@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <script src="i18n.js"></script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title id="page-title">Blog — bizebivilla</title>
+  <meta name="description" id="meta-desc" content="Villa tatili rehberleri, bölge tavsiyeleri ve seyahat ipuçları — bizebivilla blog">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" id="meta-canonical" href="https://bizebivilla.com/blog.html">
+  <meta property="og:type" content="blog">
+  <meta property="og:site_name" content="bizebivilla.com">
+  <meta property="og:title" content="Villa Tatili Rehberi — bizebivilla Blog">
+  <meta property="og:description" content="Bodrum, Fethiye, Çeşme villa tatili rehberleri, en iyi zamanlar ve ipuçları.">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+  <style>
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    :root{--sand:#f5f1ea;--navy:#1a3a5c;--blue:#2e6fa8;--text:#1a1a1a;--muted:#777;--border:#eee;--white:#fff}
+    body{font-family:'DM Sans',sans-serif;background:var(--sand);color:var(--text)}
+    nav{display:flex;align-items:center;justify-content:space-between;padding:18px 48px;background:var(--sand);border-bottom:1px solid rgba(0,0,0,0.07);position:sticky;top:0;z-index:100}
+    .logo{font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:600;color:var(--text);text-decoration:none}
+    .logo span{color:var(--blue)}
+    .nav-links{display:flex;gap:28px;align-items:center}
+    .nav-links a{font-size:13px;color:var(--muted);text-decoration:none}
+    .btn-nav{background:var(--blue);color:#fff!important;padding:8px 18px;border-radius:7px;font-weight:500!important}
+
+    .blog-hero{background:var(--navy);padding:56px 48px;text-align:center}
+    .blog-hero-title{font-family:'Cormorant Garamond',serif;font-size:44px;font-weight:300;color:#fff;margin-bottom:10px}
+    .blog-hero-title em{font-style:italic}
+    .blog-hero-sub{font-size:14px;color:rgba(255,255,255,0.65)}
+
+    .blog-layout{display:grid;grid-template-columns:1fr 280px;gap:40px;padding:48px;max-width:1100px;margin:0 auto}
+
+    /* MAKALE LİSTESİ */
+    .article-list{display:flex;flex-direction:column;gap:24px}
+    .article-card{background:var(--white);border-radius:14px;overflow:hidden;border:1px solid var(--border);display:grid;grid-template-columns:240px 1fr;transition:box-shadow 0.2s}
+    .article-card:hover{box-shadow:0 8px 28px rgba(0,0,0,0.08)}
+    .article-img{height:180px;overflow:hidden}
+    .article-img img{width:100%;height:100%;object-fit:cover;transition:transform 0.4s}
+    .article-card:hover .article-img img{transform:scale(1.04)}
+    .article-body{padding:24px}
+    .article-tag{font-size:10px;font-weight:500;text-transform:uppercase;letter-spacing:1px;color:var(--blue);margin-bottom:8px}
+    .article-title{font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:600;margin-bottom:8px;line-height:1.2}
+    .article-title a{color:var(--text);text-decoration:none}
+    .article-title a:hover{color:var(--blue)}
+    .article-excerpt{font-size:13px;color:var(--muted);line-height:1.7;margin-bottom:14px;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+    .article-meta{display:flex;gap:16px;align-items:center;font-size:11px;color:#aaa}
+    .article-read-more{font-size:12px;color:var(--blue);font-weight:500;text-decoration:none}
+    .article-read-more:hover{text-decoration:underline}
+
+    /* ÖZEL MAKALE (İÇERİK SAYFASI) */
+    .article-content{display:none;padding:48px;max-width:800px;margin:0 auto}
+    .ac-tag{font-size:11px;color:var(--blue);font-weight:500;text-transform:uppercase;letter-spacing:1px;margin-bottom:12px}
+    .ac-title{font-family:'Cormorant Garamond',serif;font-size:40px;font-weight:300;line-height:1.15;margin-bottom:14px}
+    .ac-meta{font-size:12px;color:#aaa;margin-bottom:28px;padding-bottom:20px;border-bottom:1px solid var(--border)}
+    .ac-img{width:100%;height:360px;object-fit:cover;border-radius:12px;margin-bottom:28px}
+    .ac-body h2{font-family:'Cormorant Garamond',serif;font-size:26px;font-weight:400;margin:28px 0 12px}
+    .ac-body h3{font-family:'Cormorant Garamond',serif;font-size:20px;font-weight:400;margin:20px 0 8px}
+    .ac-body p{font-size:15px;color:#333;line-height:1.85;margin-bottom:16px}
+    .ac-body ul,.ac-body ol{font-size:15px;color:#333;line-height:1.85;padding-left:22px;margin-bottom:16px}
+    .ac-body li{margin-bottom:6px}
+    .ac-body strong{font-weight:500}
+    .back-btn{display:inline-flex;align-items:center;gap:6px;font-size:13px;color:var(--blue);text-decoration:none;margin-bottom:24px;cursor:pointer;background:none;border:none;font-family:'DM Sans',sans-serif}
+
+    /* SIDEBAR */
+    .sb-card{background:var(--white);border-radius:12px;border:1px solid var(--border);padding:20px;margin-bottom:16px}
+    .sb-title{font-family:'Cormorant Garamond',serif;font-size:18px;font-weight:400;margin-bottom:14px}
+    .sb-region{display:block;padding:9px 0;border-bottom:1px solid #f5f5f5;font-size:13px;color:var(--text);text-decoration:none;display:flex;align-items:center;gap:8px}
+    .sb-region:last-child{border-bottom:none}
+    .sb-region:hover{color:var(--blue)}
+    .sb-article{padding:10px 0;border-bottom:1px solid #f5f5f5;cursor:pointer}
+    .sb-article:last-child{border-bottom:none}
+    .sb-article-title{font-size:13px;font-weight:500;margin-bottom:3px;color:var(--text)}
+    .sb-article-title:hover{color:var(--blue)}
+    .sb-article-date{font-size:11px;color:#aaa}
+
+    footer{background:#111;color:rgba(255,255,255,0.5);text-align:center;padding:24px;font-size:12px}
+
+    @media(max-width:768px){
+      nav{padding:14px 20px}
+      .nav-links a:not(.btn-nav){display:none}
+      .blog-hero{padding:36px 20px}
+      .blog-hero-title{font-size:30px}
+      .blog-layout{grid-template-columns:1fr;padding:20px}
+      .article-card{grid-template-columns:1fr}
+      .article-img{height:200px}
+      .article-content{padding:20px}
+      .ac-title{font-size:28px}
+      .ac-img{height:220px}
+    }
+  </style>
+  </head>
+<body>
+
+<nav>
+  <a href="index.html" class="logo">bize<span>bi</span>villa</a>
+  <div class="nav-links">
+    <a href="index.html#villas" data-i18n="nav_villas">Villalar</a>
+    <a href="yorumlar.html" data-i18n="nav_reviews">Yorumlar</a>
+    <a href="blog.html" style="color:var(--navy);font-weight:500">Blog</a>
+    <a href="#" class="btn-nav" data-i18n="nav_list">İlan Ver</a>
+  </div>
+</nav>
+
+<!-- BLOG LİSTE -->
+<div id="blog-list">
+  <div class="blog-hero">
+    <div class="blog-hero-title" data-i18n-html="blog_title_full">Villa Tatili <em>Rehberi</em></div>
+    <div class="blog-hero-sub" data-i18n="blog_sub">Bölge tavsiyeleri, seyahat ipuçları ve villa tatili hakkında her şey</div>
+  </div>
+
+  <div class="blog-layout">
+    <div class="article-list" id="article-list"></div>
+    <div>
+      <div class="sb-card">
+        <div class="sb-title" data-i18n="blog_regions">Bölgeler</div>
+        <a href="bolge.html?bolge=Bodrum" class="sb-region">🏖️ Bodrum</a>
+        <a href="bolge.html?bolge=Fethiye" class="sb-region">🌿 Fethiye</a>
+        <a href="bolge.html?bolge=Alacati" class="sb-region">💨 Alaçatı</a>
+        <a href="bolge.html?bolge=Antalya" class="sb-region">☀️ Antalya</a>
+        <a href="bolge.html?bolge=Marmaris" class="sb-region">⛵ Marmaris</a>
+        <a href="bolge.html?bolge=Kas" class="sb-region">🏔️ Kaş</a>
+        <a href="bolge.html?bolge=Datca" class="sb-region">🫒 Datça</a>
+      </div>
+      <div class="sb-card">
+        <div class="sb-title" data-i18n="blog_popular">Popüler Yazılar</div>
+        <div id="popular-articles"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- MAKALE İÇERİK -->
+<div id="article-page" class="article-content">
+  <button class="back-btn" onclick="showList()">← Blog'a Dön</button>
+  <div class="ac-tag" id="ac-tag"></div>
+  <h1 class="ac-title" id="ac-title"></h1>
+  <div class="ac-meta" id="ac-meta"></div>
+  <img class="ac-img" id="ac-img" src="" alt="">
+  <div class="ac-body" id="ac-body"></div>
+</div>
+
+<footer><span data-i18n="footer">© 2025 bizebivilla.com — Tüm hakları saklıdır.</span></footer>
+
+<script>
+const ARTICLES_TR = [
+  {
+    id: 1,
+    slug: 'bodrum-villa-kiralama-rehberi',
+    tag: 'Bodrum Rehberi',
+    title: 'Bodrum\'da Kiralık Villa Rehberi: En İyi Bölgeler ve İpuçları 2025',
+    excerpt: 'Bodrum\'da kiralık villa ararken nereden başlayacağınızı bilmiyor musunuz? Yalıkavak\'tan Türkbükü\'ne, tüm Bodrum bölgelerini karşılaştırdık. Hangi bölge size uygun?',
+    img: 'https://images.unsplash.com/photo-1589561253898-768105ca91a8?w=800&q=80',
+    date: '5 Mayıs 2025',
+    readTime: '8 dk okuma',
+    content: `
+      <h2>Bodrum'da Nerede Kiralık Villa Bulunur?</h2>
+      <p>Bodrum yarımadası, her biri farklı bir karakter taşıyan onlarca tatil beldesinden oluşur. Villa seçiminde önce hangi Bodrum'u istediğinizi bilmek büyük önem taşır.</p>
+      <h3>Yalıkavak — Lüksün Adresi</h3>
+      <p>Yalıkavak, son yılların en gözde Bodrum destinasyonudur. Marina etrafında gelişen butik oteller ve lüks villalar, Avrupa'nın önde gelen isimlerini ağırlıyor. Gecelik 15.000₺ ile 30.000₺ arasında değişen villa fiyatlarıyla Bodrum'un en prestijli bölgesidir.</p>
+      <p><strong>Kimler için ideal?</strong> Lüks deneyim arayanlar, sosyal ortamı sevenler ve marina manzarasına değer verenler için.</p>
+      <h3>Türkbükü — Sosyal Yaşamın Kalbi</h3>
+      <p>Türkbükü, Bodrum'un en canlı sosyal yaşama sahip bölgesidir. Ünlü plaj kulüpleri, butik restoranlar ve akşam aktiviteleriyle günü dolu dolu geçirmek isteyenler için idealdir.</p>
+      <h3>Gündoğan — Huzurun Adresi</h3>
+      <p>Şehir gürültüsünden uzak, aileler ve çiftler için Gündoğan mükemmel bir seçenektir. Daha sakin atmosferi ve uygun fiyatlarıyla Gündoğan giderek popülerleşmektedir.</p>
+      <h3>Bitez — Su Sporları Cenneti</h3>
+      <p>Sörf, kano ve su kayağı gibi su sporları için Bitez Körfezi ideal bir destinasyondur. Özellikle çocuklu aileler için güvenli sahili büyük avantaj sağlar.</p>
+      <h2>Bodrum'da Villa Kiralamak İçin En İyi Zaman</h2>
+      <p>Bodrum'da villa tatili için en ideal dönem <strong>Haziran başı ile Eylül sonu</strong> arasıdır. Temmuz ve Ağustos ayları yoğun sezon olduğundan hem fiyatlar yüksek hem de popüler bölgeler kalabalık olur.</p>
+      <ul>
+        <li><strong>Mayıs-Haziran:</strong> Sessiz, uygun fiyatlı, deniz biraz serin</li>
+        <li><strong>Temmuz-Ağustos:</strong> Yüksek sezon, kalabalık, fiyatlar zirve</li>
+        <li><strong>Eylül-Ekim:</strong> Mükemmel hava, sakin, uygun fiyat</li>
+      </ul>
+      <h2>Villa Kiralamadan Önce Dikkat Edilmesi Gerekenler</h2>
+      <ul>
+        <li>Depozito ve iptal koşullarını mutlaka öğrenin</li>
+        <li>Fotoğrafların güncel olup olmadığını sorun</li>
+        <li>Havuz ısıtmalı mı, filtreli mi kontrol edin</li>
+        <li>Klima ve jeneratör varlığını teyit edin</li>
+        <li>Çarşı ve plaja mesafeyi öğrenin</li>
+      </ul>`
+  },
+  {
+    id: 2,
+    slug: 'fethiye-tatil-rehberi',
+    tag: 'Fethiye Rehberi',
+    title: 'Fethiye Tatil Rehberi: Ölüdeniz\'den Saklıkent\'e Keşfedilmemiş Güzellikler',
+    excerpt: 'Fethiye sadece Ölüdeniz\'den ibaret değil. Göcek koyları, Saklıkent Kanyonu ve Kelebek Vadisi\'yle Fethiye, Türkiye\'nin en zengin tatil destinasyonlarından biri.',
+    img: 'https://images.unsplash.com/photo-1570168007204-dfb528c6958f?w=800&q=80',
+    date: '28 Nisan 2025',
+    readTime: '6 dk okuma',
+    content: `
+      <h2>Fethiye'yi Neden Seçmelisiniz?</h2>
+      <p>Fethiye, Türkiye'nin en çeşitli tatil deneyimini sunan destinasyonlarından biridir. Deniz, doğa, tarih ve macera bir arada bulunur.</p>
+      <h3>Ölüdeniz — Dünyanın En Güzel Koylarından Biri</h3>
+      <p>Ölüdeniz Lagünü, dünyanın en çok fotoğraflanan plajlarından biridir. Turkuaz ve lacivert renklerin buluştuğu bu eşsiz koy, Fethiye'nin simgesidir.</p>
+      <h3>Göcek — Tekne Turlarının Başlangıç Noktası</h3>
+      <p>Göcek, 12 Adalar olarak bilinen el değmemiş koylarıyla ünlüdür. Buradan başlayan mavi yolculuklar, Türkiye'nin en güzel deniz deneyimlerinden birini sunar.</p>
+      <h3>Saklıkent Kanyonu — Doğanın Harikası</h3>
+      <p>Avrupa'nın en uzun kanyonlarından biri olan Saklıkent, villa tatilinize macera katar. Yürüyüş parkurları ve soğuk su keyfini bir arada yaşayabilirsiniz.</p>
+      <h2>Fethiye'de Villa Tatili İpuçları</h2>
+      <ul>
+        <li>Hisarönü, sahile yakın ve daha uygun fiyatlı bir alternatiftir</li>
+        <li>Ölüdeniz bölgesindeki villalar manzara açısından üstündür</li>
+        <li>Nisan ve Ekim ayları yürüyüş turları için idealdir</li>
+        <li>Yamaç paraşütü Babadağ'dan yapılır, rehberli turlar mevcuttur</li>
+      </ul>`
+  },
+  {
+    id: 3,
+    slug: 'villa-tatili-ipuclari',
+    tag: 'Tatil Rehberi',
+    title: 'Villa Tatili Planlarken Bilmeniz Gereken 10 Altın Kural',
+    excerpt: 'İlk kez villa kiralıyor musunuz? Ya da daha önceki tatillerinizde hayal kırıklığı yaşadınız mı? Bu 10 altın kural sayesinde mükemmel villa tatilinizi planlayabilirsiniz.',
+    img: 'https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=800&q=80',
+    date: '20 Nisan 2025',
+    readTime: '5 dk okuma',
+    content: `
+      <h2>Villa Kiralamak İçin 10 Altın Kural</h2>
+      <ol>
+        <li><strong>En az 3 ay önceden rezervasyon yapın.</strong> Özellikle Temmuz-Ağustos için iyi villalar Ocak'ta dolmaya başlar.</li>
+        <li><strong>Fotoğrafları inceleyin, sorular sorun.</strong> Havuzun boyutu, mobilyaların durumu ve çevre hakkında detay isteyin.</li>
+        <li><strong>İptal koşullarını öğrenin.</strong> Plan değişikliği ihtimaline karşı esnek iptali olan villaları tercih edin.</li>
+        <li><strong>Depozito miktarına dikkat edin.</strong> Normal depozito villa bedelinin %20-30'udur.</li>
+        <li><strong>Çevre mesafelerini sorun.</strong> Market, restoran ve plaja mesafe konforunuzu doğrudan etkiler.</li>
+        <li><strong>Klima ve jeneratör varlığını teyit edin.</strong> Yaz sıcaklarında klima zorunludur.</li>
+        <li><strong>Havuz bakım programını öğrenin.</strong> Haftalık bakım sırasında havuz kullanılamayabilir.</li>
+        <li><strong>Misafir sayısına uygun seçim yapın.</strong> Kapasitenin %80'ini aşmamak konforu artırır.</li>
+        <li><strong>Villa sahibiyle iletişimi kurun.</strong> Güvenilir villa sahipleri sorularınıza hızlı yanıt verir.</li>
+        <li><strong>Referansları ve yorumları okuyun.</strong> Gerçek misafir deneyimleri en güvenilir kaynaktır.</li>
+      </ol>
+      <h2>Sıkça Yapılan Hatalar</h2>
+      <p>Villa kiralamada en yaygın hata, yalnızca fiyata odaklanmaktır. Düşük fiyatlı bir villa, ulaşım zorluğu, bakımsız havuz veya gürültülü komşular nedeniyle tatili mahvedebilir.</p>
+      <p>İkinci büyük hata ise son dakika rezervasyonudur. Sezon yoğunluğunda iyi villalar çok önceden kapanır ve son dakika seçenekleri genellikle kötü lokasyondadır.</p>`
+  },
+  {
+    id: 4,
+    slug: 'alacati-kiralık-villa',
+    tag: 'Alaçatı Rehberi',
+    title: 'Alaçatı\'da Kiralık Villa: Butik Tatil Deneyiminin Adresi',
+    excerpt: 'Rüzgar sörfü, taş sokaklar ve eşsiz gastronomiyle ünlü Alaçatı\'da villa tatili nasıl yapılır? En iyi bölgeler, fiyatlar ve yerel sırlar.',
+    img: 'https://images.unsplash.com/photo-1596394516093-501ba68a0ba6?w=800&q=80',
+    date: '12 Nisan 2025',
+    readTime: '7 dk okuma',
+    content: `
+      <h2>Alaçatı'yı Özel Kılan Nedir?</h2>
+      <p>Alaçatı, Türkiye'nin tatil destinasyonları içinde kendine özgü bir yerde durmaktadır. Ne Bodrum'un sosyal yoğunluğu ne de Fethiye'nin doğal yabanilik... Alaçatı, ikisi arasında kusursuz bir denge sunar.</p>
+      <h3>Rüzgar Sörfü Cenneti</h3>
+      <p>Alaçatı, dünya'nın en iyi rüzgar sörfü noktalarından biri olarak uluslararası arenada tanınmaktadır. Her yıl düzenlenen PWA Dünya Kupası, sörfçüleri ve meraklıları Alaçatı'ya çeker.</p>
+      <h3>Gastronomi Festivali</h3>
+      <p>Her yıl Eylül ayında düzenlenen Alaçatı Ot Festivali, yöresel lezzetleri ve şarapları bir araya getirir. Bu dönemde villa kiralayan tatilciler eşsiz bir kültürel deneyim yaşar.</p>
+      <h2>Alaçatı'da Villa Kiralama Tavsiyeleri</h2>
+      <ul>
+        <li>Çarşıya yürüme mesafesindeki villalar en çok tercih edilenlerdir</li>
+        <li>Havuzlu villa bulunabilirlik sınırlıdır, erken rezervasyon şarttır</li>
+        <li>Haziran ve Eylül ayları en ideal dönemdir</li>
+        <li>Surf okulu faaliyetleri için Alaçatı Plajı'na yakın konumlar avantajlıdır</li>
+      </ul>`
+  },
+];
+
+const ARTICLES_EN = [
+  {id:1,slug:'bodrum-villa-rental-guide',tag:'Bodrum Guide',
+   title:'Bodrum Villa Rental Guide: Best Areas & Tips 2025',
+   excerpt:'Looking for a villa in Bodrum but don\'t know where to start? From Yalikavak to Turkbuku, we compare all Bodrum areas to help you find the perfect match.',
+   img:'https://images.unsplash.com/photo-1589561253898-768105ca91a8?w=800&q=80',
+   date:'May 5, 2025',readTime:'8 min read',
+   content:`<h2>Where to Find a Rental Villa in Bodrum?</h2><p>The Bodrum peninsula consists of dozens of holiday towns each with its own character. Before choosing a villa, it\'s important to decide which Bodrum experience you\'re looking for.</p><h3>Yalikavak — The Luxury Address</h3><p>Yalikavak has become the most sought-after Bodrum destination in recent years. With boutique hotels and luxury villas developed around the marina, it attracts visitors from across Europe. Villa prices ranging from ₺15,000 to ₺30,000 per night make it Bodrum\'s most prestigious area.</p><h3>Turkbuku — The Social Hub</h3><p>Turkbuku offers Bodrum\'s most vibrant social scene. With famous beach clubs, boutique restaurants and evening activities, it\'s ideal for those who want to make the most of their days.</p><h2>Best Season for Bodrum</h2><p>The ideal period for a villa holiday in Bodrum is <strong>early June to late September</strong>. July and August are peak season with higher prices and busier popular areas.</p>`
+  },
+  {id:2,slug:'fethiye-holiday-guide',tag:'Fethiye Guide',
+   title:'Fethiye Holiday Guide: Hidden Gems from Oludeniz to Saklikent',
+   excerpt:'Fethiye is more than just Oludeniz. With Gocek coves, Saklikent Canyon and Butterfly Valley, Fethiye offers one of Turkey\'s richest holiday experiences.',
+   img:'https://images.unsplash.com/photo-1570168007204-dfb528c6958f?w=800&q=80',
+   date:'April 28, 2025',readTime:'6 min read',
+   content:`<h2>Why Choose Fethiye?</h2><p>Fethiye offers one of Turkey\'s most diverse holiday experiences. Sea, nature, history and adventure all come together in one destination.</p><h3>Oludeniz — One of the World\'s Most Beautiful Bays</h3><p>The Oludeniz Lagoon is one of the world\'s most photographed beaches. This unique cove, where turquoise and navy blue waters meet, is Fethiye\'s icon.</p><h3>Gocek — The Departure Point for Boat Tours</h3><p>Gocek is famous for its untouched coves known as the 12 Islands. Blue voyages starting from here offer one of Turkey\'s most beautiful sea experiences.</p>`
+  },
+  {id:3,slug:'villa-holiday-tips',tag:'Travel Guide',
+   title:'10 Golden Rules to Plan the Perfect Villa Holiday',
+   excerpt:'First time renting a villa? Or had disappointing experiences before? These 10 golden rules will help you plan a flawless villa holiday.',
+   img:'https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=800&q=80',
+   date:'April 20, 2025',readTime:'5 min read',
+   content:`<h2>10 Golden Rules for Renting a Villa</h2><ol><li><strong>Book at least 3 months in advance.</strong> Good villas for July-August start filling up in January.</li><li><strong>Study the photos and ask questions.</strong> Request details about pool size, furniture condition and the surroundings.</li><li><strong>Check the cancellation policy.</strong> Prefer villas with flexible cancellation in case your plans change.</li><li><strong>Understand the deposit.</strong> A normal deposit is 20-30% of the villa price.</li><li><strong>Ask about distances.</strong> Distance to supermarkets, restaurants and the beach directly affects your comfort.</li><li><strong>Confirm air conditioning and generator.</strong> Air conditioning is essential in summer heat.</li><li><strong>Learn the pool maintenance schedule.</strong> The pool may be unavailable during weekly maintenance.</li><li><strong>Choose according to guest count.</strong> Not exceeding 80% of capacity increases comfort for everyone.</li><li><strong>Build a rapport with the villa owner.</strong> Reliable owners respond quickly to your questions.</li><li><strong>Read reviews from real guests.</strong> Real guest experiences are the most trustworthy source.</li></ol>`
+  },
+  {id:4,slug:'alacati-villa-rental',tag:'Alacati Guide',
+   title:'Alacati Villa Rental: Turkey\'s Boutique Holiday Destination',
+   excerpt:'Known for windsurfing, stone streets and exceptional gastronomy, how do you holiday in Alacati? Best areas, prices and local secrets.',
+   img:'https://images.unsplash.com/photo-1596394516093-501ba68a0ba6?w=800&q=80',
+   date:'April 12, 2025',readTime:'7 min read',
+   content:`<h2>What Makes Alacati Special?</h2><p>Alacati occupies a unique place among Turkey\'s holiday destinations. Neither the social intensity of Bodrum nor the wild nature of Fethiye — Alacati offers a perfect balance between the two.</p><h3>Windsurfing Paradise</h3><p>Alacati is internationally recognized as one of the world\'s best windsurfing spots. The annual PWA World Cup draws surfers and enthusiasts to Alacati every year.</p><h3>Gastronomy Festival</h3><p>The annual Alacati Herb Festival in September brings together local flavours and wines. Guests who rent a villa during this period experience a unique cultural event.</p>`
+  }
+];
+
+const ARTICLES = currentLang === 'en' ? ARTICLES_EN : ARTICLES_TR;
+
+
+// Makale listesi render
+function renderList() {
+  document.getElementById('blog-list').style.display = 'block';
+  document.getElementById('article-page').style.display = 'none';
+  document.title = 'Villa Tatili Rehberi — bizebivilla Blog';
+
+  document.getElementById('article-list').innerHTML = ARTICLES.map(a => `
+    <div class="article-card" onclick="showArticle(${a.id})">
+      <div class="article-img"><img src="${a.img}" alt="${a.title}" loading="lazy"></div>
+      <div class="article-body">
+        <div class="article-tag">${a.tag}</div>
+        <div class="article-title"><a href="#" onclick="event.preventDefault();showArticle(${a.id})">${a.title}</a></div>
+        <div class="article-excerpt">${a.excerpt}</div>
+        <div class="article-meta">
+          <span>📅 ${a.date}</span>
+          <span>⏱ ${a.readTime}</span>
+          <a href="#" class="article-read-more" data-i18n="blog_read_more" onclick="event.preventDefault();event.stopPropagation();showArticle(${a.id})">Devamını oku →</a>
+        </div>
+      </div>
+    </div>`).join('');
+
+  document.getElementById('popular-articles').innerHTML = ARTICLES.slice(0,3).map(a => `
+    <div class="sb-article" onclick="showArticle(${a.id})">
+      <div class="sb-article-title">${a.title}</div>
+      <div class="sb-article-date">${a.date}</div>
+    </div>`).join('');
+}
+
+function showArticle(id) {
+  const a = ARTICLES.find(x=>x.id===id);
+  if (!a) return;
+  document.getElementById('blog-list').style.display = 'none';
+  document.getElementById('article-page').style.display = 'block';
+  document.getElementById('ac-tag').textContent = a.tag;
+  document.getElementById('ac-title').textContent = a.title;
+  document.getElementById('ac-meta').textContent = '📅 ' + a.date + ' · ⏱ ' + a.readTime;
+  document.getElementById('ac-img').src = a.img;
+  document.getElementById('ac-img').alt = a.title;
+  document.getElementById('ac-body').innerHTML = a.content;
+  document.title = a.title + ' — bizebivilla Blog';
+  window.scrollTo(0,0);
+
+  // Schema.org Article
+  const schema = {
+    '@context':'https://schema.org','@type':'Article',
+    'headline': a.title,
+    'description': a.excerpt,
+    'image': a.img,
+    'datePublished': a.date,
+    'author': {'@type':'Organization','name':'bizebivilla'},
+    'publisher': {'@type':'Organization','name':'bizebivilla','logo':{'@type':'ImageObject','url':'https://bizebivilla.com/logo.png'}}
+  };
+  let s = document.getElementById('article-schema');
+  if (!s) { s=document.createElement('script'); s.id='article-schema'; s.type='application/ld+json'; document.head.appendChild(s); }
+  s.textContent = JSON.stringify(schema);
+}
+
+function showList() {
+  document.getElementById('blog-list').style.display = 'block';
+  document.getElementById('article-page').style.display = 'none';
+  document.title = 'Villa Tatili Rehberi — bizebivilla Blog';
+}
+
+// URL'den makale slug kontrolü
+const articleSlug = new URLSearchParams(window.location.search).get('makale');
+if (articleSlug) {
+  const a = ARTICLES.find(x=>x.slug===articleSlug);
+  if (a) { renderList(); showArticle(a.id); } else renderList();
+} else renderList();
+</script>
+</body>
+</html>

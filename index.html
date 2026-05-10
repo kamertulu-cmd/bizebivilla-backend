@@ -2,322 +2,390 @@
 <html lang="tr">
 <head>
   <meta charset="UTF-8">
+  <script src="i18n.js"></script>
+  <!-- ── SEO META ──────────────────────────────────────────────── -->
+  <meta name="description" content="Türkiye'nin en güzel kiralık villalarını keşfedin. Bodrum, Fethiye, Çeşme, Antalya ve daha fazlası. Havuzlu, deniz manzaralı lüks villa kiralama.">
+  <meta name="keywords" content="kiralık villa, villa kiralama, bodrum villa, fethiye villa, çeşme villa, antalya villa, tatil villası, havuzlu villa, deniz manzaralı villa, yazlık kiralama">
+  <meta name="author" content="bizebivilla.com">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://bizebivilla.com/">
+
+  <!-- ── Open Graph (Facebook, WhatsApp) ────────────────────────── -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://bizebivilla.com/">
+  <meta id="og-title" property="og:title" content="bizebivilla — Türkiye'nin En Güzel Kiralık Villaları">
+  <meta property="og:description" content="Bodrum'dan Fethiye'ye, Çeşme'den Kaş'a hayalinizdeki kiralık villayı bulun. Havuzlu, deniz manzaralı lüks villalar.">
+  <meta property="og:image" content="https://images.unsplash.com/photo-1613977257363-707ba9348227?w=1200&q=80">
+  <meta property="og:locale" content="tr_TR">
+  <meta property="og:site_name" content="bizebivilla.com">
+
+  <!-- ── Twitter Card ───────────────────────────────────────────── -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="bizebivilla — Türkiye'nin En Güzel Kiralık Villaları">
+  <meta name="twitter:description" content="Bodrum, Fethiye, Çeşme, Antalya ve daha fazlasında kiralık villa.">
+  <meta name="twitter:image" content="https://images.unsplash.com/photo-1613977257363-707ba9348227?w=1200&q=80">
+
+  <!-- ── Schema.org Yapısal Veri ────────────────────────────────── -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "name": "bizebivilla",
+    "url": "https://bizebivilla.com",
+    "description": "Türkiye genelinde kiralık villa platformu",
+    "potentialAction": {
+      "@type": "SearchAction",
+      "target": "https://bizebivilla.com/#villas?search={search_term_string}",
+      "query-input": "required name=search_term_string"
+    }
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "name": "bizebivilla",
+    "url": "https://bizebivilla.com",
+    "logo": "https://bizebivilla.com/logo.png",
+    "contactPoint": {
+      "@type": "ContactPoint",
+      "telephone": "+90-532-123-4567",
+      "contactType": "customer service",
+      "availableLanguage": "Turkish"
+    }
+  }
+  </script>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>bizebivilla — Hayalindeki Villa</title>
+  <title>bizebivilla | Kiralık Villa Türkiye — Bodrum, Fethiye, Çeşme, Antalya</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-    :root {
-      --sand: #f5f1ea;
-      --navy: #1a3a5c;
-      --blue: #2e6fa8;
-      --blue-light: #eaf1f8;
-      --text: #1a1a1a;
-      --muted: #777;
-      --border: #eee;
-      --white: #fff;
-    }
-
+    :root { --sand:#f5f1ea; --navy:#1a3a5c; --blue:#2e6fa8; --text:#1a1a1a; --muted:#777; --border:#eee; --white:#fff; --green:#25d366; }
     body { font-family: 'DM Sans', sans-serif; background: var(--sand); color: var(--text); }
 
     /* NAV */
-    nav {
-      display: flex; align-items: center; justify-content: space-between;
-      padding: 18px 48px; background: var(--sand);
-      border-bottom: 1px solid rgba(0,0,0,0.07);
-      position: sticky; top: 0; z-index: 100;
-    }
-    .logo { font-family: 'Cormorant Garamond', serif; font-size: 22px; font-weight: 600; color: var(--text); text-decoration: none; }
-    .logo span { color: var(--blue); }
-    .nav-links { display: flex; gap: 28px; align-items: center; }
-    .nav-links a { font-size: 13px; color: var(--muted); text-decoration: none; }
-    .nav-links a:hover { color: var(--text); }
-    .btn-nav { background: var(--blue); color: #fff !important; padding: 8px 18px; border-radius: 7px; font-weight: 500 !important; }
+    nav { display:flex; align-items:center; justify-content:space-between; padding:18px 48px; background:var(--sand); border-bottom:1px solid rgba(0,0,0,0.07); position:sticky; top:0; z-index:100; }
+    .logo { font-family:'Cormorant Garamond',serif; font-size:22px; font-weight:600; color:var(--text); text-decoration:none; }
+    .logo span { color:var(--blue); }
+    .nav-links { display:flex; gap:28px; align-items:center; }
+    .nav-links a { font-size:13px; color:var(--muted); text-decoration:none; }
+    .nav-links a:hover { color:var(--text); }
+    .btn-nav { background:var(--blue); color:#fff!important; padding:8px 18px; border-radius:7px; font-weight:500!important; }
 
     /* HERO */
-    .hero {
-      position: relative; height: 500px; display: flex; align-items: flex-end;
-      overflow: hidden;
-    }
-    .hero-bg {
-      position: absolute; inset: 0;
-      background: linear-gradient(135deg, #0f2d4a 0%, #1a5276 35%, #2471a3 65%, #5dade2 100%);
-    }
-    .hero-bg::before {
-      content: ''; position: absolute;
-      width: 600px; height: 600px; border-radius: 50%;
-      background: rgba(255,255,255,0.03);
-      top: -150px; right: -100px;
-    }
-    .hero-bg::after {
-      content: ''; position: absolute;
-      width: 350px; height: 350px; border-radius: 50%;
-      background: rgba(255,255,255,0.05);
-      bottom: -100px; left: 80px;
-    }
-    .hero-overlay {
-      position: absolute; inset: 0;
-      background: linear-gradient(to top, rgba(0,0,0,0.6) 0%, rgba(0,0,0,0.1) 60%, transparent 100%);
-    }
-    .hero-content { position: relative; padding: 0 48px 48px; width: 100%; }
-    .hero-badge {
-      display: inline-block;
-      background: rgba(255,255,255,0.12); border: 1px solid rgba(255,255,255,0.2);
-      color: #fff; font-size: 11px; letter-spacing: 1.5px; text-transform: uppercase;
-      padding: 5px 14px; border-radius: 20px; margin-bottom: 18px;
-    }
-    .hero-title {
-      font-family: 'Cormorant Garamond', serif; font-size: 58px; font-weight: 300;
-      color: #fff; line-height: 1.08; letter-spacing: -0.5px; margin-bottom: 12px;
-    }
-    .hero-title em { font-style: italic; font-weight: 400; }
-    .hero-sub { font-size: 15px; color: rgba(255,255,255,0.72); font-weight: 300; }
+    .hero { position:relative; height:500px; display:flex; align-items:flex-end; overflow:hidden; }
+    .hero-bg { position:absolute; inset:0; background:linear-gradient(135deg,#0f2d4a 0%,#1a5276 35%,#2471a3 65%,#5dade2 100%); }
+    .hero-bg::before { content:''; position:absolute; width:600px; height:600px; border-radius:50%; background:rgba(255,255,255,0.03); top:-150px; right:-100px; }
+    .hero-overlay { position:absolute; inset:0; background:linear-gradient(to top,rgba(0,0,0,0.6) 0%,rgba(0,0,0,0.1) 60%,transparent 100%); }
+    .hero-content { position:relative; padding:0 48px 48px; width:100%; }
+    .hero-badge { display:inline-block; background:rgba(255,255,255,0.12); border:1px solid rgba(255,255,255,0.2); color:#fff; font-size:11px; letter-spacing:1.5px; text-transform:uppercase; padding:5px 14px; border-radius:20px; margin-bottom:18px; }
+    .hero-title { font-family:'Cormorant Garamond',serif; font-size:58px; font-weight:300; color:#fff; line-height:1.08; letter-spacing:-0.5px; margin-bottom:12px; }
+    .hero-title em { font-style:italic; font-weight:400; }
+    .hero-sub { font-size:15px; color:rgba(255,255,255,0.72); font-weight:300; }
 
     /* SEARCH */
-    .search-wrap { background: var(--sand); padding: 28px 48px; border-bottom: 1px solid var(--border); }
-    .search-box {
-      display: flex; max-width: 900px;
-      background: var(--white); border: 1px solid #ddd; border-radius: 10px; overflow: hidden;
-    }
-    .search-field {
-      flex: 1; display: flex; flex-direction: column;
-      padding: 12px 20px; border-right: 1px solid #eee; cursor: pointer;
-    }
-    .search-field:last-of-type { border-right: none; }
-    .search-label { font-size: 10px; font-weight: 500; letter-spacing: 0.8px; text-transform: uppercase; color: #aaa; margin-bottom: 3px; }
-    .search-field select, .search-field input {
-      border: none; outline: none; font-size: 14px; font-family: 'DM Sans', sans-serif;
-      color: var(--text); background: transparent; cursor: pointer;
-    }
-    .search-field select option { color: var(--text); }
-    .search-btn {
-      background: var(--blue); color: #fff; border: none;
-      padding: 0 32px; font-size: 14px; font-weight: 500;
-      cursor: pointer; font-family: 'DM Sans', sans-serif;
-      display: flex; align-items: center; gap: 8px;
-      transition: background 0.2s;
-    }
-    .search-btn:hover { background: var(--navy); }
+    .search-wrap { background:var(--sand); padding:28px 48px 20px; border-bottom:1px solid var(--border); }
+    .search-box { display:flex; max-width:900px; background:var(--white); border:1px solid #ddd; border-radius:10px; overflow:hidden; margin-bottom:16px; }
+    .search-field { flex:1; display:flex; flex-direction:column; padding:12px 20px; border-right:1px solid #eee; }
+    .search-field:last-of-type { border-right:none; }
+    .search-label { font-size:10px; font-weight:500; letter-spacing:0.8px; text-transform:uppercase; color:#aaa; margin-bottom:3px; }
+    .search-field select, .search-field input { border:none; outline:none; font-size:14px; font-family:'DM Sans',sans-serif; color:var(--text); background:transparent; }
+    .search-btn { background:var(--blue); color:#fff; border:none; padding:0 32px; font-size:14px; font-weight:500; cursor:pointer; font-family:'DM Sans',sans-serif; display:flex; align-items:center; gap:8px; transition:background 0.2s; }
+    .search-btn:hover { background:var(--navy); }
+
+    /* AKILLI FİLTRELER */
+    .quick-filters { display:flex; gap:8px; flex-wrap:wrap; max-width:900px; }
+    .qf-chip { display:flex; align-items:center; gap:6px; padding:7px 14px; background:var(--white); border:1px solid var(--border); border-radius:20px; font-size:12px; font-weight:400; color:var(--text); cursor:pointer; transition:all 0.18s; font-family:'DM Sans',sans-serif; white-space:nowrap; }
+    .qf-chip:hover { border-color:var(--blue); color:var(--blue); }
+    .qf-chip.active { background:var(--blue); color:#fff; border-color:var(--blue); }
+    .qf-chip .chip-icon { font-size:14px; }
 
     /* SECTIONS */
-    .section { padding: 40px 48px; }
-    .section-head { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 22px; }
-    .section-title { font-family: 'Cormorant Garamond', serif; font-size: 28px; font-weight: 400; letter-spacing: -0.3px; }
-    .see-all { font-size: 12px; color: var(--blue); text-decoration: none; font-weight: 500; }
+    .section { padding:40px 48px; }
+    .section-head { display:flex; justify-content:space-between; align-items:baseline; margin-bottom:22px; }
+    .section-title { font-family:'Cormorant Garamond',serif; font-size:28px; font-weight:400; letter-spacing:-0.3px; }
+    .see-all { font-size:12px; color:var(--blue); text-decoration:none; font-weight:500; }
 
     /* BÖLGELER */
-    .region-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; }
-    .region-card {
-      border-radius: 12px; overflow: hidden; position: relative;
-      height: 150px; cursor: pointer; transition: transform 0.25s;
-    }
-    .region-card:hover { transform: translateY(-3px); }
-    .region-bg { position: absolute; inset: 0; }
-    .r-bodrum    { background: linear-gradient(135deg, #0d3b6e, #1a6bb5); }
-    .r-fethiye   { background: linear-gradient(135deg, #0a4a2e, #1a9c6b); }
-    .r-cesme     { background: linear-gradient(135deg, #7a3b0d, #c4783a); }
-    .r-antalya   { background: linear-gradient(135deg, #5a1a6e, #a84ac4); }
-    .r-marmaris  { background: linear-gradient(135deg, #1a3a6e, #3a7ab5); }
-    .r-default   { background: linear-gradient(135deg, #2d4a1a, #5a9c3a); }
-    .region-overlay { position: absolute; inset: 0; background: linear-gradient(to top, rgba(0,0,0,0.65), transparent); }
-    .region-info { position: absolute; bottom: 0; left: 0; right: 0; padding: 16px; }
-    .region-name { font-family: 'Cormorant Garamond', serif; font-size: 19px; font-weight: 600; color: #fff; }
-    .region-count { font-size: 11px; color: rgba(255,255,255,0.7); margin-top: 2px; }
+    .region-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:14px; }
+    .region-card { border-radius:12px; overflow:hidden; position:relative; height:150px; cursor:pointer; transition:transform 0.25s; }
+    .region-card:hover { transform:translateY(-3px); }
+    .region-bg { position:absolute; inset:0; background-size:cover; background-position:center; }
+    .region-overlay { position:absolute; inset:0; background:linear-gradient(to top,rgba(0,0,0,0.7),rgba(0,0,0,0.1)); }
+    .region-info { position:absolute; bottom:0; left:0; right:0; padding:16px; }
+    .region-name { font-family:'Cormorant Garamond',serif; font-size:19px; font-weight:600; color:#fff; }
+    .region-count { font-size:11px; color:rgba(255,255,255,0.75); margin-top:2px; }
 
     /* VİLLA KARTLARI */
-    .villas-section { background: var(--white); padding: 40px 48px; }
-    .villa-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
-    .villa-card {
-      border: 1px solid var(--border); border-radius: 14px; overflow: hidden;
-      background: var(--white); transition: box-shadow 0.25s, transform 0.25s; cursor: pointer;
-    }
-    .villa-card:hover { box-shadow: 0 12px 32px rgba(0,0,0,0.09); transform: translateY(-2px); }
-    .villa-img { height: 185px; position: relative; overflow: hidden; }
-    .villa-img-bg { position: absolute; inset: 0; transition: transform 0.3s; }
-    .villa-card:hover .villa-img-bg { transform: scale(1.04); }
-    .img-bodrum  { background: linear-gradient(135deg, #1a4a6e 0%, #4a90c4 100%); }
-    .img-fethiye { background: linear-gradient(135deg, #1a5c3a 0%, #4caf7d 100%); }
-    .img-cesme   { background: linear-gradient(135deg, #5c3a1a 0%, #c4874a 100%); }
-    .img-default { background: linear-gradient(135deg, #2a3a5c 0%, #5a7ab5 100%); }
-    .villa-badge {
-      position: absolute; top: 12px; left: 12px;
-      background: #fff; font-size: 10px; font-weight: 500;
-      padding: 4px 10px; border-radius: 20px; color: var(--blue);
-    }
-    .villa-fav {
-      position: absolute; top: 12px; right: 12px;
-      width: 30px; height: 30px; background: rgba(255,255,255,0.9);
-      border-radius: 50%; display: flex; align-items: center; justify-content: center;
-      font-size: 15px; cursor: pointer; border: none; transition: background 0.2s;
-    }
-    .villa-fav:hover { background: #fff; }
-    .villa-body { padding: 16px 18px; }
-    .villa-loc { font-size: 11px; color: #aaa; text-transform: uppercase; letter-spacing: 0.8px; margin-bottom: 5px; }
-    .villa-name { font-family: 'Cormorant Garamond', serif; font-size: 18px; font-weight: 600; color: var(--text); margin-bottom: 10px; line-height: 1.2; }
-    .villa-feats { display: flex; gap: 14px; margin-bottom: 14px; flex-wrap: wrap; }
-    .villa-feat { font-size: 12px; color: #666; display: flex; align-items: center; gap: 4px; }
-    .villa-footer { display: flex; justify-content: space-between; align-items: center; padding-top: 12px; border-top: 1px solid #f0f0f0; }
-    .villa-price { font-size: 16px; font-weight: 500; }
-    .villa-price span { font-size: 11px; font-weight: 400; color: #aaa; }
-    .villa-btn {
-      font-size: 11px; color: var(--blue); font-weight: 500;
-      padding: 6px 14px; border: 1px solid var(--blue); border-radius: 6px;
-      text-decoration: none; transition: all 0.2s;
-    }
-    .villa-btn:hover { background: var(--blue); color: #fff; }
+    .villas-section { background:var(--white); padding:40px 48px; }
+    .villa-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:22px; }
+    .villa-card { border:1px solid var(--border); border-radius:14px; overflow:hidden; background:var(--white); transition:box-shadow 0.25s,transform 0.25s; cursor:pointer; }
+    .villa-card:hover { box-shadow:0 12px 32px rgba(0,0,0,0.1); transform:translateY(-3px); }
+    .villa-img { height:200px; position:relative; overflow:hidden; background:#ddd; }
+    .villa-img img { width:100%; height:100%; object-fit:cover; transition:transform 0.4s; display:block; }
+    .villa-card:hover .villa-img img { transform:scale(1.05); }
+    .villa-img-placeholder { width:100%; height:100%; background:linear-gradient(135deg,#1a4a6e,#4a90c4); }
+    .villa-badge { position:absolute; top:12px; left:12px; background:#fff; font-size:10px; font-weight:500; padding:4px 10px; border-radius:20px; color:var(--blue); z-index:1; }
+    .villa-avail { position:absolute; top:12px; left:12px; background:#22c55e; color:#fff; font-size:10px; font-weight:500; padding:4px 10px; border-radius:20px; z-index:1; }
+    .villa-fav.active { background:rgba(255,255,255,0.95); }
+    .villa-fav {position:absolute; top:12px; right:12px; width:30px; height:30px; background:rgba(255,255,255,0.9); border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:15px; cursor:pointer; border:none; z-index:1; }
+    .villa-body { padding:16px 18px; }
+    .villa-loc { font-size:11px; color:#aaa; text-transform:uppercase; letter-spacing:0.8px; margin-bottom:5px; }
+    .villa-name { font-family:'Cormorant Garamond',serif; font-size:18px; font-weight:600; color:var(--text); margin-bottom:8px; line-height:1.2; }
+    .villa-desc { font-size:12px; color:var(--muted); line-height:1.5; margin-bottom:10px; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden; }
+    .villa-feats { display:flex; gap:12px; margin-bottom:14px; flex-wrap:wrap; }
+    .villa-feat { font-size:12px; color:#666; }
+    .villa-footer { display:flex; justify-content:space-between; align-items:center; padding-top:12px; border-top:1px solid #f0f0f0; }
+    .villa-price { font-size:16px; font-weight:500; }
+    .villa-price span { font-size:11px; font-weight:400; color:#aaa; }
+    .villa-rating { font-size:12px; color:#666; }
+    .villa-actions { display:flex; gap:8px; align-items:center; }
+    .villa-btn { font-size:11px; color:var(--blue); font-weight:500; padding:6px 14px; border:1px solid var(--blue); border-radius:6px; text-decoration:none; transition:all 0.2s; }
+    .villa-btn:hover { background:var(--blue); color:#fff; }
+    .villa-wa { font-size:11px; color:var(--green); font-weight:500; padding:6px 12px; border:1px solid var(--green); border-radius:6px; text-decoration:none; display:flex; align-items:center; gap:4px; transition:all 0.2s; }
+    .villa-wa:hover { background:var(--green); color:#fff; }
 
-    /* LOADING & STATES */
-    .loading { text-align: center; padding: 60px; color: var(--muted); font-size: 14px; }
-    .loading-dots::after { content: '...'; animation: dots 1.2s infinite; }
-    @keyframes dots { 0%,20%{content:'.'} 40%{content:'..'} 60%,100%{content:'...'} }
-    .empty { text-align: center; padding: 60px; color: var(--muted); }
-    .empty-icon { font-size: 40px; margin-bottom: 12px; }
-    .error-banner { background: #fff3f3; border: 1px solid #fcc; color: #c00; padding: 14px 20px; border-radius: 8px; font-size: 13px; margin-bottom: 20px; }
+    /* STATS */
+    .stats-section { background:var(--navy); padding:32px 48px; }
+    .stats-inner { display:grid; grid-template-columns:repeat(4,1fr); gap:24px; }
+    .stat { text-align:center; }
+    .stat-val { font-family:'Cormorant Garamond',serif; font-size:40px; font-weight:600; color:#fff; }
+    .stat-label { font-size:12px; color:rgba(255,255,255,0.6); margin-top:4px; }
 
-    /* BANNER */
-    .cta-banner {
-      background: var(--navy); padding: 40px 48px;
-      display: flex; justify-content: space-between; align-items: center;
-    }
-    .cta-title { font-family: 'Cormorant Garamond', serif; font-size: 26px; font-weight: 400; color: #fff; margin-bottom: 5px; }
-    .cta-sub { font-size: 13px; color: rgba(255,255,255,0.6); }
-    .cta-btn {
-      background: #fff; color: var(--navy); border: none;
-      padding: 13px 28px; border-radius: 8px; font-size: 13px; font-weight: 500;
-      cursor: pointer; font-family: 'DM Sans', sans-serif; white-space: nowrap;
-      transition: opacity 0.2s;
-    }
-    .cta-btn:hover { opacity: 0.9; }
+    /* YORUMLAR */
+    .reviews-section { background:var(--sand); padding:40px 48px; }
+    .reviews-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:20px; margin-top:24px; }
+    .review-card { background:var(--white); border-radius:14px; padding:24px; border:1px solid var(--border); transition:box-shadow 0.2s; }
+    .review-card:hover { box-shadow:0 8px 24px rgba(0,0,0,0.07); }
+    .review-header { display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:14px; }
+    .review-guest { display:flex; align-items:center; gap:10px; }
+    .avatar { width:38px; height:38px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:14px; font-weight:500; color:#fff; flex-shrink:0; }
+    .guest-name { font-size:14px; font-weight:500; }
+    .stay-date { font-size:11px; color:var(--muted); margin-top:2px; }
+    .review-stars { color:#f59e0b; font-size:15px; }
+    .review-villa-tag { font-size:11px; color:var(--blue); font-weight:500; margin-bottom:10px; }
+    .review-comment { font-size:13px; color:#444; line-height:1.65; font-style:italic; }
+    .reviews-cta { text-align:center; margin-top:28px; }
+    .reviews-cta a { display:inline-block; padding:11px 28px; border:1px solid var(--blue); color:var(--blue); border-radius:8px; font-size:13px; font-weight:500; text-decoration:none; transition:all 0.2s; }
+    .reviews-cta a:hover { background:var(--blue); color:#fff; }
 
-    /* FOOTER */
-    footer { background: #111; color: rgba(255,255,255,0.5); text-align: center; padding: 24px; font-size: 12px; }
+    .cta-banner { background:#1a2a3a; padding:40px 48px; display:flex; justify-content:space-between; align-items:center; }
+    .cta-title { font-family:'Cormorant Garamond',serif; font-size:26px; font-weight:400; color:#fff; margin-bottom:5px; }
+    .cta-sub { font-size:13px; color:rgba(255,255,255,0.6); }
+    .cta-btn { background:#fff; color:var(--navy); border:none; padding:13px 28px; border-radius:8px; font-size:13px; font-weight:500; cursor:pointer; font-family:'DM Sans',sans-serif; }
+
+    footer { background:#111; color:rgba(255,255,255,0.5); text-align:center; padding:24px; font-size:12px; }
+
+    /* WHATSAPP SABIT BUTON */
+    .wa-float { position:fixed; bottom:28px; right:28px; z-index:999; display:flex; flex-direction:column; align-items:flex-end; gap:10px; }
+    .wa-bubble { background:#fff; border-radius:12px; padding:12px 16px; font-size:12px; color:var(--text); box-shadow:0 4px 20px rgba(0,0,0,0.12); max-width:220px; line-height:1.5; display:none; border:1px solid var(--border); }
+    .wa-bubble.show { display:block; animation:fadeUp 0.25s ease; }
+    @keyframes fadeUp { from{opacity:0;transform:translateY(8px)} to{opacity:1;transform:translateY(0)} }
+    .wa-btn { width:56px; height:56px; background:var(--green); border-radius:50%; display:flex; align-items:center; justify-content:center; cursor:pointer; box-shadow:0 4px 20px rgba(37,211,102,0.4); transition:transform 0.2s; border:none; }
+    .wa-btn:hover { transform:scale(1.08); }
+    .wa-btn svg { width:28px; height:28px; fill:#fff; }
+    .wa-badge { position:absolute; top:-4px; right:-4px; width:18px; height:18px; background:#ef4444; border-radius:50%; font-size:10px; color:#fff; display:flex; align-items:center; justify-content:center; font-weight:600; }
+
+    .loading { text-align:center; padding:60px; color:var(--muted); font-size:14px; grid-column:1/-1; }
+    .error-banner { background:#fff3f3; border:1px solid #fcc; color:#c00; padding:14px 20px; border-radius:8px; font-size:13px; margin-bottom:20px; }
+    .empty-state { text-align:center; padding:60px; color:var(--muted); grid-column:1/-1; }
+    .empty-icon { font-size:40px; margin-bottom:12px; }
 
     /* MODAL */
-    .modal-overlay {
-      position: fixed; inset: 0; background: rgba(0,0,0,0.5);
-      display: none; align-items: center; justify-content: center; z-index: 200;
-    }
-    .modal-overlay.open { display: flex; }
-    .modal {
-      background: #fff; border-radius: 16px; padding: 36px; width: 480px; max-width: 95vw;
-      position: relative; max-height: 90vh; overflow-y: auto;
-    }
-    .modal-close {
-      position: absolute; top: 16px; right: 16px;
-      background: none; border: none; font-size: 22px; cursor: pointer; color: #aaa;
-    }
-    .modal-title { font-family: 'Cormorant Garamond', serif; font-size: 24px; font-weight: 600; margin-bottom: 6px; }
-    .modal-loc { font-size: 12px; color: var(--muted); margin-bottom: 20px; }
-    .modal-field { margin-bottom: 14px; }
-    .modal-field label { display: block; font-size: 12px; font-weight: 500; color: #555; margin-bottom: 5px; }
-    .modal-field input, .modal-field textarea {
-      width: 100%; border: 1px solid #ddd; border-radius: 7px;
-      padding: 9px 13px; font-size: 13px; font-family: 'DM Sans', sans-serif; outline: none;
-    }
-    .modal-field input:focus, .modal-field textarea:focus { border-color: var(--blue); }
-    .modal-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
-    .modal-submit {
-      width: 100%; background: var(--blue); color: #fff; border: none;
-      padding: 13px; border-radius: 8px; font-size: 14px; font-weight: 500;
-      cursor: pointer; font-family: 'DM Sans', sans-serif; margin-top: 6px;
-    }
-    .modal-submit:hover { background: var(--navy); }
-    .modal-success { text-align: center; padding: 20px 0; }
-    .modal-success-icon { font-size: 48px; margin-bottom: 12px; }
-    .modal-success-title { font-family: 'Cormorant Garamond', serif; font-size: 22px; margin-bottom: 8px; }
-    .modal-success-sub { font-size: 13px; color: var(--muted); }
+    .modal-overlay { position:fixed; inset:0; background:rgba(0,0,0,0.5); display:none; align-items:center; justify-content:center; z-index:200; }
+    .modal-overlay.open { display:flex; }
+    .modal { background:#fff; border-radius:16px; padding:36px; width:480px; max-width:95vw; position:relative; max-height:90vh; overflow-y:auto; }
+    .modal-close { position:absolute; top:16px; right:16px; background:none; border:none; font-size:22px; cursor:pointer; color:#aaa; }
+    .modal-title { font-family:'Cormorant Garamond',serif; font-size:24px; font-weight:600; margin-bottom:6px; }
+    .modal-loc { font-size:12px; color:var(--muted); margin-bottom:20px; }
+    .modal-field { margin-bottom:14px; }
+    .modal-field label { display:block; font-size:12px; font-weight:500; color:#555; margin-bottom:5px; }
+    .modal-field input, .modal-field textarea { width:100%; border:1px solid #ddd; border-radius:7px; padding:9px 13px; font-size:13px; font-family:'DM Sans',sans-serif; outline:none; }
+    .modal-field input:focus, .modal-field textarea:focus { border-color:var(--blue); }
+    .modal-row { display:grid; grid-template-columns:1fr 1fr; gap:12px; }
+    .modal-submit { width:100%; background:var(--blue); color:#fff; border:none; padding:13px; border-radius:8px; font-size:14px; font-weight:500; cursor:pointer; font-family:'DM Sans',sans-serif; margin-top:6px; }
+    .modal-submit:hover { background:var(--navy); }
+    .modal-wa { width:100%; background:var(--green); color:#fff; border:none; padding:13px; border-radius:8px; font-size:14px; font-weight:500; cursor:pointer; font-family:'DM Sans',sans-serif; margin-top:8px; display:flex; align-items:center; justify-content:center; gap:8px; text-decoration:none; }
+    .modal-success { text-align:center; padding:20px 0; }
+    .modal-success-icon { font-size:48px; margin-bottom:12px; }
+  
+  /* ── MOBİL UYUMLULUK ─────────────────────────────────────────── */
+  @media (max-width: 768px) {
+    nav { padding: 14px 20px; }
+    .nav-links a:not(.btn-nav):not([style*="position"]) { display: none; }
+    .btn-nav { padding: 7px 14px; font-size: 12px; }
+
+    .hero { height: 380px; }
+    .hero-title { font-size: 36px; }
+    .hero-content { padding: 0 20px 32px; }
+    .hero-sub { font-size: 13px; }
+
+    .search-wrap { padding: 16px 20px; }
+    .search-box { flex-direction: column; border-radius: 10px; }
+    .search-field { border-right: none !important; border-bottom: 1px solid #eee; padding: 10px 16px; }
+    .search-field:last-of-type { border-bottom: none; }
+    .search-btn { padding: 14px; justify-content: center; border-radius: 0 0 10px 10px; }
+    .quick-filters { gap: 6px; }
+    .qf-chip { padding: 6px 12px; font-size: 11px; }
+
+    .section { padding: 24px 20px; }
+    .region-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
+    .region-card { height: 120px; }
+    .region-name { font-size: 16px; }
+
+    .villas-section { padding: 24px 20px; }
+    .villa-grid { grid-template-columns: 1fr; gap: 16px; }
+
+    .stats-section { padding: 24px 20px; }
+    .stats-inner { grid-template-columns: repeat(2, 1fr); gap: 14px; }
+    .stat-val { font-size: 28px; }
+
+    .reviews-section { padding: 24px 20px; }
+    .reviews-grid { grid-template-columns: 1fr; gap: 12px; }
+
+    .cta-banner { flex-direction: column; gap: 16px; padding: 28px 20px; text-align: center; }
+    .cta-title { font-size: 22px; }
+
+    .wa-float { bottom: 16px; right: 16px; }
+    .wa-btn { width: 50px; height: 50px; }
+
+    .modal-overlay { align-items: flex-end; }
+    .modal { border-radius: 16px 16px 0 0; width: 100%; max-width: 100%; max-height: 92vh; padding: 24px 20px; }
+
+    footer { padding: 20px; font-size: 11px; }
+  }
+
+  @media (max-width: 480px) {
+    .hero-title { font-size: 28px; }
+    .section-title { font-size: 22px; }
+    .region-grid { grid-template-columns: 1fr 1fr; }
+    .stats-inner { grid-template-columns: 1fr 1fr; }
+  }
   </style>
-</head>
+  </head>
 <body>
 
-<!-- NAV -->
 <nav>
   <a href="#" class="logo">bize<span>bi</span>villa</a>
   <div class="nav-links">
-    <a href="#villas">Villaları Keşfet</a>
-    <a href="#regions">Bölgeler</a>
-    <a href="#" class="btn-nav">İlan Ver</a>
+    <a href="#villas" data-i18n="nav_villas">Villalar</a>
+    <a href="#regions" data-i18n="nav_regions">Bölgeler</a>
+    <a href="yorumlar.html" data-i18n="nav_reviews">Yorumlar</a>
+    <a href="blog.html" data-i18n="nav_blog">Blog</a>
+    <a href="#" onclick="showFavs(event)" style="position:relative">❤️ <span data-i18n="nav_favs">Favorilerim</span> <span id="fav-badge" style="display:none;position:absolute;top:-6px;right:-10px;background:#ef4444;color:#fff;font-size:10px;width:16px;height:16px;border-radius:50%;align-items:center;justify-content:center;font-weight:600">0</span></a>
+    <a href="#" class="btn-nav" data-i18n="nav_list">İlan Ver</a>
   </div>
 </nav>
 
-<!-- HERO -->
 <div class="hero">
   <div class="hero-bg"></div>
   <div class="hero-overlay"></div>
   <div class="hero-content">
-    <div class="hero-badge">Türkiye'nin villa kiralama platformu</div>
-    <div class="hero-title">Hayalindeki villayla<br><em>tanışma vakti.</em></div>
-    <div class="hero-sub">Bodrum'dan Fethiye'ye, Çeşme'den Kaş'a — sana en uygun villayı bul.</div>
+    <div class="hero-badge" data-i18n="hero_badge">Türkiye'nin villa kiralama platformu</div>
+    <div class="hero-title" data-i18n-html="hero_title">Hayalindeki villayla<br><em>tanışma vakti.</em></div>
+    <div class="hero-sub" data-i18n="hero_sub">Bodrum'dan Fethiye'ye, Çeşme'den Kaş'a — sana en uygun villayı bul.</div>
   </div>
 </div>
 
-<!-- SEARCH -->
+<!-- ARAMA + AKILLI FİLTRELER -->
 <div class="search-wrap">
   <div class="search-box">
     <div class="search-field">
-      <div class="search-label">Bölge</div>
+      <div class="search-label" data-i18n="search_region">Bölge</div>
       <select id="filter-region">
-        <option value="">Tüm bölgeler</option>
-        <option>Bodrum</option>
-        <option>Fethiye</option>
-        <option>Alacati</option>
-        <option>Antalya</option>
-        <option>Marmaris</option>
-        <option>Datca</option>
+        <option value="" data-i18n="search_region_all">Tüm bölgeler</option>
+        <option>Bodrum</option><option>Fethiye</option><option>Alacati</option>
+        <option>Antalya</option><option>Marmaris</option><option>Datca</option><option>Kas</option>
       </select>
     </div>
     <div class="search-field">
-      <div class="search-label">Misafir</div>
-      <input type="number" id="filter-guests" placeholder="Kaç kişi?" min="1" max="50">
+      <div class="search-label" data-i18n="search_checkin">Giriş</div>
+      <input type="date" id="filter-checkin">
     </div>
     <div class="search-field">
-      <div class="search-label">Maks. Fiyat (₺/gece)</div>
-      <input type="number" id="filter-price" placeholder="Üst limit" min="0">
+      <div class="search-label" data-i18n="search_checkout">Çıkış</div>
+      <input type="date" id="filter-checkout">
+    </div>
+    <div class="search-field">
+      <div class="search-label" data-i18n="search_guests">Misafir</div>
+      <input type="number" id="filter-guests" placeholder="Kaç kişi?" min="1" data-i18n-ph="search_guests_ph">
     </div>
     <button class="search-btn" onclick="searchVillas()">
       <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
-      Ara
+      <span data-i18n="search_btn">Ara</span>
     </button>
   </div>
+
+  <!-- AKILLI FİLTRELER -->
+  <div class="quick-filters">
+    <button class="qf-chip" onclick="quickFilter('weekend',this)"><span class="chip-icon">🌅</span> <span data-i18n="qf_weekend">Bu hafta sonu</span></button>
+    <button class="qf-chip" onclick="quickFilter('pool',this)"><span class="chip-icon">🏊</span> <span data-i18n="qf_pool">Havuzlu</span></button>
+    <button class="qf-chip" onclick="quickFilter('seaview',this)"><span class="chip-icon">🌊</span> <span data-i18n="qf_seaview">Deniz manzaralı</span></button>
+    <button class="qf-chip" onclick="quickFilter('budget',this)"><span class="chip-icon">💰</span> <span data-i18n="qf_budget">Uygun fiyatlı</span></button>
+    <button class="qf-chip" onclick="quickFilter('luxury',this)"><span class="chip-icon">✨</span> <span data-i18n="qf_luxury">Lüks</span></button>
+    <button class="qf-chip" onclick="quickFilter('large',this)"><span class="chip-icon">👨‍👩‍👧‍👦</span> <span data-i18n="qf_large">Geniş aile</span></button>
+    <button class="qf-chip" onclick="quickFilter('beachfront',this)"><span class="chip-icon">🏖️</span> <span data-i18n="qf_beach">Denize sıfır</span></button>
+    <button class="qf-chip" onclick="quickFilter('reset',this)"><span class="chip-icon">↺</span> <span data-i18n="qf_reset">Temizle</span></button>
+  </div>
 </div>
 
-<!-- BÖLGELER -->
 <div class="section" id="regions">
-  <div class="section-head">
-    <div class="section-title">Popüler bölgeler</div>
-  </div>
-  <div class="region-grid" id="region-grid">
-    <div class="loading"><span class="loading-dots">Yükleniyor</span></div>
-  </div>
+  <div class="section-head"><div class="section-title" data-i18n="popular_regions">Popüler bölgeler</div></div>
+  <div class="region-grid" id="region-grid"><div class="loading" data-i18n-load="loading">Yükleniyor...</div></div>
 </div>
 
-<!-- VİLLALAR -->
 <div class="villas-section" id="villas">
   <div class="section-head">
-    <div class="section-title">Villalar</div>
-    <span id="villa-count" style="font-size:13px; color:var(--muted)"></span>
+    <div class="section-title" data-i18n="villas_title">Villalar</div>
+    <span id="villa-count" style="font-size:13px;color:var(--muted)"></span>
   </div>
   <div id="error-area"></div>
-  <div class="villa-grid" id="villa-grid">
-    <div class="loading"><span class="loading-dots">Yükleniyor</span></div>
+  <div class="villa-grid" id="villa-grid"><div class="loading" data-i18n-load="loading">Yükleniyor...</div></div>
+</div>
+
+<div class="stats-section">
+  <div class="stats-inner">
+    <div class="stat"><div class="stat-val">8</div><div class="stat-label">${t('stat_villas')}</div></div>
+    <div class="stat"><div class="stat-val" id="s-reviews">—</div><div class="stat-label">${t('stat_guests')}</div></div>
+    <div class="stat"><div class="stat-val" id="s-rating">—</div><div class="stat-label">${t('stat_rating')}</div></div>
+    <div class="stat"><div class="stat-val">7</div><div class="stat-label">${t('stat_regions')}</div></div>
   </div>
 </div>
 
-<!-- CTA BANNER -->
+<div class="reviews-section" id="reviews">
+  <div class="section-head">
+    <div class="section-title" data-i18n="featured_title">Misafirlerimiz ne diyor?</div>
+    <a href="yorumlar.html" class="see-all" data-i18n="all_reviews">Tüm yorumlar →</a>
+  </div>
+  <div class="reviews-grid" id="reviews-grid"><div class="loading" data-i18n="reviews_loading">Yorumlar yükleniyor...</div></div>
+  <div class="reviews-cta"><a href="yorumlar.html" data-i18n="all_reviews_link">Tüm yorumları gör & yorum yaz →</a></div>
+</div>
+
 <div class="cta-banner">
   <div>
-    <div class="cta-title">Villanızı bizimle kiraya verin.</div>
-    <div class="cta-sub">Binlerce tatilciye ulaşın — ücretsiz ilan oluşturun.</div>
+    <div class="cta-title" data-i18n="cta_title">Villanızı bizimle kiraya verin.</div>
+    <div class="cta-sub" data-i18n="cta_sub">Binlerce tatilciye ulaşın — ücretsiz ilan oluşturun.</div>
   </div>
-  <button class="cta-btn">Hemen İlan Ver</button>
+  <button class="cta-btn" data-i18n="cta_btn">Hemen İlan Ver</button>
 </div>
 
-<!-- FOOTER -->
-<footer>© 2025 bizebivilla.com — Tüm hakları saklıdır.</footer>
+<footer data-i18n="footer">© 2025 bizebivilla.com — Tüm hakları saklıdır.</footer>
 
-<!-- REZERVASYON MODAL -->
+<!-- WHATSAPP SABİT BUTON -->
+<div class="wa-float">
+  <div class="wa-bubble" id="wa-bubble">
+    👋 <span data-i18n="wa_bubble">Merhaba! Villa bulmana yardımcı olalım.</span>
+  </div>
+  <div style="position:relative">
+    <button class="wa-btn" onclick="openWA()" id="wa-main-btn">
+      <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+    </button>
+    <div class="wa-badge">1</div>
+  </div>
+</div>
+
+<!-- MODAL -->
 <div class="modal-overlay" id="modal">
   <div class="modal">
     <button class="modal-close" onclick="closeModal()">×</button>
@@ -326,209 +394,335 @@
 </div>
 
 <script>
-  const API = 'http://localhost:3001/api';
-  const regionColors = {
-    'Bodrum':   'r-bodrum',
-    'Fethiye':  'r-fethiye',
-    'Alacati':  'r-cesme',
-    'Antalya':  'r-antalya',
-    'Marmaris': 'r-marmaris',
-  };
-  const imgColors = {
-    'Bodrum':   'img-bodrum',
-    'Fethiye':  'img-fethiye',
-    'Alacati':  'img-cesme',
-  };
+const API = 'http://localhost:3001/api';
+const WA_NUMBER = '905321234567'; // Buraya kendi numaranı yaz
+const regionPhotos = {
+  'Bodrum':'https://images.unsplash.com/photo-1589561253898-768105ca91a8?w=400&q=80',
+  'Fethiye':'https://images.unsplash.com/photo-1570168007204-dfb528c6958f?w=400&q=80',
+  'Alacati':'https://images.unsplash.com/photo-1596394516093-501ba68a0ba6?w=400&q=80',
+  'Antalya':'https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?w=400&q=80',
+  'Marmaris':'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=400&q=80',
+  'Datca':'https://images.unsplash.com/photo-1519046904884-53103b34b206?w=400&q=80',
+  'Kas':'https://images.unsplash.com/photo-1559827260-dc66d52bef19?w=400&q=80',
+};
+const avatarColors = ['#1a3a5c','#2e6fa8','#0e6655','#784212','#6c3483','#b7410e'];
+let currentVilla = null;
+let activeQuickFilter = null;
 
-  let currentVilla = null;
+// ── WhatsApp ──────────────────────────────────────────────────────
+let waBubbleShown = false;
+setTimeout(() => {
+  document.getElementById('wa-bubble').classList.add('show');
+  waBubbleShown = true;
+  setTimeout(() => document.getElementById('wa-bubble').classList.remove('show'), 5000);
+}, 3000);
 
-  // ── Bölgeleri yükle ────────────────────────────────────────────
-  async function loadRegions() {
-    try {
-      const res = await fetch(API + '/regions');
-      const json = await res.json();
-      const grid = document.getElementById('region-grid');
+function openWA(villaTitle) {
+  const msg = villaTitle
+    ? (currentLang === 'en'
+        ? `Hello! I'd like to get information about "${villaTitle}".`
+        : `Merhaba! "${villaTitle}" villası hakkında bilgi almak istiyorum.`)
+    : (currentLang === 'en'
+        ? 'Hello! I would like help finding a villa.'
+        : 'Merhaba! Villa bulmak için yardımınızı almak istiyorum.');
+  window.open(`https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(msg)}`, '_blank');
+}
 
-      if (!json.data || !json.data.length) {
-        grid.innerHTML = '<div class="empty">Bölge bulunamadı.</div>';
-        return;
-      }
+// ── Akıllı filtreler ──────────────────────────────────────────────
+function getWeekendDates() {
+  const today = new Date();
+  const day = today.getDay();
+  const daysUntilFri = (5 - day + 7) % 7 || 7;
+  const fri = new Date(today); fri.setDate(today.getDate() + daysUntilFri);
+  const sun = new Date(fri); sun.setDate(fri.getDate() + 2);
+  return { checkin: fri.toISOString().split('T')[0], checkout: sun.toISOString().split('T')[0] };
+}
 
-      grid.innerHTML = json.data.map(r => `
-        <div class="region-card" onclick="filterByRegion('${r.name}')">
-          <div class="region-bg ${regionColors[r.name] || 'r-default'}"></div>
-          <div class="region-overlay"></div>
-          <div class="region-info">
-            <div class="region-name">${r.name}</div>
-            <div class="region-count">${r.count} villa · min ₺${r.minPrice.toLocaleString('tr-TR')}</div>
-          </div>
+function quickFilter(type, btn) {
+  document.querySelectorAll('.qf-chip').forEach(c => c.classList.remove('active'));
+
+  if (type === 'reset') {
+    activeQuickFilter = null;
+    document.getElementById('filter-region').value = '';
+    document.getElementById('filter-guests').value = '';
+    document.getElementById('filter-checkin').value = '';
+    document.getElementById('filter-checkout').value = '';
+    loadVillas({});
+    return;
+  }
+
+  btn.classList.add('active');
+  activeQuickFilter = type;
+
+  const filters = {};
+  if (type === 'weekend') {
+    const dates = getWeekendDates();
+    document.getElementById('filter-checkin').value = dates.checkin;
+    document.getElementById('filter-checkout').value = dates.checkout;
+    loadVillas({});
+  } else if (type === 'pool')       { loadVillas({ pool: 'true' }); }
+  else if (type === 'seaview')      { loadVillas({ seaView: 'true' }); }
+  else if (type === 'budget')       { loadVillas({ maxPrice: 8000 }); }
+  else if (type === 'luxury')       { loadVillas({ minPrice: 15000 }); }
+  else if (type === 'large')        { loadVillas({ guests: 8 }); }
+  else if (type === 'beachfront')   { loadVillas({ beachfront: 'true' }); }
+
+  document.getElementById('villas').scrollIntoView({ behavior: 'smooth' });
+}
+
+// ── Bölgeler ──────────────────────────────────────────────────────
+// ── Favoriler ─────────────────────────────────────────────────────
+function getFavs() { try { return JSON.parse(localStorage.getItem('bvFavs') || '[]'); } catch(e) { return []; } }
+function saveFavs(favs) { localStorage.setItem('bvFavs', JSON.stringify(favs)); }
+function isFav(id) { return getFavs().includes(id); }
+
+function toggleFav(id, title) {
+  let favs = getFavs();
+  const btn = document.getElementById('fav-' + id);
+  if (favs.includes(id)) {
+    favs = favs.filter(f => f !== id);
+    if (btn) btn.textContent = '🤍';
+    showToast(currentLang==='en'?'Removed from favorites':'Favorilerden kaldırıldı');
+  } else {
+    favs.push(id);
+    if (btn) { btn.textContent = '❤️'; btn.style.transform = 'scale(1.3)'; setTimeout(() => btn.style.transform = '', 200); }
+    showToast('"' + title + (currentLang==='en'?'" added to favorites ❤️':'" favorilere eklendi ❤️'));
+  }
+  saveFavs(favs);
+  updateFavCount();
+}
+
+function updateFavCount() {
+  const count = getFavs().length;
+  const badge = document.getElementById('fav-badge');
+  if (badge) { badge.textContent = count; badge.style.display = count > 0 ? 'flex' : 'none'; }
+}
+
+let toastTimer;
+function showToast(msg) {
+  let t = document.getElementById('toast-msg');
+  if (!t) {
+    t = document.createElement('div');
+    t.id = 'toast-msg';
+    t.style.cssText = 'position:fixed;bottom:90px;left:50%;transform:translateX(-50%);background:#1a1a1a;color:#fff;padding:10px 20px;border-radius:20px;font-size:13px;z-index:999;transition:opacity 0.3s;white-space:nowrap';
+    document.body.appendChild(t);
+  }
+  t.textContent = msg;
+  t.style.opacity = '1';
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => t.style.opacity = '0', 2500);
+}
+
+async function loadRegions() {
+  try {
+    const res = await fetch(API + '/regions');
+    const json = await res.json();
+    const grid = document.getElementById('region-grid');
+    if (!json.data?.length) { grid.innerHTML = '<div class="loading" data-i18n-load="loading">Yükleniyor...</div>'; return; }
+    grid.innerHTML = json.data.map(r => `
+      <div class="region-card" onclick="window.location.href='bolge.html?bolge='+encodeURIComponent('${r.name}')">
+        <div class="region-bg" style="background-image:url('${regionPhotos[r.name]||regionPhotos['Bodrum']}')"></div>
+        <div class="region-overlay"></div>
+        <div class="region-info">
+          <div class="region-name">${r.name}</div>
+          <div class="region-count">${r.count} ${currentLang==='en'?'villas':'villa'} · ${currentLang==='en'?'from':'min'} ₺${r.minPrice.toLocaleString(currentLang==='en'?'en-US':'tr-TR')}</div>
         </div>
-      `).join('');
-    } catch (e) {
-      document.getElementById('region-grid').innerHTML =
-        '<div class="empty">Bölgeler yüklenemedi.</div>';
-    }
-  }
+      </div>`).join('');
+  } catch(e) {}
+}
 
-  // ── Villaları yükle ────────────────────────────────────────────
-  async function loadVillas(params = {}) {
-    const grid = document.getElementById('villa-grid');
-    const errorArea = document.getElementById('error-area');
-    grid.innerHTML = '<div class="loading"><span class="loading-dots">Yükleniyor</span></div>';
-    errorArea.innerHTML = '';
+// ── Villalar ──────────────────────────────────────────────────────
+async function loadVillas(params={}) {
+  const grid = document.getElementById('villa-grid');
+  const errorArea = document.getElementById('error-area');
+  grid.innerHTML = '<div class="loading" data-i18n-load="loading">Yükleniyor...</div>';
+  errorArea.innerHTML = '';
+  try {
+    const q = new URLSearchParams();
+    if (params.region)      q.set('region', params.region);
+    if (params.guests)      q.set('guests', params.guests);
+    if (params.maxPrice)    q.set('maxPrice', params.maxPrice);
+    if (params.minPrice)    q.set('minPrice', params.minPrice);
+    if (params.pool)        q.set('pool', params.pool);
+    if (params.seaView)     q.set('seaView', params.seaView);
+    if (params.beachfront)  q.set('beachfront', params.beachfront);
 
-    try {
-      const query = new URLSearchParams();
-      if (params.region)   query.set('region', params.region);
-      if (params.guests)   query.set('guests', params.guests);
-      if (params.maxPrice) query.set('maxPrice', params.maxPrice);
+    const res = await fetch(API + '/villas?' + q.toString());
+    const json = await res.json();
+    document.getElementById('villa-count').textContent = json.total ? json.total + ' ' + t('villas_found') : '';
 
-      const res = await fetch(API + '/villas?' + query.toString());
-      const json = await res.json();
-
-      document.getElementById('villa-count').textContent =
-        json.total ? json.total + ' villa bulundu' : '';
-
-      if (!json.data || !json.data.length) {
-        grid.innerHTML = `
-          <div class="empty" style="grid-column:1/-1">
-            <div class="empty-icon">🏡</div>
-            <div>Bu kriterlere uygun villa bulunamadı.</div>
-          </div>`;
-        return;
-      }
-
-      grid.innerHTML = json.data.map(villa => `
-        <div class="villa-card" onclick="openModal('${villa._id}')">
-          <div class="villa-img">
-            <div class="villa-img-bg ${imgColors[villa.location.region] || 'img-default'}"></div>
-            ${villa.isFeatured ? '<div class="villa-badge">Öne Çıkan</div>' : ''}
-            <button class="villa-fav" onclick="event.stopPropagation()">♡</button>
-          </div>
-          <div class="villa-body">
-            <div class="villa-loc">${villa.location.region}${villa.location.district ? ' · ' + villa.location.district : ''}</div>
-            <div class="villa-name">${villa.title}</div>
-            <div class="villa-feats">
-              <div class="villa-feat">🛏 ${villa.capacity.bedrooms} yatak</div>
-              <div class="villa-feat">🚿 ${villa.capacity.bathrooms} banyo</div>
-              <div class="villa-feat">👥 ${villa.capacity.guests} kişi</div>
-              ${villa.amenities.pool ? '<div class="villa-feat">🏊 Havuz</div>' : ''}
-              ${villa.amenities.seaView ? '<div class="villa-feat">🌊 Deniz</div>' : ''}
-            </div>
-            <div class="villa-footer">
-              <div class="villa-price">₺${villa.pricing.nightly.toLocaleString('tr-TR')} <span>/ gece</span></div>
-              <a href="#" class="villa-btn" onclick="event.preventDefault(); openModal('${villa._id}')">Rezervasyon</a>
-            </div>
-          </div>
-        </div>
-      `).join('');
-
-      // Villa verilerini sakla
-      window._villas = json.data;
-
-    } catch (e) {
-      errorArea.innerHTML = `<div class="error-banner">⚠️ API'ye bağlanılamadı. Sunucunun çalıştığını kontrol edin: <strong>npm run dev</strong></div>`;
-      grid.innerHTML = '';
-    }
-  }
-
-  // ── Arama ──────────────────────────────────────────────────────
-  function searchVillas() {
-    const region   = document.getElementById('filter-region').value;
-    const guests   = document.getElementById('filter-guests').value;
-    const maxPrice = document.getElementById('filter-price').value;
-    loadVillas({ region, guests, maxPrice });
-    document.getElementById('villas').scrollIntoView({ behavior: 'smooth' });
-  }
-
-  // ── Bölge filtresi ─────────────────────────────────────────────
-  function filterByRegion(region) {
-    document.getElementById('filter-region').value = region;
-    loadVillas({ region });
-    document.getElementById('villas').scrollIntoView({ behavior: 'smooth' });
-  }
-
-  // ── Modal ──────────────────────────────────────────────────────
-  function openModal(villaId) {
-    const villa = (window._villas || []).find(v => v._id === villaId);
-    if (!villa) return;
-    currentVilla = villa;
-
-    document.getElementById('modal-body').innerHTML = `
-      <div class="modal-title">${villa.title}</div>
-      <div class="modal-loc">📍 ${villa.location.region}${villa.location.district ? ', ' + villa.location.district : ''} &nbsp;·&nbsp; ₺${villa.pricing.nightly.toLocaleString('tr-TR')} / gece</div>
-      <div class="modal-field"><label>Adınız Soyadınız</label><input type="text" id="i-name" placeholder="ör. Ayşe Kaya"></div>
-      <div class="modal-row">
-        <div class="modal-field"><label>E-posta</label><input type="email" id="i-email" placeholder="email@ornek.com"></div>
-        <div class="modal-field"><label>Telefon</label><input type="tel" id="i-phone" placeholder="05XX XXX XXXX"></div>
-      </div>
-      <div class="modal-row">
-        <div class="modal-field"><label>Giriş tarihi</label><input type="date" id="i-checkin"></div>
-        <div class="modal-field"><label>Çıkış tarihi</label><input type="date" id="i-checkout"></div>
-      </div>
-      <div class="modal-field"><label>Misafir sayısı</label><input type="number" id="i-guests" placeholder="Kaç kişi?" min="1" max="${villa.capacity.guests}"></div>
-      <div class="modal-field"><label>Mesajınız (opsiyonel)</label><textarea id="i-message" rows="3" placeholder="Eklemek istediğiniz notlar..."></textarea></div>
-      <button class="modal-submit" onclick="submitInquiry()">Rezervasyon Talebi Gönder</button>
-    `;
-    document.getElementById('modal').classList.add('open');
-  }
-
-  function closeModal() {
-    document.getElementById('modal').classList.remove('open');
-  }
-
-  async function submitInquiry() {
-    const name     = document.getElementById('i-name').value.trim();
-    const email    = document.getElementById('i-email').value.trim();
-    const phone    = document.getElementById('i-phone').value.trim();
-    const checkIn  = document.getElementById('i-checkin').value;
-    const checkOut = document.getElementById('i-checkout').value;
-    const guests   = document.getElementById('i-guests').value;
-    const message  = document.getElementById('i-message').value.trim();
-
-    if (!name || !email || !checkIn || !checkOut || !guests) {
-      alert('Lütfen zorunlu alanları doldurun.');
+    if (!json.data?.length) {
+      grid.innerHTML = `<div class="empty-state"><div class="empty-icon">🏡</div><div>${currentLang==="en"?"No villas match these criteria.":"Bu kriterlere uygun villa bulunamadı."}</div></div>`;
       return;
     }
+    window._villas = json.data;
 
-    try {
-      const res = await fetch(API + '/inquiries', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          villaId: currentVilla._id,
-          guest: { name, email, phone },
-          dates: { checkIn, checkOut },
-          guestCount: Number(guests),
-          message,
-        }),
-      });
-      const json = await res.json();
+    const checkin  = document.getElementById('filter-checkin').value;
+    const checkout = document.getElementById('filter-checkout').value;
 
-      if (json.success) {
-        document.getElementById('modal-body').innerHTML = `
-          <div class="modal-success">
-            <div class="modal-success-icon">🎉</div>
-            <div class="modal-title">Talebiniz alındı!</div>
-            <div class="modal-success-sub">Villa sahibi en kısa sürede sizinle iletişime geçecek.</div>
-          </div>`;
-        setTimeout(closeModal, 3000);
-      } else {
-        alert('Bir hata oluştu: ' + json.message);
-      }
-    } catch (e) {
-      alert('Sunucuya bağlanılamadı.');
-    }
+    grid.innerHTML = json.data.map(v => {
+      const cover = v.photos?.find(p=>p.isCover)?.url || v.photos?.[0]?.url;
+      const isWeekend = activeQuickFilter === 'weekend';
+      return `
+      <div class="villa-card" onclick="window.location.href='villa.html?slug=${v.slug}'">
+        <div class="villa-img">
+          ${cover ? `<img src="${cover}" alt="${v.title}" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='block'">` : ''}
+          <div class="villa-img-placeholder" style="${cover?'display:none':''}"></div>
+          ${isWeekend ? `<div class="villa-avail">✓ ${t('villa_weekend')}</div>` : (v.isFeatured ? `<div class="villa-badge">${t('villa_featured')}</div>` : '')}
+          <button class="villa-fav" id="fav-${v._id}" onclick="event.stopPropagation();toggleFav('${v._id}','${v.title}')">${isFav(v._id)?'❤️':'🤍'}</button>
+        </div>
+        <div class="villa-body">
+          <div class="villa-loc">${v.location.region}${v.location.district?' · '+v.location.district:''}</div>
+          <div class="villa-name">${(currentLang==='en' && v.title_en) ? v.title_en : v.title}</div>
+          <div class="villa-desc">${(currentLang==='en' && v.description_en) ? v.description_en : v.description}</div>
+          <div class="villa-feats">
+            <span class="villa-feat">🛏 ${v.capacity.bedrooms} ${t('villa_bedroom')}</span>
+            <span class="villa-feat">🚿 ${v.capacity.bathrooms} ${t('villa_bath')}</span>
+            <span class="villa-feat">👥 ${v.capacity.guests} ${t('villa_person')}</span>
+            ${v.amenities.pool?`<span class="villa-feat">🏊 ${t('villa_pool')}</span>`:''}
+            ${v.amenities.seaView?`<span class="villa-feat">🌊 ${t('villa_sea')}</span>`:''}
+          </div>
+          <div class="villa-footer">
+            <div>
+              <div class="villa-price">₺${v.pricing.nightly.toLocaleString(currentLang==='en'?'en-US':'tr-TR')} <span>${t('villa_per_night')}</span></div>
+              <div class="villa-rating">⭐ ${v.rating.average} (${v.rating.count} ${t('villa_reviews')})</div>
+            </div>
+            <div class="villa-actions">
+              <a href="#" class="villa-wa" onclick="event.stopPropagation();event.preventDefault();openWA('${v.title}')">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="#25d366"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+                WA
+              </a>
+              <a href="#" class="villa-btn" onclick="event.preventDefault();event.stopPropagation();window.location.href='villa.html?slug=${v.slug}'">${t('villa_btn')}</a>
+            </div>
+          </div>
+        </div>
+      </div>`;
+    }).join('');
+  } catch(e) {
+    errorArea.innerHTML = '<div class="error-banner">⚠️ API\'ye bağlanılamadı. Terminalde <strong>npm run dev</strong> çalıştığını kontrol edin.</div>';
+    grid.innerHTML = '';
   }
+}
 
-  // Modal dışına tıklayınca kapat
-  document.getElementById('modal').addEventListener('click', function(e) {
-    if (e.target === this) closeModal();
+// ── Yorumlar ──────────────────────────────────────────────────────
+async function loadReviews() {
+  try {
+    const res = await fetch(API + '/reviews/all?limit=6');
+    const json = await res.json();
+    const grid = document.getElementById('reviews-grid');
+    if (!json.data?.length) { grid.innerHTML = `<div class="loading">${currentLang==="en"?"No reviews yet.":"Henüz yorum yok."}</div>`; return; }
+    grid.innerHTML = json.data.slice(0,6).map(r => {
+      const stars = '★'.repeat(r.rating.overall)+'☆'.repeat(5-r.rating.overall);
+      const initials = r.guest.name.split(' ').map(w=>w[0]).join('').substring(0,2).toUpperCase();
+      const color = avatarColors[initials.charCodeAt(0) % avatarColors.length];
+      return `
+      <div class="review-card">
+        <div class="review-header">
+          <div class="review-guest">
+            <div class="avatar" style="background:${color}">${initials}</div>
+            <div><div class="guest-name">${r.guest.name}</div><div class="stay-date">${r.stayDate||''}</div></div>
+          </div>
+          <div class="review-stars">${stars}</div>
+        </div>
+        ${r.villa?`<div class="review-villa-tag">🏡 ${r.villa.title}</div>`:''}
+        <div class="review-comment">"${r.comment}"</div>
+      </div>`;
+    }).join('');
+  } catch(e) {}
+}
+
+async function loadStats() {
+  try {
+    const res = await fetch(API + '/reviews/stats');
+    const json = await res.json();
+    const d = json.data;
+    if (d.total) document.getElementById('s-reviews').textContent = d.total + '+';
+    if (d.avgRating) document.getElementById('s-rating').textContent = d.avgRating.toFixed(1) + ' / 5';
+  } catch(e) {}
+}
+
+function searchVillas() {
+  loadVillas({
+    region: document.getElementById('filter-region').value,
+    guests: document.getElementById('filter-guests').value,
   });
+  document.getElementById('villas').scrollIntoView({ behavior:'smooth' });
+}
 
-  // ── Başlat ─────────────────────────────────────────────────────
-  loadRegions();
-  loadVillas();
+function filterByRegion(region) {
+  document.getElementById('filter-region').value = region;
+  document.querySelectorAll('.qf-chip').forEach(c=>c.classList.remove('active'));
+  loadVillas({ region });
+  document.getElementById('villas').scrollIntoView({ behavior:'smooth' });
+}
+
+// ── Modal ─────────────────────────────────────────────────────────
+function openModal(villaId) {
+  const villa = (window._villas||[]).find(v=>v._id===villaId);
+  if (!villa) return;
+  currentVilla = villa;
+  document.getElementById('modal-body').innerHTML = `
+    <div class="modal-title">${(currentLang==='en' && villa.title_en) ? villa.title_en : villa.title}</div>
+    <div class="modal-loc">📍 ${villa.location.region}${villa.location.district?', '+villa.location.district:''} &nbsp;·&nbsp; ₺${villa.pricing.nightly.toLocaleString(currentLang==='en'?'en-US':'tr-TR')} ${t('villa_per_night')}</div>
+    <div class="modal-field"><label>${t('modal_name')}</label><input type="text" id="i-name" placeholder="${currentLang==='en'?'e.g. John Smith':'ör. Ayşe Kaya'}"></div>
+    <div class="modal-row">
+      <div class="modal-field"><label>${t('modal_email')}</label><input type="email" id="i-email" placeholder="email@ornek.com"></div>
+      <div class="modal-field"><label>${t('modal_phone')}</label><input type="tel" id="i-phone" placeholder="${t('modal_phone_ph')}"></div>
+    </div>
+    <div class="modal-row">
+      <div class="modal-field"><label>Giriş tarihi</label><input type="date" id="i-checkin" value="${document.getElementById('filter-checkin').value}"></div>
+      <div class="modal-field"><label>Çıkış tarihi</label><input type="date" id="i-checkout" value="${document.getElementById('filter-checkout').value}"></div>
+    </div>
+    <div class="modal-field"><label>${t('modal_guests')}</label><input type="number" id="i-guests" placeholder="${t('search_guests_ph')}" min="1" max="${villa.capacity.guests}"></div>
+    <div class="modal-field"><label>${t('modal_message')}</label><textarea id="i-message" rows="3" placeholder="${t('modal_msg_ph')}"></textarea></div>
+    <button class="modal-submit" onclick="submitInquiry()">${t('modal_submit')}</button>
+    <a class="modal-wa" href="#" onclick="event.preventDefault();openWA('${villa.title}')">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="#fff"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+      ${t('modal_wa')}
+    </a>`;
+  document.getElementById('modal').classList.add('open');
+}
+
+function closeModal() { document.getElementById('modal').classList.remove('open'); }
+
+async function submitInquiry() {
+  const name=document.getElementById('i-name').value.trim();
+  const email=document.getElementById('i-email').value.trim();
+  const phone=document.getElementById('i-phone').value.trim();
+  const checkIn=document.getElementById('i-checkin').value;
+  const checkOut=document.getElementById('i-checkout').value;
+  const guests=document.getElementById('i-guests').value;
+  const message=document.getElementById('i-message').value.trim();
+  if (!name||!email||!checkIn||!checkOut||!guests) { alert(currentLang==='en'?'Please fill in all required fields.':'Lütfen zorunlu alanları doldurun.'); return; }
+  try {
+    const res = await fetch(API+'/inquiries',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({villaId:currentVilla._id,guest:{name,email,phone},dates:{checkIn,checkOut},guestCount:Number(guests),message})});
+    const json = await res.json();
+    if (json.success) {
+      document.getElementById('modal-body').innerHTML = `<div class="modal-success"><div class="modal-success-icon">🎉</div><div class="modal-title">${t('modal_success')}</div><p style="color:var(--muted);font-size:13px;margin-top:8px">${t('modal_success_sub')}</p></div>`;
+      setTimeout(closeModal, 3000);
+    } else { alert((currentLang==='en'?'Error: ':'Hata: ')+json.message); }
+  } catch(e) { alert(currentLang==='en'?'Could not connect to server.':'Sunucuya bağlanılamadı.'); }
+}
+
+document.getElementById('modal').addEventListener('click',function(e){if(e.target===this)closeModal();});
+
+loadRegions();
+loadVillas();
+loadReviews();
+loadStats();
 </script>
 </body>
 </html>
+<!-- favs fix -->
+<script>
+// showFavs override
+function showFavs(e) {
+  e.preventDefault();
+  const favs = getFavs();
+  if (!favs.length) { showToast(currentLang==='en'?'You haven\'t added any favorites yet':'Henüz favori villa eklemediniz'); return; }
+  showToast(favs.length + (currentLang==='en'?' favorites ❤️':' favori villanız var ❤️'));
+  document.getElementById('villas').scrollIntoView({behavior:'smooth'});
+}
+// init fav count
+setTimeout(updateFavCount, 500);
+</script>

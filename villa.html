@@ -584,12 +584,12 @@ async function loadAvailability() {
       if (!existing) {
         const info = document.createElement('div');
         info.id = 'booked-dates-info';
-        info.innerHTML = '<div class="booked-legend"><div class="bl-item"><div class="bl-dot" style="background:#fee2e2;border:1px solid #ef4444"></div>Dolu</div><div class="bl-item"><div class="bl-dot" style="background:#dbeafe"></div>Seçilen aralık</div></div>' +
+        info.innerHTML = `<div class="booked-legend"><div class="bl-item"><div class="bl-dot" style="background:#fee2e2;border:1px solid #ef4444"></div>${currentLang==='en'?'Booked':'Dolu'}</div><div class="bl-item"><div class="bl-dot" style="background:#dbeafe"></div>${currentLang==='en'?'Selected range':'Seçilen aralık'}</div></div>` +
           '<div style="font-size:11px;color:var(--muted);padding:8px 12px;background:#f9f9f9;border-radius:6px;line-height:1.9">' +
-          '<strong style="color:#555;display:block;margin-bottom:4px">Dolu tarihler:</strong>' +
+          `<strong style="color:#555;display:block;margin-bottom:4px">${currentLang==='en'?'Booked dates:':'Dolu tarihler:'}</strong>` +
           bookedBlocks.map(b => {
-            const s = new Date(b.startDate).toLocaleDateString('tr-TR',{day:'2-digit',month:'short',year:'numeric'});
-            const e = new Date(b.endDate).toLocaleDateString('tr-TR',{day:'2-digit',month:'short',year:'numeric'});
+            const s = new Date(b.startDate).toLocaleDateString(currentLang==='en'?'en-US':'tr-TR',{day:'2-digit',month:'short',year:'numeric'});
+            const e = new Date(b.endDate).toLocaleDateString(currentLang==='en'?'en-US':'tr-TR',{day:'2-digit',month:'short',year:'numeric'});
             return '<span style="color:#ef4444">⛔</span> ' + s + ' — ' + e;
           }).join('<br>') + '</div>';
         const bcBtn = document.querySelector('.bc-btn');
@@ -645,7 +645,7 @@ function renderVilla() {
   document.getElementById('c-area').textContent = villa.area?.indoor ? villa.area.indoor + ' m²' : '—';
   document.getElementById('c-outdoor').textContent = villa.area?.outdoor ? villa.area.outdoor + ' m²' : '—';
 
-  document.getElementById('bc-nightly').textContent = villa.pricing.nightly.toLocaleString('tr-TR');
+  document.getElementById('bc-nightly').textContent = villa.pricing.nightly.toLocaleString(currentLang==='en'?'en-US':'tr-TR');
   document.getElementById('bc-rating').textContent = villa.rating.average;
   document.getElementById('bc-count').textContent = villa.rating.count;
 
@@ -735,7 +735,7 @@ function renderVilla() {
     '. ' + villa.capacity.bedrooms + (currentLang==='en'?' beds, ':' yatak, ') + villa.capacity.guests + (currentLang==='en'?' guest capacity, ':' kişilik, ') +
     (villa.amenities.pool ? 'havuzlu, ' : '') +
     (villa.amenities.seaView ? 'deniz manzaralı, ' : '') +
-    'gecelik ₺' + villa.pricing.nightly.toLocaleString('tr-TR') + '. bizebivilla.com';
+    'gecelik ₺' + villa.pricing.nightly.toLocaleString(currentLang==='en'?'en-US':'tr-TR') + '. bizebivilla.com';
 
   document.title = ((currentLang==='en' && villa.title_en) ? villa.title_en : villa.title) + ' | Kiralık Villa ' + villa.location.region + ' — bizebivilla';
   document.getElementById('meta-desc').content      = desc;
@@ -839,14 +839,14 @@ function calcPrice() {
   const cleaning= villa.pricing.cleaningFee || 0;
   const total   = nights * nightly + cleaning;
 
-  document.getElementById('bc-nights-label').textContent = nights + +(currentLang==='en'?' nights × ₺':' gece × ₺')+ + nightly.toLocaleString('tr-TR');
+  document.getElementById('bc-nights-label').textContent = nights + +(currentLang==='en'?' nights × ₺':' gece × ₺')+ + nightly.toLocaleString(currentLang==='en'?'en-US':'tr-TR');
   // İlk gece - Son gece göster
   const lastN = new Date(cout); lastN.setDate(lastN.getDate()-1);
-  const rangeLabel = cin.toLocaleDateString('tr-TR',{day:'2-digit',month:'short'}) + ' — ' + lastN.toLocaleDateString('tr-TR',{day:'2-digit',month:'short'});
-  document.getElementById('bc-nights-label').textContent = rangeLabel + ' · ' + nights + +(currentLang==='en'?' nights × ₺':' gece × ₺')+ + nightly.toLocaleString('tr-TR');
-  document.getElementById('bc-nights-total').textContent = '₺' + (nights * nightly).toLocaleString('tr-TR');
-  document.getElementById('bc-cleaning').textContent = '₺' + cleaning.toLocaleString('tr-TR');
-  document.getElementById('bc-total').textContent = '₺' + total.toLocaleString('tr-TR');
+  const rangeLabel = cin.toLocaleDateString(currentLang==='en'?'en-US':'tr-TR',{day:'2-digit',month:'short'}) + ' — ' + lastN.toLocaleDateString(currentLang==='en'?'en-US':'tr-TR',{day:'2-digit',month:'short'});
+  document.getElementById('bc-nights-label').textContent = rangeLabel + ' · ' + nights + +(currentLang==='en'?' nights × ₺':' gece × ₺')+ + nightly.toLocaleString(currentLang==='en'?'en-US':'tr-TR');
+  document.getElementById('bc-nights-total').textContent = '₺' + (nights * nightly).toLocaleString(currentLang==='en'?'en-US':'tr-TR');
+  document.getElementById('bc-cleaning').textContent = '₺' + cleaning.toLocaleString(currentLang==='en'?'en-US':'tr-TR');
+  document.getElementById('bc-total').textContent = '₺' + total.toLocaleString(currentLang==='en'?'en-US':'tr-TR');
   document.getElementById('bc-summary').style.display = 'block';
 }
 
@@ -924,7 +924,7 @@ function openReservation() {
   const nights = Math.round((coutDate - cinDate) / (1000*60*60*24));
   const total  = nights * villa.pricing.nightly + (villa.pricing.cleaningFee || 0);
 
-  const fmt = (d) => d.toLocaleDateString('tr-TR', {day:'2-digit', month:'long', year:'numeric'});
+  const fmt = (d) => d.toLocaleDateString(currentLang==='en'?'en-US':'tr-TR', {day:'2-digit', month:'long', year:'numeric'});
   const cinTR      = fmt(cinDate);
   const lastTR     = fmt(lastNight);
   const coutTR     = fmt(coutDate);
@@ -951,7 +951,7 @@ function openReservation() {
       <div style="font-size:12px;color:var(--blue);text-align:center;margin-bottom:10px;font-weight:500">${nights} ${currentLang==="en"?"night stay":"gece konaklama"}</div>
       <div style="display:flex;justify-content:space-between;border-top:1px solid #ddd;padding-top:10px">
         <span style="color:var(--muted)">💰 Toplam tutar</span>
-        <strong>₺${total.toLocaleString('tr-TR')}</strong>
+        <strong>₺${total.toLocaleString(currentLang==='en'?'en-US':'tr-TR')}</strong>
       </div>
     </div>
     <input type="hidden" id="i-checkin"  value="${checkin}">
