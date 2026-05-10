@@ -153,7 +153,7 @@
 <footer>© 2025 bizebivilla.com — Tüm hakları saklıdır.</footer>
 
 <script>
-const API = 'http://localhost:3001/api';
+const API = '/api';
 const region = new URLSearchParams(window.location.search).get('bolge') || 'Bodrum';
 
 const REGION_DATA_TR = {
@@ -416,7 +416,7 @@ async function loadVillas(filter) {
     if (filter === 'pool')      q.set('pool','true');
     if (filter === 'seaView')   q.set('seaView','true');
     if (filter === 'beachfront')q.set('beachfront','true');
-    const res  = await fetch('http://localhost:3001/api/villas?' + q.toString());
+    const res  = await fetch('/api/villas?' + q.toString());
     const json = await res.json();
     allVillas  = json.data || [];
     if (!allVillas.length) { grid.innerHTML = `<div class="loading">${currentLang==='en'?'No villas in this region.':'Bu bölgede villa bulunamadı.'}</div>`; return; }
