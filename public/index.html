@@ -346,10 +346,10 @@
 
 <div class="stats-section">
   <div class="stats-inner">
-    <div class="stat"><div class="stat-val">8</div><div class="stat-label">${t('stat_villas')}</div></div>
-    <div class="stat"><div class="stat-val" id="s-reviews">—</div><div class="stat-label">${t('stat_guests')}</div></div>
-    <div class="stat"><div class="stat-val" id="s-rating">—</div><div class="stat-label">${t('stat_rating')}</div></div>
-    <div class="stat"><div class="stat-val">7</div><div class="stat-label">${t('stat_regions')}</div></div>
+    <div class="stat"><div class="stat-val">8</div><div class="stat-label" data-i18n="stat_villas">Seçkin villa</div></div>
+    <div class="stat"><div class="stat-val" id="s-reviews">—</div><div class="stat-label" data-i18n="stat_guests">Mutlu misafir</div></div>
+    <div class="stat"><div class="stat-val" id="s-rating">—</div><div class="stat-label" data-i18n="stat_rating">Ortalama puan</div></div>
+    <div class="stat"><div class="stat-val">7</div><div class="stat-label" data-i18n="stat_regions">Tatil bölgesi</div></div>
   </div>
 </div>
 
@@ -525,7 +525,7 @@ async function loadRegions() {
         <div class="region-overlay"></div>
         <div class="region-info">
           <div class="region-name">${r.name}</div>
-          <div class="region-count">${r.count} ${currentLang==='en'?'villas':'villa'} · ${currentLang==='en'?'from':'min'} ₺${r.minPrice.toLocaleString('tr-TR')}</div>
+          <div class="region-count">${r.count} ${currentLang==='en'?'villas':'villa'} · ${currentLang==='en'?'from':'min'} ₺${r.minPrice.toLocaleString(currentLang==='en'?'en-US':'tr-TR')}</div>
         </div>
       </div>`).join('');
   } catch(e) {}
@@ -584,7 +584,7 @@ async function loadVillas(params={}) {
           </div>
           <div class="villa-footer">
             <div>
-              <div class="villa-price">₺${v.pricing.nightly.toLocaleString('tr-TR')} <span>${t('villa_per_night')}</span></div>
+              <div class="villa-price">₺${v.pricing.nightly.toLocaleString(currentLang==='en'?'en-US':'tr-TR')} <span>${t('villa_per_night')}</span></div>
               <div class="villa-rating">⭐ ${v.rating.average} (${v.rating.count} ${t('villa_reviews')})</div>
             </div>
             <div class="villa-actions">
@@ -663,7 +663,7 @@ function openModal(villaId) {
   currentVilla = villa;
   document.getElementById('modal-body').innerHTML = `
     <div class="modal-title">${(currentLang==='en' && villa.title_en) ? villa.title_en : villa.title}</div>
-    <div class="modal-loc">📍 ${villa.location.region}${villa.location.district?', '+villa.location.district:''} &nbsp;·&nbsp; ₺${villa.pricing.nightly.toLocaleString('tr-TR')} ${t('villa_per_night')}</div>
+    <div class="modal-loc">📍 ${villa.location.region}${villa.location.district?', '+villa.location.district:''} &nbsp;·&nbsp; ₺${villa.pricing.nightly.toLocaleString(currentLang==='en'?'en-US':'tr-TR')} ${t('villa_per_night')}</div>
     <div class="modal-field"><label>${t('modal_name')}</label><input type="text" id="i-name" placeholder="${currentLang==='en'?'e.g. John Smith':'ör. Ayşe Kaya'}"></div>
     <div class="modal-row">
       <div class="modal-field"><label>${t('modal_email')}</label><input type="email" id="i-email" placeholder="email@ornek.com"></div>

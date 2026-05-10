@@ -437,7 +437,7 @@ async function loadVillas(filter) {
             ${v.amenities.seaView?`<span class="villa-feat">🌊 ${currentLang==="en"?"Sea":"Deniz"}</span>`:''}
           </div>
           <div class="villa-footer">
-            <div class="villa-price">₺${v.pricing.nightly.toLocaleString('tr-TR')} <span>${currentLang==='en'?'/ night':'/ gece'}</span></div>
+            <div class="villa-price">₺${v.pricing.nightly.toLocaleString(currentLang==='en'?'en-US':'tr-TR')} <span>${currentLang==='en'?'/ night':'/ gece'}</span></div>
             <a href="villa.html?slug=${v.slug}" class="villa-btn" onclick="event.stopPropagation()">${currentLang==='en'?'View':'İncele'}</a>
           </div>
         </div>
