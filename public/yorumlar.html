@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <script src="i18n.js"></script>
+  <meta name="description" content="bizebivilla misafir yorumları — Bodrum, Fethiye, Çeşme villalarında kalan misafirlerimizin gerçek deneyimleri ve değerlendirmeleri.">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://bizebivilla.com/yorumlar.html">
+  <meta property="og:title" content="Misafir Yorumları — bizebivilla">
+  <meta property="og:description" content="Gerçek misafirlerimizden gerçek villa deneyimleri. Bodrum, Fethiye, Çeşme ve daha fazlası.">
+  <meta property="og:type" content="website">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title id='page-title'>Misafir Yorumları | Villa Kiralama Deneyimleri — bizebivilla</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+  <style>
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    :root{--sand:#f5f1ea;--navy:#1a3a5c;--blue:#2e6fa8;--text:#1a1a1a;--muted:#777;--border:#eee;--white:#fff}
+    body{font-family:'DM Sans',sans-serif;background:var(--sand);color:var(--text)}
+
+    nav{display:flex;align-items:center;justify-content:space-between;padding:18px 48px;background:var(--sand);border-bottom:1px solid rgba(0,0,0,0.07);position:sticky;top:0;z-index:100}
+    .logo{font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:600;color:var(--text);text-decoration:none}
+    .logo span{color:var(--blue)}
+    .nav-links{display:flex;gap:28px;align-items:center}
+    .nav-links a{font-size:13px;color:var(--muted);text-decoration:none}
+    .nav-links a:hover{color:var(--text)}
+    .btn-nav{background:var(--blue);color:#fff!important;padding:8px 18px;border-radius:7px;font-weight:500!important}
+
+    /* HERO */
+    .hero{background:var(--navy);padding:60px 48px;text-align:center}
+    .hero-title{font-family:'Cormorant Garamond',serif;font-size:48px;font-weight:300;color:#fff;margin-bottom:12px}
+    .hero-title em{font-style:italic}
+    .hero-sub{font-size:15px;color:rgba(255,255,255,0.65)}
+
+    /* STATS */
+    .stats-bar{background:var(--white);padding:32px 48px;border-bottom:1px solid var(--border)}
+    .stats-inner{display:grid;grid-template-columns:repeat(4,1fr);gap:24px;max-width:900px;margin:0 auto}
+    .stat{text-align:center}
+    .stat-val{font-family:'Cormorant Garamond',serif;font-size:36px;font-weight:600;color:var(--navy)}
+    .stat-label{font-size:12px;color:var(--muted);margin-top:4px}
+
+    /* YORUM YAZMA */
+    .write-section{padding:40px 48px;background:var(--sand)}
+    .write-card{background:var(--white);border-radius:16px;border:1px solid var(--border);padding:32px;max-width:700px}
+    .section-title{font-family:'Cormorant Garamond',serif;font-size:26px;font-weight:400;margin-bottom:20px}
+    .form-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px}
+    .form-field{display:flex;flex-direction:column;gap:5px}
+    .form-field.full{grid-column:1/-1}
+    label{font-size:12px;font-weight:500;color:#555}
+    input,select,textarea{border:1px solid #ddd;border-radius:7px;padding:9px 13px;font-size:13px;font-family:'DM Sans',sans-serif;outline:none;transition:border-color 0.2s}
+    input:focus,select:focus,textarea:focus{border-color:var(--blue)}
+    textarea{resize:vertical;min-height:100px}
+    .stars-input{display:flex;gap:6px;margin-top:4px}
+    .star-btn{font-size:22px;cursor:pointer;color:#ddd;background:none;border:none;transition:color 0.15s;padding:0}
+    .star-btn.active{color:#f59e0b}
+    .submit-btn{background:var(--blue);color:#fff;border:none;padding:12px 28px;border-radius:8px;font-size:14px;font-weight:500;cursor:pointer;font-family:'DM Sans',sans-serif;margin-top:6px}
+    .submit-btn:hover{background:var(--navy)}
+    .success-msg{background:#e8f5e9;border:1px solid #c8e6c9;color:#2e7d32;padding:12px 16px;border-radius:8px;font-size:13px;margin-top:12px;display:none}
+
+    /* YORUMLAR */
+    .reviews-section{padding:40px 48px;background:var(--white)}
+    .filter-bar{display:flex;gap:10px;margin-bottom:28px;flex-wrap:wrap}
+    .filter-chip{padding:7px 16px;border:1px solid var(--border);border-radius:20px;font-size:12px;cursor:pointer;background:var(--white);font-family:'DM Sans',sans-serif;transition:all 0.15s}
+    .filter-chip.active,.filter-chip:hover{background:var(--blue);color:#fff;border-color:var(--blue)}
+    .review-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+    .review-card{background:var(--sand);border-radius:14px;padding:22px;border:1px solid var(--border);transition:box-shadow 0.2s}
+    .review-card:hover{box-shadow:0 8px 24px rgba(0,0,0,0.07)}
+    .review-header{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:12px}
+    .review-guest{display:flex;align-items:center;gap:10px}
+    .avatar{width:38px;height:38px;border-radius:50%;background:var(--navy);display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:500;color:#fff;flex-shrink:0}
+    .guest-name{font-size:14px;font-weight:500}
+    .stay-date{font-size:11px;color:var(--muted);margin-top:2px}
+    .review-stars{color:#f59e0b;font-size:14px;letter-spacing:1px}
+    .review-villa{font-size:11px;color:var(--blue);font-weight:500;margin-bottom:10px;display:flex;align-items:center;gap:4px}
+    .review-comment{font-size:13px;color:#444;line-height:1.6}
+    .review-ratings{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-top:14px;padding-top:14px;border-top:1px solid var(--border)}
+    .sub-rating{display:flex;justify-content:space-between;font-size:11px;color:var(--muted)}
+    .sub-rating span{color:var(--text);font-weight:500}
+    .loading{text-align:center;padding:60px;color:var(--muted);grid-column:1/-1}
+    .pagination{display:flex;justify-content:center;gap:8px;margin-top:32px}
+    .page-btn{padding:8px 14px;border:1px solid var(--border);border-radius:7px;font-size:13px;cursor:pointer;background:var(--white);font-family:'DM Sans',sans-serif}
+    .page-btn.active,.page-btn:hover{background:var(--blue);color:#fff;border-color:var(--blue)}
+
+    footer{background:#111;color:rgba(255,255,255,0.5);text-align:center;padding:24px;font-size:12px}
+  
+  @media (max-width: 768px) {
+    nav { padding: 14px 20px; }
+    .nav-links a:not(.btn-nav) { display: none; }
+    .hero { padding: 40px 20px; }
+    .hero-title { font-size: 32px; }
+    .stats-bar { padding: 20px; }
+    .stats-inner { grid-template-columns: repeat(2, 1fr); gap: 12px; }
+    .stat-val { font-size: 28px; }
+    .write-section { padding: 24px 20px; }
+    .form-grid { grid-template-columns: 1fr; }
+    .checkbox-grid { grid-template-columns: repeat(2, 1fr); }
+    .reviews-section { padding: 24px 20px; }
+    .review-grid { grid-template-columns: 1fr; gap: 12px; }
+    .filter-bar { gap: 6px; }
+    .filter-chip { padding: 6px 12px; font-size: 11px; }
+    .modal-overlay { align-items: flex-end; }
+    .modal { border-radius: 16px 16px 0 0; width: 100%; max-width: 100%; padding: 20px; }
+    .modal-row { grid-template-columns: 1fr; }
+    footer { padding: 16px; }
+  }
+  </style>
+  </head>
+<body>
+
+<nav>
+  <a href="index.html" class="logo">bize<span>bi</span>villa</a>
+  <div class="nav-links">
+    <a href="index.html" data-i18n="nav_home">Ana Sayfa</a>
+    <a href="index.html#villas" data-i18n="nav_villas">Villalar</a>
+    <a href="yorumlar.html" data-i18n="nav_reviews" style="color:var(--navy);font-weight:500">Yorumlar</a>
+    <a href="#" class="btn-nav" data-i18n="nav_list">İlan Ver</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-title" data-i18n-html="rev_hero_title_full">Misafir <em>yorumları</em></div>
+  <div class="hero-sub" data-i18n="rev_hero_sub">Gerçek misafirlerimizden, gerçek deneyimler</div>
+</div>
+
+<!-- STATS -->
+<div class="stats-bar">
+  <div class="stats-inner">
+    <div class="stat"><div class="stat-val" id="stat-total">—</div><div class="stat-label" data-i18n="rev_total">Toplam yorum</div></div>
+    <div class="stat"><div class="stat-val" id="stat-avg">—</div><div class="stat-label" data-i18n="rev_avg">Ortalama puan</div></div>
+    <div class="stat"><div class="stat-val" id="stat-5star">—</div><div class="stat-label" data-i18n="rev_5star">5 yıldız</div></div>
+    <div class="stat"><div class="stat-val" id="stat-satisfaction">—</div><div class="stat-label" data-i18n="rev_satisfaction">Memnuniyet</div></div>
+  </div>
+</div>
+
+<!-- YORUM YAZ -->
+<div class="write-section">
+  <div class="write-card">
+    <div class="section-title" data-i18n="rev_write">Siz de yorum yazın</div>
+    <div class="form-grid">
+      <div class="form-field">
+        <label data-i18n="modal_name">Adınız</label>
+        <input type="text" id="r-name" placeholder="ör. Ayşe K." data-i18n-ph="rev_name_ph">
+      </div>
+      <div class="form-field">
+        <label data-i18n="nav_villas">Hangi villada kaldınız?</label>
+        <select id="r-villa">
+          <option value="">Villa seçin...</option>
+        </select>
+      </div>
+      <div class="form-field">
+        <label data-i18n="rev_stay">Kalış dönemi</label>
+        <input type="text" id="r-date" placeholder="ör. Temmuz 2025" data-i18n-ph="rev_stay_ph">
+      </div>
+      <div class="form-field">
+        <label data-i18n="rev_rating">Genel puan</label>
+        <div class="stars-input" id="star-input">
+          <button class="star-btn" data-val="1">★</button>
+          <button class="star-btn" data-val="2">★</button>
+          <button class="star-btn" data-val="3">★</button>
+          <button class="star-btn" data-val="4">★</button>
+          <button class="star-btn" data-val="5">★</button>
+        </div>
+      </div>
+      <div class="form-field full">
+        <label data-i18n="rev_comment">Yorumunuz</label>
+        <textarea id="r-comment" placeholder="Tatil deneyiminizi diğer misafirlerle paylaşın..." data-i18n-ph="rev_comment_ph"></textarea>
+      </div>
+    </div>
+    <button class="submit-btn" onclick="submitReview()" data-i18n="rev_submit">Yorumu Gönder</button>
+    <div class="success-msg" id="success-msg" data-i18n="rev_success">🎉 Yorumunuz alındı, teşekkürler!</div>
+  </div>
+</div>
+
+<!-- YORUMLAR -->
+<div class="reviews-section">
+  <div class="section-title" style="margin-bottom:16px" data-i18n="rev_all">Tüm yorumlar</div>
+  <div class="filter-bar">
+    <button class="filter-chip active" onclick="filterReviews(null,this)" data-i18n="rev_filter_all">Tümü</button>
+    <button class="filter-chip" onclick="filterReviews('5',this)">⭐⭐⭐⭐⭐ <span data-i18n="rev_5star">5 yıldız</span></button>
+    <button class="filter-chip" onclick="filterReviews('4',this)">⭐⭐⭐⭐ <span data-i18n="rev_4star">4 yıldız</span></button>
+  </div>
+  <div class="review-grid" id="review-grid">
+    <div class="loading" data-i18n="reviews_loading">Yorumlar yükleniyor...</div>
+  </div>
+  <div class="pagination" id="pagination"></div>
+</div>
+
+<footer><span data-i18n="footer">© 2025 bizebivilla.com — Tüm hakları saklıdır.</span></footer>
+
+<script>
+const API = 'http://localhost:3001/api';
+let selectedRating = 0;
+let allReviews = [];
+let currentFilter = null;
+
+// Yıldız seçimi
+document.getElementById('star-input').querySelectorAll('.star-btn').forEach(btn => {
+  btn.addEventListener('mouseover', () => highlightStars(+btn.dataset.val));
+  btn.addEventListener('mouseout',  () => highlightStars(selectedRating));
+  btn.addEventListener('click',     () => { selectedRating = +btn.dataset.val; highlightStars(selectedRating); });
+});
+
+function highlightStars(val) {
+  document.querySelectorAll('.star-btn').forEach(b => b.classList.toggle('active', +b.dataset.val <= val));
+}
+
+// Villaları yükle (select için)
+async function loadVillasForSelect() {
+  try {
+    const res = await fetch(API + '/villas?limit=50');
+    const json = await res.json();
+    const sel = document.getElementById('r-villa');
+    json.data.forEach(v => {
+      const opt = document.createElement('option');
+      opt.value = v._id;
+      opt.textContent = v.title + ' — ' + v.location.region;
+      sel.appendChild(opt);
+    });
+  } catch(e) {}
+}
+
+// Stats yükle
+async function loadStats() {
+  try {
+    const res = await fetch(API + '/reviews/stats');
+    const json = await res.json();
+    const d = json.data;
+    document.getElementById('stat-total').textContent = d.total || 0;
+    document.getElementById('stat-avg').textContent = d.avgRating ? d.avgRating.toFixed(1) + ' / 5' : '—';
+    document.getElementById('stat-5star').textContent = d.avg5 || 0;
+    const pct = d.total ? Math.round(((d.avg5 + d.avg4) / d.total) * 100) : 0;
+    document.getElementById('stat-satisfaction').textContent = '%' + pct;
+  } catch(e) {}
+}
+
+// Yorumları yükle
+async function loadReviews() {
+  try {
+    const res = await fetch(API + '/reviews/all?limit=50');
+    const json = await res.json();
+    allReviews = json.data || [];
+    renderReviews(allReviews);
+  } catch(e) {
+    document.getElementById('review-grid').innerHTML = `<div class="loading">${currentLang==="en"?"Could not load reviews.":"Yorumlar yüklenemedi."}</div>`;
+  }
+}
+
+function renderReviews(reviews) {
+  const grid = document.getElementById('review-grid');
+  if (!reviews.length) { grid.innerHTML = `<div class="loading">${currentLang==="en"?"No reviews yet.":"Henüz yorum yok."}</div>`; return; }
+  grid.innerHTML = reviews.map(r => {
+    const stars = '★'.repeat(r.rating.overall) + '☆'.repeat(5 - r.rating.overall);
+    const initials = r.guest.name.split(' ').map(w => w[0]).join('').substring(0, 2).toUpperCase();
+    const colors = ['#1a3a5c','#2e6fa8','#0e6655','#784212','#6c3483'];
+    const color = colors[initials.charCodeAt(0) % colors.length];
+    return `
+    <div class="review-card">
+      <div class="review-header">
+        <div class="review-guest">
+          <div class="avatar" style="background:${color}">${initials}</div>
+          <div>
+            <div class="guest-name">${r.guest.name}</div>
+            <div class="stay-date">${r.stayDate || ''}</div>
+          </div>
+        </div>
+        <div class="review-stars">${stars}</div>
+      </div>
+      ${r.villa ? `<div class="review-villa">🏡 ${r.villa.title}</div>` : ''}
+      <div class="review-comment">"${r.comment}"</div>
+      ${r.rating.cleanliness ? `
+      <div class="review-ratings">
+        <div class="sub-rating">Temizlik <span>${'★'.repeat(r.rating.cleanliness)}</span></div>
+        <div class="sub-rating">Konum <span>${'★'.repeat(r.rating.location || r.rating.overall)}</span></div>
+        <div class="sub-rating">Konfor <span>${'★'.repeat(r.rating.comfort || r.rating.overall)}</span></div>
+        <div class="sub-rating">Fiyat <span>${'★'.repeat(r.rating.value || r.rating.overall)}</span></div>
+      </div>` : ''}
+    </div>`;
+  }).join('');
+}
+
+function filterReviews(rating, btn) {
+  document.querySelectorAll('.filter-chip').forEach(c => c.classList.remove('active'));
+  btn.classList.add('active');
+  currentFilter = rating;
+  const filtered = rating ? allReviews.filter(r => r.rating.overall === +rating) : allReviews;
+  renderReviews(filtered);
+}
+
+// Yorum gönder
+async function submitReview() {
+  const name    = document.getElementById('r-name').value.trim();
+  const villaId = document.getElementById('r-villa').value;
+  const comment = document.getElementById('r-comment').value.trim();
+  const stayDate= document.getElementById('r-date').value.trim();
+
+  if (!name || !villaId || !comment || !selectedRating) {
+    alert(currentLang==='en'?'Please fill in your name, villa, rating and review.':'Lütfen adınızı, villayı, puanı ve yorumu doldurun.'); return;
+  }
+
+  try {
+    const res = await fetch(API + '/reviews', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        villaId,
+        guest: { name },
+        rating: { overall: selectedRating, cleanliness: selectedRating, location: selectedRating, comfort: selectedRating, value: selectedRating },
+        comment,
+        stayDate,
+      }),
+    });
+    const json = await res.json();
+    if (json.success) {
+      document.getElementById('success-msg').style.display = 'block';
+      document.getElementById('r-name').value = '';
+      document.getElementById('r-villa').value = '';
+      document.getElementById('r-comment').value = '';
+      document.getElementById('r-date').value = '';
+      selectedRating = 0; highlightStars(0);
+      setTimeout(() => document.getElementById('success-msg').style.display = 'none', 5000);
+      loadReviews(); loadStats();
+    }
+  } catch(e) { alert(currentLang==='en'?'Could not connect to server.':'Sunucuya bağlanılamadı.'); }
+}
+
+loadVillasForSelect();
+loadStats();
+loadReviews();
+</script>
+</body>
+</html>

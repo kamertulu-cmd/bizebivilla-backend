@@ -1,0 +1,19 @@
+// ── auth.routes.js ────────────────────────────────────────────────
+const express = require('express');
+const { body } = require('express-validator');
+const router  = express.Router();
+const ctrl    = require('../controllers/auth.controller');
+const { protect } = require('../middleware/auth.middleware');
+
+router.post('/register', [
+  body('name').trim().notEmpty().withMessage('Ad soyad zorunludur'),
+  body('email').isEmail().withMessage('Geçerli e-posta girin'),
+  body('password').isLength({ min: 8 }).withMessage('Şifre en az 8 karakter olmalı'),
+], ctrl.register);
+
+router.post('/login', ctrl.login);
+router.get('/me', protect, ctrl.getMe);
+router.put('/me', protect, ctrl.updateMe);
+router.put('/change-password', protect, ctrl.changePassword);
+
+module.exports = router;

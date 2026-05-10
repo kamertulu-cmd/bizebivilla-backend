@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <script src="i18n.js"></script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title id="page-title">Kiralık Villa — bizebivilla</title>
+  <meta name="description" id="meta-desc" content="">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" id="meta-canonical" href="">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="bizebivilla.com">
+  <meta property="og:title" id="og-title" content="">
+  <meta property="og:description" id="og-desc" content="">
+  <meta property="og:image" id="og-image" content="">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+  <style>
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    :root{--sand:#f5f1ea;--navy:#1a3a5c;--blue:#2e6fa8;--text:#1a1a1a;--muted:#777;--border:#eee;--white:#fff}
+    body{font-family:'DM Sans',sans-serif;background:var(--sand);color:var(--text)}
+    nav{display:flex;align-items:center;justify-content:space-between;padding:18px 48px;background:var(--sand);border-bottom:1px solid rgba(0,0,0,0.07);position:sticky;top:0;z-index:100}
+    .logo{font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:600;color:var(--text);text-decoration:none}
+    .logo span{color:var(--blue)}
+    .nav-links{display:flex;gap:28px;align-items:center}
+    .nav-links a{font-size:13px;color:var(--muted);text-decoration:none}
+    .btn-nav{background:var(--blue);color:#fff!important;padding:8px 18px;border-radius:7px;font-weight:500!important}
+
+    /* HERO */
+    .hero{position:relative;height:420px;display:flex;align-items:flex-end;overflow:hidden}
+    .hero-bg{position:absolute;inset:0;background-size:cover;background-position:center}
+    .hero-overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,0.65) 0%,rgba(0,0,0,0.2) 60%,transparent 100%)}
+    .hero-content{position:relative;padding:0 48px 44px;width:100%}
+    .hero-badge{display:inline-block;background:rgba(255,255,255,0.15);border:1px solid rgba(255,255,255,0.25);color:#fff;font-size:11px;letter-spacing:1.5px;text-transform:uppercase;padding:5px 14px;border-radius:20px;margin-bottom:14px}
+    .hero-title{font-family:'Cormorant Garamond',serif;font-size:52px;font-weight:300;color:#fff;line-height:1.1;margin-bottom:10px}
+    .hero-title em{font-style:italic}
+    .hero-sub{font-size:14px;color:rgba(255,255,255,0.75)}
+
+    /* BREADCRUMB */
+    .bc{font-size:12px;color:var(--muted);padding:14px 48px;background:var(--white);border-bottom:1px solid var(--border)}
+    .bc a{color:var(--blue);text-decoration:none}
+    .bc span{margin:0 6px}
+
+    /* LAYOUT */
+    .layout{display:grid;grid-template-columns:1fr 300px;gap:32px;padding:40px 48px;align-items:start}
+
+    /* VILLA LİSTESİ */
+    .villa-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:18px}
+    .villa-card{border:1px solid var(--border);border-radius:14px;overflow:hidden;background:var(--white);transition:box-shadow 0.25s,transform 0.25s;cursor:pointer}
+    .villa-card:hover{box-shadow:0 12px 32px rgba(0,0,0,0.1);transform:translateY(-2px)}
+    .villa-img{height:180px;position:relative;overflow:hidden}
+    .villa-img img{width:100%;height:100%;object-fit:cover;transition:transform 0.4s}
+    .villa-card:hover .villa-img img{transform:scale(1.05)}
+    .villa-img-ph{width:100%;height:100%;background:linear-gradient(135deg,#1a4a6e,#4a90c4)}
+    .villa-badge{position:absolute;top:10px;left:10px;background:#fff;font-size:10px;font-weight:500;padding:3px 8px;border-radius:20px;color:var(--blue)}
+    .villa-body{padding:14px 16px}
+    .villa-loc{font-size:11px;color:#aaa;text-transform:uppercase;letter-spacing:0.7px;margin-bottom:4px}
+    .villa-name{font-family:'Cormorant Garamond',serif;font-size:17px;font-weight:600;margin-bottom:8px;line-height:1.2}
+    .villa-feats{display:flex;gap:10px;margin-bottom:12px;flex-wrap:wrap}
+    .villa-feat{font-size:11px;color:#666}
+    .villa-footer{display:flex;justify-content:space-between;align-items:center;padding-top:10px;border-top:1px solid #f0f0f0}
+    .villa-price{font-size:15px;font-weight:500}
+    .villa-price span{font-size:11px;font-weight:400;color:#aaa}
+    .villa-btn{font-size:11px;color:var(--blue);padding:5px 12px;border:1px solid var(--blue);border-radius:5px;text-decoration:none;transition:all 0.2s}
+    .villa-btn:hover{background:var(--blue);color:#fff}
+
+    /* SAĞ PANEL */
+    .sidebar-card{background:var(--white);border-radius:12px;border:1px solid var(--border);padding:20px;margin-bottom:16px}
+    .sc-title{font-family:'Cormorant Garamond',serif;font-size:18px;font-weight:400;margin-bottom:14px}
+    .sc-item{display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid #f5f5f5;font-size:13px}
+    .sc-item:last-child{border-bottom:none}
+    .sc-label{color:var(--muted)}
+    .sc-val{font-weight:500}
+    .filter-chip{display:flex;align-items:center;gap:8px;padding:9px 14px;border:1px solid var(--border);border-radius:8px;font-size:12px;cursor:pointer;background:var(--white);transition:all 0.15s;margin-bottom:8px;font-family:'DM Sans',sans-serif;width:100%;text-align:left}
+    .filter-chip:hover,.filter-chip.active{background:var(--blue);color:#fff;border-color:var(--blue)}
+
+    /* İÇERİK BÖLÜMÜ */
+    .content-section{padding:0 48px 48px}
+    .content-section h2{font-family:'Cormorant Garamond',serif;font-size:28px;font-weight:400;margin-bottom:16px;margin-top:32px}
+    .content-section h3{font-family:'Cormorant Garamond',serif;font-size:20px;font-weight:400;margin-bottom:10px;margin-top:24px}
+    .content-section p{font-size:14px;color:#444;line-height:1.8;margin-bottom:12px}
+    .content-section ul{font-size:14px;color:#444;line-height:1.8;padding-left:20px;margin-bottom:12px}
+    .faq-item{border:1px solid var(--border);border-radius:10px;margin-bottom:8px;overflow:hidden}
+    .faq-q{padding:14px 18px;font-size:14px;font-weight:500;cursor:pointer;display:flex;justify-content:space-between;align-items:center;background:var(--white)}
+    .faq-q:hover{background:#f9f9f9}
+    .faq-a{padding:0 18px;font-size:13px;color:#555;line-height:1.7;max-height:0;overflow:hidden;transition:max-height 0.3s,padding 0.3s}
+    .faq-item.open .faq-a{max-height:300px;padding:12px 18px}
+    .faq-arrow{transition:transform 0.3s;font-size:12px;color:var(--muted)}
+    .faq-item.open .faq-arrow{transform:rotate(180deg)}
+
+    footer{background:#111;color:rgba(255,255,255,0.5);text-align:center;padding:24px;font-size:12px}
+    .loading{text-align:center;padding:60px;color:var(--muted);grid-column:1/-1}
+
+    @media(max-width:768px){
+      nav{padding:14px 20px}
+      .nav-links a:not(.btn-nav){display:none}
+      .hero{height:300px}
+      .hero-title{font-size:32px}
+      .hero-content{padding:0 20px 28px}
+      .bc{padding:10px 20px}
+      .layout{grid-template-columns:1fr;padding:20px}
+      .villa-grid{grid-template-columns:1fr}
+      .content-section{padding:0 20px 32px}
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="logo">bize<span>bi</span>villa</a>
+  <div class="nav-links">
+    <a href="index.html#villas" data-i18n="nav_villas">Villalar</a>
+    <a href="yorumlar.html" data-i18n="nav_reviews">Yorumlar</a>
+    <a href="#" class="btn-nav" data-i18n="nav_list">İlan Ver</a>
+  </div>
+</nav>
+
+<div class="bc" id="breadcrumb">
+  <a href="index.html" data-i18n="breadcrumb_home">Ana sayfa</a><span>›</span>
+  <a href="index.html#regions" data-i18n="breadcrumb_regions">Bölgeler</a><span>›</span>
+  <span id="bc-region">...</span>
+</div>
+
+<div class="hero">
+  <div class="hero-bg" id="hero-bg"></div>
+  <div class="hero-overlay"></div>
+  <div class="hero-content">
+    <div class="hero-badge" id="hero-badge">Kiralık Villa</div>
+    <h1 class="hero-title" id="hero-title">Villa <em>Kiralama</em></h1>
+    <div class="hero-sub" id="hero-sub"></div>
+  </div>
+</div>
+
+<div class="layout">
+  <div>
+    <div class="villa-grid" id="villa-grid"><div class="loading">Yükleniyor...</div></div>
+  </div>
+  <div>
+    <div class="sidebar-card">
+      <div class="sc-title" data-i18n="filter_title">Filtrele</div>
+      <button class="filter-chip active" onclick="applyFilter(null,this)">🏡 <span data-i18n="rev_filter_all">Tümü</span></button>
+      <button class="filter-chip" onclick="applyFilter('pool',this)">🏊 <span data-i18n="qf_pool">Havuzlu</span></button>
+      <button class="filter-chip" onclick="applyFilter('seaView',this)">🌊 <span data-i18n="qf_seaview">Deniz manzaralı</span></button>
+      <button class="filter-chip" onclick="applyFilter('beachfront',this)">🏖️ <span data-i18n="qf_beach">Denize sıfır</span></button>
+    </div>
+    <div class="sidebar-card" id="region-stats">
+      <div class="sc-title" id="stats-title">Bölge Bilgileri</div>
+    </div>
+  </div>
+</div>
+
+<div class="content-section" id="seo-content"></div>
+
+<footer>© 2025 bizebivilla.com — Tüm hakları saklıdır.</footer>
+
+<script>
+const API = 'http://localhost:3001/api';
+const region = new URLSearchParams(window.location.search).get('bolge') || 'Bodrum';
+
+const REGION_DATA_TR = {
+  'Bodrum': {
+    hero: 'https://images.unsplash.com/photo-1589561253898-768105ca91a8?w=1200&q=80',
+    badge: 'Ege\'nin İncisi',
+    titlePre: 'Bodrum\'da', titleEm: 'Kiralık Villa',
+    sub: 'Yalıkavak\'tan Türkbükü\'ne, Bodrum\'un efsanevi koylarında hayalinizdeki villa',
+    desc: 'Türkiye\'nin en prestijli tatil destinasyonu Bodrum\'da kiralık villa arıyorsanız doğru yerdesiniz.',
+    meta: 'Bodrum kiralık villa — Yalıkavak, Türkbükü, Gündoğan ve tüm Bodrum bölgesinde havuzlu, deniz manzaralı lüks villalar.',
+    statsTitle: 'Bodrum Bilgileri',
+    stats: [['Ortalama fiyat','₺12.000-22.000/gece'],['Popüler bölge','Yalıkavak, Türkbükü'],['Sezon','Mayıs - Ekim'],['Min. konaklama','3-5 gece']],
+    faq: [
+      ['Bodrum\'da kiralık villa fiyatları ne kadar?','Bodrum\'da kiralık villa fiyatları konuma, kapasiteye ve sezona göre gecelik 8.000₺ ile 25.000₺ arasında değişmektedir.'],
+      ['Bodrum\'da en iyi kiralık villa bölgeleri hangileri?','Yalıkavak marina manzarası, Türkbükü sosyal yaşamı, Gündoğan sakinliği ve Bitez aileler için en çok tercih edilen bölgelerdir.'],
+      ['Bodrum\'da kaç gece minimum konaklama yapılır?','Çoğu villa için minimum 3-5 gece konaklama zorunluluğu bulunmaktadır.'],
+    ],
+    content: '<h2>Bodrum Kiralık Villa Rehberi</h2><p>Bodrum, Türkiye\'nin villa kiralama sektöründe tartışmasız lider konumdadır. Efsanevi Ege manzarası, kristal berraklığındaki koyları ve canlı sosyal yaşamıyla Bodrum; hem yerli hem de yabancı tatilcilerin gözdesidir.</p><h3>Neden Bodrum\'da Kiralık Villa?</h3><p>Bodrum\'da kiralık villa tercih etmenin en büyük avantajı mahremiyettir. Otel kalabalığından uzak, kendi özel havuzunuzda Ege\'nin serin sularında serinleyebilir, muhteşem günbatımlarını terasta izleyebilirsiniz.</p><ul><li>Yalıkavak — Marina manzarası, lüks yaşam</li><li>Türkbükü — Sosyal hayat, plaj kulüpleri</li><li>Gündoğan — Sakin koylar, aile tatili</li><li>Bitez — Sörf ve su sporları</li></ul>'
+  },
+  'Fethiye': {
+    hero: 'https://images.unsplash.com/photo-1570168007204-dfb528c6958f?w=1200&q=80',
+    badge: 'Türkiye\'nin Cenneti',
+    titlePre: 'Fethiye\'de', titleEm: 'Kiralık Villa',
+    sub: 'Ölüdeniz\'den Göcek\'e, Fethiye\'nin eşsiz doğasında villa tatili',
+    desc: 'Fethiye\'de kiralık villa.',
+    meta: 'Fethiye kiralık villa — Ölüdeniz, Hisarönü, Göcek ve Fethiye bölgesinde havuzlu, doğa içinde lüks villalar.',
+    statsTitle: 'Fethiye Bilgileri',
+    stats: [['Ortalama fiyat','₺9.000-16.000/gece'],['Popüler bölge','Ölüdeniz, Hisarönü'],['Sezon','Nisan - Kasım'],['Min. konaklama','4-7 gece']],
+    faq: [
+      ['Fethiye\'de kiralık villa fiyatları ne kadar?','Fethiye\'de kiralık villa fiyatları gecelik 7.000₺ ile 18.000₺ arasında değişmektedir.'],
+      ['Fethiye\'nin en güzel villa bölgeleri hangileri?','Ölüdeniz eşsiz lagünüyle, Hisarönü hareketli atmosferiyle ve Göcek tekne turlarıyla öne çıkmaktadır.'],
+    ],
+    content: '<h2>Fethiye Kiralık Villa Rehberi</h2><p>Fethiye, UNESCO Dünya Mirası listesinde yer alan doğal güzellikleriyle villa tatilinin vazgeçilmez destinasyonlarından biridir.</p>'
+  },
+  'Alacati': {
+    hero: 'https://images.unsplash.com/photo-1596394516093-501ba68a0ba6?w=1200&q=80',
+    badge: 'Ege\'nin Butik Cenneti',
+    titlePre: 'Alaçatı\'da', titleEm: 'Kiralık Villa',
+    sub: 'Taş evler, rüzgar değirmenleri ve eşsiz gastronomiyle ünlü Alaçatı\'da villa tatili',
+    desc: 'Alaçatı\'da kiralık villa.',
+    meta: 'Alaçatı kiralık villa — Çeşme ve Alaçatı bölgesinde taş villalar, butik tatil evleri.',
+    statsTitle: 'Alaçatı Bilgileri',
+    stats: [['Ortalama fiyat','₺7.000-12.000/gece'],['Popüler bölge','Alaçatı Merkez'],['Sezon','Nisan - Ekim'],['Min. konaklama','2-3 gece']],
+    faq: [['Alaçatı\'da kiralık villa ne kadar?','Alaçatı\'da kiralık villa fiyatları gecelik 5.000₺ ile 15.000₺ arasındadır.']],
+    content: '<h2>Alaçatı Kiralık Villa Rehberi</h2><p>Alaçatı, Türkiye\'nin en seçkin tatil destinasyonları arasında yerini sağlamlaştırmıştır.</p>'
+  },
+  'Antalya': {
+    hero: 'https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?w=1200&q=80',
+    badge: 'Akdeniz\'in Başkenti',
+    titlePre: 'Antalya\'da', titleEm: 'Kiralık Villa',
+    sub: 'Kemer\'den Kaş\'a, Akdeniz\'in eşsiz kıyılarında lüks villa tatili',
+    desc: 'Antalya kiralık villa.',
+    meta: 'Antalya kiralık villa — Kemer, Kaş, Kalkan ve Antalya bölgesinde deniz manzaralı, havuzlu lüks villalar.',
+    statsTitle: 'Antalya Bilgileri',
+    stats: [['Ortalama fiyat','₺8.000-15.000/gece'],['Popüler bölge','Kemer, Kaş, Kalkan'],['Sezon','Nisan - Kasım'],['Min. konaklama','3-5 gece']],
+    faq: [['Antalya\'da kiralık villa fiyatları nedir?','Antalya\'da kiralık villa fiyatları gecelik 6.000₺ ile 20.000₺ arasında değişmektedir.']],
+    content: '<h2>Antalya Kiralık Villa Rehberi</h2><p>Antalya, yıl boyunca süren güneşi, antik kentleri ve turkuaz kıyılarıyla Türkiye\'nin en büyük turizm destinasyonudur.</p>'
+  },
+  'Marmaris': {
+    hero: 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=1200&q=80',
+    badge: 'Mavi Yolculuğun Kalbi',
+    titlePre: 'Marmaris\'te', titleEm: 'Kiralık Villa',
+    sub: 'Marmaris\'in muhteşem körfezinde villa tatili',
+    desc: 'Marmaris kiralık villa.',
+    meta: 'Marmaris kiralık villa — İçmeler, Selimiye ve Marmaris bölgesinde havuzlu, koy manzaralı villalar.',
+    statsTitle: 'Marmaris Bilgileri',
+    stats: [['Ortalama fiyat','₺6.000-12.000/gece'],['Popüler bölge','İçmeler, Selimiye'],['Sezon','Mayıs - Ekim'],['Min. konaklama','2-4 gece']],
+    faq: [['Marmaris\'te kiralık villa fiyatları ne kadar?','Marmaris\'te kiralık villa fiyatları gecelik 5.000₺ ile 14.000₺ arasındadır.']],
+    content: '<h2>Marmaris Kiralık Villa Rehberi</h2><p>Marmaris, derin körfezi ve el değmemiş koylarıyla benzersiz bir villa tatili deneyimi sunar.</p>'
+  },
+  'Kas': {
+    hero: 'https://images.unsplash.com/photo-1559827260-dc66d52bef19?w=1200&q=80',
+    badge: 'Gizli Cennet',
+    titlePre: 'Kaş\'ta', titleEm: 'Kiralık Villa',
+    sub: 'Yunan adaları manzarasında, Kaş\'ın büyülü atmosferinde villa tatili',
+    desc: 'Kaş kiralık villa.',
+    meta: 'Kaş kiralık villa — Kaş bölgesinde sonsuzluk havuzlu, Yunan adaları manzaralı lüks villalar.',
+    statsTitle: 'Kaş Bilgileri',
+    stats: [['Ortalama fiyat','₺7.000-13.000/gece'],['Popüler bölge','Kaş Merkez, Kalkan'],['Sezon','Nisan - Kasım'],['Min. konaklama','3-5 gece']],
+    faq: [['Kaş\'ta kiralık villa fiyatları ne kadar?','Kaş\'ta kiralık villa fiyatları gecelik 6.000₺ ile 15.000₺ arasındadır.']],
+    content: '<h2>Kaş Kiralık Villa Rehberi</h2><p>Kaş, Akdeniz\'in en autentik ve büyülü destinasyonlarından biridir.</p>'
+  },
+  'Datca': {
+    hero: 'https://images.unsplash.com/photo-1519046904884-53103b34b206?w=1200&q=80',
+    badge: 'İki Denizin Buluşması',
+    titlePre: 'Datça\'da', titleEm: 'Kiralık Villa',
+    sub: 'Ege ve Akdeniz\'in buluştuğu Datça yarımadasında huzurlu villa tatili',
+    desc: 'Datça kiralık villa.',
+    meta: 'Datça kiralık villa — Datça yarımadasında el değmemiş doğa, zeytin bahçeleri ve deniz manzaralı villalar.',
+    statsTitle: 'Datça Bilgileri',
+    stats: [['Ortalama fiyat','₺8.000-14.000/gece'],['Popüler bölge','Datça, Mesudiye'],['Sezon','Mayıs - Ekim'],['Min. konaklama','4-7 gece']],
+    faq: [['Datça\'da kiralık villa fiyatları ne kadar?','Datça\'da kiralık villa fiyatları gecelik 7.000₺ ile 16.000₺ arasındadır.']],
+    content: '<h2>Datça Kiralık Villa Rehberi</h2><p>Datça, Türkiye\'nin en el değmemiş yarımadalarından biri olarak otantik bir tatil arayanların sığınağıdır.</p>'
+  }
+};
+
+const REGION_DATA_EN = {
+  'Bodrum': {
+    hero: 'https://images.unsplash.com/photo-1589561253898-768105ca91a8?w=1200&q=80',
+    badge: 'The Pearl of the Aegean',
+    titlePre: 'Villa Rentals in', titleEm: 'Bodrum',
+    sub: 'From Yalikavak to Turkbuku, find your dream villa in the legendary bays of Bodrum',
+    desc: 'If you are looking for a holiday villa in Bodrum, Turkey\'s most prestigious destination, you are in the right place.',
+    meta: 'Bodrum villa rentals — luxury villas with pool and sea view in Yalikavak, Turkbuku, Gundogan and all of Bodrum.',
+    statsTitle: 'Bodrum Information',
+    stats: [['Average price','₺12,000-22,000/night'],['Popular areas','Yalikavak, Turkbuku'],['Season','May - October'],['Min. stay','3-5 nights']],
+    faq: [
+      ['How much do Bodrum villa rentals cost?','Villa rental prices in Bodrum vary between ₺8,000 and ₺25,000 per night depending on location, capacity and season.'],
+      ['What are the best villa areas in Bodrum?','Yalikavak with marina views, Turkbuku for social life, Gundogan for tranquility and Bitez for families are the most preferred areas.'],
+      ['What is the minimum stay in Bodrum?','Most villas require a minimum stay of 3-5 nights.'],
+    ],
+    content: '<h2>Bodrum Villa Rental Guide</h2><p>Bodrum is the undisputed leader of Turkey\'s villa rental sector. With its legendary Aegean views, crystal clear bays and vibrant social life, Bodrum is the favorite of both local and international holidaymakers.</p><h3>Why Rent a Villa in Bodrum?</h3><p>The biggest advantage of renting a villa in Bodrum is privacy. Far from hotel crowds, you can cool off in your own private pool, watch magnificent sunsets from the terrace.</p><ul><li>Yalikavak — Marina views, luxury living</li><li>Turkbuku — Social life, beach clubs</li><li>Gundogan — Quiet bays, family holidays</li><li>Bitez — Surfing and water sports</li></ul>'
+  },
+  'Fethiye': {
+    hero: 'https://images.unsplash.com/photo-1570168007204-dfb528c6958f?w=1200&q=80',
+    badge: 'Turkey\'s Paradise',
+    titlePre: 'Villa Rentals in', titleEm: 'Fethiye',
+    sub: 'From Oludeniz to Gocek, villa holidays in the unique nature of Fethiye',
+    desc: 'Fethiye villa rentals.',
+    meta: 'Fethiye villa rentals — luxury villas with pools in Oludeniz, Hisaronu, Gocek and Fethiye area.',
+    statsTitle: 'Fethiye Information',
+    stats: [['Average price','₺9,000-16,000/night'],['Popular areas','Oludeniz, Hisaronu'],['Season','April - November'],['Min. stay','4-7 nights']],
+    faq: [
+      ['How much do Fethiye villa rentals cost?','Villa rental prices in Fethiye vary between ₺7,000 and ₺18,000 per night.'],
+      ['What are the best villa areas in Fethiye?','Oludeniz with its unique lagoon, Hisaronu with vibrant atmosphere and Gocek with boat tours stand out.'],
+    ],
+    content: '<h2>Fethiye Villa Rental Guide</h2><p>Fethiye, with its UNESCO World Heritage natural beauties, is one of the indispensable destinations for villa holidays.</p>'
+  },
+  'Alacati': {
+    hero: 'https://images.unsplash.com/photo-1596394516093-501ba68a0ba6?w=1200&q=80',
+    badge: 'Aegean Boutique Paradise',
+    titlePre: 'Villa Rentals in', titleEm: 'Alacati',
+    sub: 'Famous for stone houses, windmills and exceptional gastronomy — villa holidays in Alacati',
+    desc: 'Alacati villa rentals.',
+    meta: 'Alacati villa rentals — stone villas and boutique holiday homes in Cesme and Alacati area.',
+    statsTitle: 'Alacati Information',
+    stats: [['Average price','₺7,000-12,000/night'],['Popular area','Alacati Center'],['Season','April - October'],['Min. stay','2-3 nights']],
+    faq: [['How much does an Alacati villa rental cost?','Villa rentals in Alacati cost between ₺5,000 and ₺15,000 per night.']],
+    content: '<h2>Alacati Villa Rental Guide</h2><p>Alacati has firmly established its place among Turkey\'s most distinguished holiday destinations.</p>'
+  },
+  'Antalya': {
+    hero: 'https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?w=1200&q=80',
+    badge: 'The Capital of the Mediterranean',
+    titlePre: 'Villa Rentals in', titleEm: 'Antalya',
+    sub: 'From Kemer to Kas, luxury villa holidays on the Mediterranean coast',
+    desc: 'Antalya villa rentals.',
+    meta: 'Antalya villa rentals — luxury villas with sea views and pools in Kemer, Kas, Kalkan.',
+    statsTitle: 'Antalya Information',
+    stats: [['Average price','₺8,000-15,000/night'],['Popular areas','Kemer, Kas, Kalkan'],['Season','April - November'],['Min. stay','3-5 nights']],
+    faq: [['How much do Antalya villa rentals cost?','Villa rentals in Antalya vary between ₺6,000 and ₺20,000 per night.']],
+    content: '<h2>Antalya Villa Rental Guide</h2><p>Antalya is Turkey\'s largest tourism destination with year-round sunshine, ancient cities and turquoise coasts.</p>'
+  },
+  'Marmaris': {
+    hero: 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=1200&q=80',
+    badge: 'Heart of Blue Voyage',
+    titlePre: 'Villa Rentals in', titleEm: 'Marmaris',
+    sub: 'Villa holidays in the magnificent bay of Marmaris',
+    desc: 'Marmaris villa rentals.',
+    meta: 'Marmaris villa rentals — bay-view villas with pools in Icmeler, Selimiye and Marmaris.',
+    statsTitle: 'Marmaris Information',
+    stats: [['Average price','₺6,000-12,000/night'],['Popular areas','Icmeler, Selimiye'],['Season','May - October'],['Min. stay','2-4 nights']],
+    faq: [['How much do Marmaris villa rentals cost?','Villa rentals in Marmaris cost between ₺5,000 and ₺14,000 per night.']],
+    content: '<h2>Marmaris Villa Rental Guide</h2><p>Marmaris offers a unique villa holiday experience with its deep bay and untouched coves.</p>'
+  },
+  'Kas': {
+    hero: 'https://images.unsplash.com/photo-1559827260-dc66d52bef19?w=1200&q=80',
+    badge: 'Hidden Paradise',
+    titlePre: 'Villa Rentals in', titleEm: 'Kas',
+    sub: 'Villa holidays with views of Greek islands in the magical atmosphere of Kas',
+    desc: 'Kas villa rentals.',
+    meta: 'Kas villa rentals — luxury villas with infinity pools and Greek island views in Kas.',
+    statsTitle: 'Kas Information',
+    stats: [['Average price','₺7,000-13,000/night'],['Popular areas','Kas Center, Kalkan'],['Season','April - November'],['Min. stay','3-5 nights']],
+    faq: [['How much do Kas villa rentals cost?','Villa rentals in Kas cost between ₺6,000 and ₺15,000 per night.']],
+    content: '<h2>Kas Villa Rental Guide</h2><p>Kas is one of the most authentic and magical destinations of the Mediterranean.</p>'
+  },
+  'Datca': {
+    hero: 'https://images.unsplash.com/photo-1519046904884-53103b34b206?w=1200&q=80',
+    badge: 'Where Two Seas Meet',
+    titlePre: 'Villa Rentals in', titleEm: 'Datca',
+    sub: 'Peaceful villa holidays on the Datca peninsula where Aegean and Mediterranean meet',
+    desc: 'Datca villa rentals.',
+    meta: 'Datca villa rentals — villas in untouched nature, olive groves and sea views on the Datca peninsula.',
+    statsTitle: 'Datca Information',
+    stats: [['Average price','₺8,000-14,000/night'],['Popular areas','Datca, Mesudiye'],['Season','May - October'],['Min. stay','4-7 nights']],
+    faq: [['How much do Datca villa rentals cost?','Villa rentals in Datca cost between ₺7,000 and ₺16,000 per night.']],
+    content: '<h2>Datca Villa Rental Guide</h2><p>Datca, one of Turkey\'s most untouched peninsulas, is a refuge for travelers seeking an authentic holiday.</p>'
+  }
+};
+
+const REGION_DATA = currentLang === 'en' ? REGION_DATA_EN : REGION_DATA_TR;
+
+function renderRegion() {
+const REGION_DATA = currentLang === 'en' ? REGION_DATA_EN : REGION_DATA_TR;
+const data = REGION_DATA[region] || REGION_DATA['Bodrum'];
+
+// Meta güncelle
+document.title = (currentLang === 'en' ? region + ' Villa Rentals | Pool & Sea View — bizebivilla' : region + ' Kiralık Villa | Havuzlu & Deniz Manzaralı — bizebivilla');
+document.getElementById('meta-desc').content = data.meta;
+document.getElementById('meta-canonical').href = 'https://bizebivilla.com/bolge.html?bolge=' + region;
+document.getElementById('og-title').content = region + ' Kiralık Villa — bizebivilla';
+document.getElementById('og-desc').content = data.meta;
+document.getElementById('og-image').content = data.hero;
+document.getElementById('page-title').textContent = region + ' Kiralık Villa — bizebivilla';
+
+// Hero
+document.getElementById('hero-bg').style.backgroundImage = "url('" + data.hero + "')";
+document.getElementById('hero-badge').textContent = data.badge;
+document.getElementById('hero-title').innerHTML = data.titlePre + ' <em>' + data.titleEm + '</em>';
+document.getElementById('hero-sub').textContent = data.sub;
+document.getElementById('bc-region').textContent = region + (currentLang==='en'?' Villa Rental':' Kiralık Villa');
+
+// Breadcrumb schema
+const bcSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  'itemListElement': [
+    {'@type':'ListItem','position':1,'name':'Ana Sayfa','item':'https://bizebivilla.com/'},
+    {'@type':'ListItem','position':2,'name':'Bölgeler','item':'https://bizebivilla.com/#regions'},
+    {'@type':'ListItem','position':3,'name':region+' Kiralık Villa','item':'https://bizebivilla.com/bolge.html?bolge='+region}
+  ]
+};
+const s = document.createElement('script'); s.type='application/ld+json';
+s.textContent = JSON.stringify(bcSchema); document.head.appendChild(s);
+
+// Stats
+const statsEl = document.getElementById('region-stats');
+statsEl.innerHTML = '<div class="sc-title" id="stats-title">' + region + ' Bilgileri</div>' +
+  data.stats.map(([l,v]) => '<div class="sc-item"><span class="sc-label">'+l+'</span><span class="sc-val">'+v+'</span></div>').join('');
+
+// SEO İçerik
+document.getElementById('seo-content').innerHTML = data.content +
+  (currentLang==='en'?'<h2>Frequently Asked Questions</h2>':'<h2>Sık Sorulan Sorular</h2>') +
+  data.faq.map(([q,a]) => `<div class="faq-item"><div class="faq-q" onclick="toggleFaq(this)">${q}<span class="faq-arrow">▼</span></div><div class="faq-a">${a}</div></div>`).join('');
+
+// FAQ Schema
+const faqSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  'mainEntity': data.faq.map(([q,a]) => ({'@type':'Question','name':q,'acceptedAnswer':{'@type':'Answer','text':a}}))
+};
+const fs2 = document.createElement('script'); fs2.type='application/ld+json';
+fs2.textContent = JSON.stringify(faqSchema); document.head.appendChild(fs2);
+
+} // renderRegion sonu
+
+renderRegion();
+
+function toggleFaq(el) {
+  el.parentElement.classList.toggle('open');
+}
+
+// Villalar
+let allVillas = [];
+async function loadVillas(filter) {
+  const grid = document.getElementById('villa-grid');
+  grid.innerHTML = `<div class="loading">${currentLang==='en'?'Loading...':'Yükleniyor...'}</div>`;
+  try {
+    const q = new URLSearchParams({ region });
+    if (filter === 'pool')      q.set('pool','true');
+    if (filter === 'seaView')   q.set('seaView','true');
+    if (filter === 'beachfront')q.set('beachfront','true');
+    const res  = await fetch('http://localhost:3001/api/villas?' + q.toString());
+    const json = await res.json();
+    allVillas  = json.data || [];
+    if (!allVillas.length) { grid.innerHTML = `<div class="loading">${currentLang==='en'?'No villas in this region.':'Bu bölgede villa bulunamadı.'}</div>`; return; }
+    grid.innerHTML = allVillas.map(v => {
+      const cover = v.photos?.find(p=>p.isCover)?.url || v.photos?.[0]?.url;
+      return `<div class="villa-card" onclick="window.location.href='villa.html?slug=${v.slug}'">
+        <div class="villa-img">
+          ${cover?`<img src="${cover}" alt="${v.title}" loading="lazy">`:'<div class="villa-img-ph"></div>'}
+          ${v.isFeatured?`<div class="villa-badge">${currentLang==='en'?'Featured':'Öne Çıkan'}</div>`:''}
+        </div>
+        <div class="villa-body">
+          <div class="villa-loc">${v.location.region}${v.location.district?' · '+v.location.district:''}</div>
+          <div class="villa-name">${(currentLang==='en' && v.title_en) ? v.title_en : v.title}</div>
+          <div class="villa-feats">
+            <span class="villa-feat">🛏 ${v.capacity.bedrooms} ${currentLang==='en'?'beds':'yatak'}</span>
+            <span class="villa-feat">👥 ${v.capacity.guests} ${currentLang==='en'?'guests':'kişi'}</span>
+            ${v.amenities.pool?`<span class="villa-feat">🏊 ${currentLang==="en"?"Pool":"Havuz"}</span>`:''}
+            ${v.amenities.seaView?`<span class="villa-feat">🌊 ${currentLang==="en"?"Sea":"Deniz"}</span>`:''}
+          </div>
+          <div class="villa-footer">
+            <div class="villa-price">₺${v.pricing.nightly.toLocaleString('tr-TR')} <span>${currentLang==='en'?'/ night':'/ gece'}</span></div>
+            <a href="villa.html?slug=${v.slug}" class="villa-btn" onclick="event.stopPropagation()">${currentLang==='en'?'View':'İncele'}</a>
+          </div>
+        </div>
+      </div>`;
+    }).join('');
+  } catch(e) { grid.innerHTML = `<div class="loading">${currentLang==='en'?'Connection error.':'Bağlantı hatası.'}</div>`; }
+}
+
+function applyFilter(filter, btn) {
+  document.querySelectorAll('.filter-chip').forEach(c=>c.classList.remove('active'));
+  btn.classList.add('active');
+  loadVillas(filter);
+}
+
+loadVillas(null);
+// Dil değişince yeniden yükle
+const origSetLang = window.setLang;
+if (origSetLang) {
+  window.setLang = function(lang) {
+    origSetLang(lang);
+    renderRegion();
+    loadVillas(null);
+  };
+}
+</script>
+</body>
+</html>

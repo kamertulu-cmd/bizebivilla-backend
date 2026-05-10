@@ -1,0 +1,1405 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Panel — bizebivilla</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+  <style>
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    :root{--sand:#f5f1ea;--navy:#1a3a5c;--blue:#2e6fa8;--text:#1a1a1a;--muted:#777;--border:#eee;--white:#fff;--red:#ef4444;--green:#22c55e;--yellow:#f59e0b;--orange:#f97316}
+    body{font-family:'DM Sans',sans-serif;background:#f0f2f5;color:var(--text)}
+
+    /* LOGIN */
+    .login-wrap{min-height:100vh;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,#0f2d4a,#1a5276)}
+    .login-card{background:#fff;border-radius:16px;padding:40px;width:380px;box-shadow:0 20px 60px rgba(0,0,0,0.2)}
+    .login-logo{font-family:'Cormorant Garamond',serif;font-size:26px;font-weight:600;text-align:center;margin-bottom:8px}
+    .login-logo span{color:var(--blue)}
+    .login-sub{font-size:13px;color:var(--muted);text-align:center;margin-bottom:28px}
+    .lf{margin-bottom:14px}
+    .lf label{display:block;font-size:12px;font-weight:500;color:#555;margin-bottom:5px}
+    .lf input{width:100%;border:1px solid #ddd;border-radius:8px;padding:10px 14px;font-size:14px;font-family:'DM Sans',sans-serif;outline:none}
+    .lf input:focus{border-color:var(--blue)}
+    .login-btn{width:100%;background:var(--blue);color:#fff;border:none;padding:13px;border-radius:8px;font-size:14px;font-weight:500;cursor:pointer;font-family:'DM Sans',sans-serif}
+    .login-err{background:#fff3f3;border:1px solid #fcc;color:#c00;padding:10px 14px;border-radius:8px;font-size:12px;margin-bottom:14px;display:none}
+
+    /* LAYOUT */
+    .admin-wrap{display:flex;min-height:100vh}
+    .sidebar{width:240px;background:var(--navy);padding:0;flex-shrink:0;position:fixed;height:100vh;overflow-y:auto;display:flex;flex-direction:column}
+    .sidebar-logo{font-family:'Cormorant Garamond',serif;font-size:20px;font-weight:600;color:#fff;padding:20px 24px;border-bottom:1px solid rgba(255,255,255,0.1)}
+    .sidebar-logo span{color:#5dade2}
+    .sidebar-logo small{display:block;font-size:11px;font-family:'DM Sans',sans-serif;font-weight:300;color:rgba(255,255,255,0.5);margin-top:2px}
+    .sidebar-section{padding:14px 24px 6px;font-size:10px;letter-spacing:1px;text-transform:uppercase;color:rgba(255,255,255,0.4)}
+    .sidebar-item{display:flex;align-items:center;gap:10px;padding:10px 24px;font-size:13px;color:rgba(255,255,255,0.7);cursor:pointer;transition:all 0.15s;border-left:3px solid transparent}
+    .sidebar-item:hover{background:rgba(255,255,255,0.08);color:#fff}
+    .sidebar-item.active{background:rgba(255,255,255,0.12);color:#fff;border-left-color:#5dade2}
+    .sidebar-badge{margin-left:auto;background:#ef4444;color:#fff;font-size:10px;padding:2px 7px;border-radius:10px}
+    .sidebar-footer{margin-top:auto;padding:16px 24px;border-top:1px solid rgba(255,255,255,0.1)}
+    .logout-btn{display:flex;align-items:center;gap:8px;font-size:13px;color:rgba(255,255,255,0.6);cursor:pointer;background:none;border:none;font-family:'DM Sans',sans-serif}
+    .logout-btn:hover{color:#fff}
+
+    .main{margin-left:240px;flex:1;padding:28px;min-height:100vh}
+    .ph{display:flex;justify-content:space-between;align-items:center;margin-bottom:24px}
+    .pt{font-family:'Cormorant Garamond',serif;font-size:28px;font-weight:400}
+    .ps{font-size:13px;color:var(--muted);margin-top:2px}
+
+    .btn{padding:9px 18px;border-radius:8px;font-size:13px;font-weight:500;cursor:pointer;font-family:'DM Sans',sans-serif;border:none;transition:all 0.2s;display:inline-flex;align-items:center;gap:6px}
+    .btn-primary{background:var(--blue);color:#fff}.btn-primary:hover{background:var(--navy)}
+    .btn-success{background:#f0fdf4;color:#166534;border:1px solid #d1fae5}.btn-success:hover{background:var(--green);color:#fff}
+    .btn-danger{background:#fff3f3;color:var(--red);border:1px solid #fcc}.btn-danger:hover{background:var(--red);color:#fff}
+    .btn-warn{background:#fffbeb;color:#92400e;border:1px solid #fde68a}.btn-warn:hover{background:var(--yellow);color:#fff}
+    .btn-sm{padding:5px 10px;font-size:11px}
+    .btn-outline{background:#fff;border:1px solid var(--border);color:var(--text)}.btn-outline:hover{background:#f5f5f5}
+
+    /* STAT */
+    .stat-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:24px}
+    .stat-card{background:#fff;border-radius:12px;padding:20px;border:1px solid var(--border)}
+    .sc-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px}
+    .sc-label{font-size:12px;color:var(--muted)}
+    .sc-icon{width:36px;height:36px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:18px}
+    .sc-val{font-family:'Cormorant Garamond',serif;font-size:32px;font-weight:600}
+    .sc-trend{font-size:11px;color:var(--muted);margin-top:4px}
+
+    /* TABLE */
+    .tc{background:#fff;border-radius:12px;border:1px solid var(--border);overflow:hidden;margin-bottom:20px}
+    .tc-head{padding:16px 20px;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:center}
+    .tc-title{font-size:15px;font-weight:500}
+    table{width:100%;border-collapse:collapse}
+    th{padding:10px 16px;text-align:left;font-size:11px;font-weight:500;text-transform:uppercase;letter-spacing:0.5px;color:var(--muted);background:#f9f9f9;border-bottom:1px solid var(--border)}
+    td{padding:11px 16px;font-size:13px;border-bottom:1px solid #f5f5f5;vertical-align:middle}
+    tr:last-child td{border-bottom:none}
+    tr:hover td{background:#fafafa}
+
+    /* BADGE */
+    .badge{display:inline-flex;align-items:center;gap:4px;padding:3px 10px;border-radius:20px;font-size:11px;font-weight:500}
+    .badge-active{background:#f0fdf4;color:#166534}
+    .badge-pending{background:#fffbeb;color:#92400e}
+    .badge-draft{background:#f3f4f6;color:#6b7280}
+    .badge-new{background:#eff6ff;color:#1d4ed8}
+    .badge-confirmed{background:#f0fdf4;color:#166534}
+    .badge-rejected{background:#fff3f3;color:#991b1b}
+    .badge-booked{background:#eff6ff;color:#1d4ed8}
+    .badge-option{background:#fffbeb;color:#92400e}
+    .badge-blocked{background:#f3f4f6;color:#6b7280}
+    .badge-competitor{background:#fff3f3;color:#991b1b}
+
+    /* FORM */
+    .fc{background:#fff;border-radius:12px;border:1px solid var(--border);padding:24px;margin-bottom:20px}
+    .fc-title{font-size:15px;font-weight:500;margin-bottom:18px;padding-bottom:12px;border-bottom:1px solid var(--border)}
+    .fg{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+    .ff{display:flex;flex-direction:column;gap:5px}
+    .ff.full{grid-column:1/-1}
+    .ff label{font-size:12px;font-weight:500;color:#555}
+    .ff input,.ff select,.ff textarea{border:1px solid #ddd;border-radius:7px;padding:9px 13px;font-size:13px;font-family:'DM Sans',sans-serif;outline:none;transition:border-color 0.2s}
+    .ff input:focus,.ff select:focus,.ff textarea:focus{border-color:var(--blue)}
+    .ff textarea{resize:vertical;min-height:80px}
+    .fa{display:flex;gap:10px;margin-top:20px;padding-top:16px;border-top:1px solid var(--border)}
+    .cbgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+    .cbitem{display:flex;align-items:center;gap:7px;font-size:12px;background:#f9f9f9;border:1px solid #eee;border-radius:7px;padding:7px 10px;cursor:pointer}
+
+    /* TAKVİM */
+    .cal-wrap{background:#fff;border-radius:12px;border:1px solid var(--border);overflow:hidden;margin-bottom:20px}
+    .cal-header{display:flex;justify-content:space-between;align-items:center;padding:16px 20px;border-bottom:1px solid var(--border)}
+    .cal-title{font-family:'Cormorant Garamond',serif;font-size:20px;font-weight:400}
+    .cal-nav{display:flex;gap:8px}
+    .cal-nav button{width:32px;height:32px;border:1px solid var(--border);border-radius:6px;cursor:pointer;background:#fff;font-size:14px;display:flex;align-items:center;justify-content:center}
+    .cal-grid{display:grid;grid-template-columns:repeat(7,1fr);border-left:1px solid var(--border)}
+    .cal-dow{padding:8px;text-align:center;font-size:11px;font-weight:500;color:var(--muted);border-right:1px solid var(--border);border-bottom:1px solid var(--border);background:#f9f9f9}
+    .cal-day{padding:6px;min-height:70px;border-right:1px solid var(--border);border-bottom:1px solid var(--border);cursor:pointer;transition:background 0.15s;position:relative}
+    .cal-day:hover{background:#f5f9ff}
+    .cal-day.other-month{background:#f9f9f9}
+    .cal-day.today{background:#eff6ff}
+    .cal-day-num{font-size:12px;font-weight:500;margin-bottom:3px;color:var(--text)}
+    .cal-day.other-month .cal-day-num{color:#ccc}
+    .cal-event{font-size:10px;padding:2px 5px;border-radius:3px;margin-bottom:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;cursor:pointer}
+    .ev-booked{background:#dbeafe;color:#1e40af}
+    .ev-option{background:#fef3c7;color:#92400e}
+    .ev-blocked{background:#f3f4f6;color:#6b7280}
+    .ev-competitor{background:#fee2e2;color:#991b1b}
+
+    /* TAKVİM LEGEND */
+    .cal-legend{display:flex;gap:16px;padding:12px 20px;border-top:1px solid var(--border);flex-wrap:wrap}
+    .leg-item{display:flex;align-items:center;gap:6px;font-size:12px;color:var(--muted)}
+    .leg-dot{width:12px;height:12px;border-radius:2px}
+
+    /* VİLLA SEÇİCİ */
+    .villa-selector{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:20px}
+    .vs-item{padding:7px 14px;border:1px solid var(--border);border-radius:8px;font-size:12px;cursor:pointer;background:#fff;transition:all 0.15s;font-family:'DM Sans',sans-serif}
+    .vs-item:hover,.vs-item.active{background:var(--blue);color:#fff;border-color:var(--blue)}
+
+    /* MODAL */
+    .mo{position:fixed;inset:0;background:rgba(0,0,0,0.5);display:none;align-items:center;justify-content:center;z-index:200}
+    .mo.open{display:flex}
+    .mc{background:#fff;border-radius:14px;padding:28px;width:500px;max-width:95vw;position:relative;max-height:90vh;overflow-y:auto}
+    .mc-close{position:absolute;top:14px;right:14px;background:none;border:none;font-size:20px;cursor:pointer;color:#aaa}
+    .mc-title{font-size:16px;font-weight:500;margin-bottom:18px}
+
+    /* TABS */
+    .tabs{display:flex;border-bottom:1px solid var(--border);margin-bottom:20px}
+    .tab{padding:10px 20px;font-size:13px;color:var(--muted);cursor:pointer;border-bottom:2px solid transparent;margin-bottom:-1px;background:none;border-top:none;border-left:none;border-right:none;font-family:'DM Sans',sans-serif}
+    .tab.active{color:var(--blue);border-bottom-color:var(--blue);font-weight:500}
+
+    /* SAHİP KARTI */
+    .owner-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:20px}
+    .owner-card{background:#fff;border-radius:12px;border:1px solid var(--border);padding:20px;transition:box-shadow 0.2s}
+    .owner-card:hover{box-shadow:0 4px 16px rgba(0,0,0,0.07)}
+    .oc-name{font-family:'Cormorant Garamond',serif;font-size:18px;font-weight:600;margin-bottom:4px}
+    .oc-phone{font-size:13px;color:var(--blue);margin-bottom:8px;display:flex;align-items:center;gap:6px}
+    .oc-detail{font-size:12px;color:var(--muted);margin-bottom:3px}
+    .oc-villas{display:flex;flex-wrap:wrap;gap:4px;margin:10px 0}
+    .oc-villa-tag{font-size:11px;background:#eff6ff;color:var(--blue);padding:3px 8px;border-radius:4px}
+    .oc-actions{display:flex;gap:8px;margin-top:12px;padding-top:12px;border-top:1px solid var(--border)}
+
+    .toast{position:fixed;bottom:24px;right:24px;background:#1a1a1a;color:#fff;padding:10px 18px;border-radius:8px;font-size:13px;z-index:999;display:none}
+    .loading{text-align:center;padding:40px;color:var(--muted);font-size:13px}
+    .empty{text-align:center;padding:40px;color:var(--muted);font-size:13px}
+    .thumb{width:44px;height:34px;border-radius:6px;object-fit:cover;background:linear-gradient(135deg,#1a4a6e,#4a90c4)}
+  
+  @media (max-width: 768px) {
+    .login-card { width: 95%; padding: 28px 20px; }
+
+    /* Sidebar gizle, hamburger menü */
+    .sidebar {
+      width: 100%;
+      height: auto;
+      position: relative;
+      flex-direction: row;
+      flex-wrap: wrap;
+      padding: 0;
+    }
+    .sidebar-logo { padding: 14px 16px; font-size: 16px; width: 100%; border-bottom: 1px solid rgba(255,255,255,0.1); }
+    .sidebar-section { display: none; }
+    .sidebar-item {
+      padding: 10px 14px;
+      font-size: 12px;
+      border-left: none;
+      border-bottom: 2px solid transparent;
+      flex: 0 0 auto;
+    }
+    .sidebar-item.active { border-bottom-color: #5dade2; border-left: none; }
+    .sidebar-footer { padding: 10px 14px; }
+    .admin-wrap { flex-direction: column; }
+    .main { margin-left: 0; padding: 16px; }
+
+    /* Stat grid */
+    .stat-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
+    .sc-val { font-size: 24px; }
+
+    /* Tablolar */
+    .tc { overflow-x: auto; }
+    table { min-width: 600px; }
+    th, td { padding: 8px 10px; font-size: 12px; }
+
+    /* Form */
+    .fg { grid-template-columns: 1fr; }
+    .ff.full { grid-column: 1; }
+    .cbgrid { grid-template-columns: repeat(2, 1fr); }
+
+    /* Takvim */
+    .cal-grid { grid-template-columns: repeat(7, 1fr); }
+    .cal-day { min-height: 48px; padding: 4px; }
+    .cal-day-num { font-size: 11px; }
+    .cal-event { font-size: 9px; }
+    .villa-selector { gap: 6px; }
+    .vs-item { font-size: 11px; padding: 5px 10px; }
+
+    /* Sahip kartları */
+    .owner-grid { grid-template-columns: 1fr; }
+
+    /* Modal */
+    .modal-overlay { align-items: flex-end; }
+    .mc { border-radius: 16px 16px 0 0; width: 100%; max-width: 100%; max-height: 90vh; padding: 20px; }
+
+    .ph { flex-direction: column; gap: 12px; align-items: flex-start; }
+    .pt { font-size: 22px; }
+  }
+
+  @media (max-width: 480px) {
+    .stat-grid { grid-template-columns: 1fr 1fr; }
+    .sidebar-item span:not(.sidebar-badge) { display: none; }
+  }
+  </style>
+</head>
+<body>
+
+<!-- LOGIN -->
+<div id="login-screen" class="login-wrap">
+  <div class="login-card">
+    <div class="login-logo">bize<span>bi</span>villa</div>
+    <div class="login-sub">Yönetim Paneli</div>
+    <div class="login-err" id="login-err"></div>
+    <div class="lf"><label>E-posta</label><input type="email" id="l-email" value="ahmet@bizebivilla.com"></div>
+    <div class="lf"><label>Şifre</label><input type="password" id="l-pass" value="Test1234!" onkeydown="if(event.key==='Enter')doLogin()"></div>
+    <button class="login-btn" onclick="doLogin()">Giriş Yap</button>
+  </div>
+</div>
+
+<!-- ADMIN -->
+<div id="admin-screen" style="display:none">
+<div class="admin-wrap">
+
+<!-- SIDEBAR -->
+<div class="sidebar">
+  <div class="sidebar-logo">bize<span>bi</span>villa <small>Yönetim Paneli</small></div>
+  <div class="sidebar-section">Genel</div>
+  <div class="sidebar-item active" onclick="showPage('dashboard',this)">📊 Dashboard</div>
+  <div class="sidebar-section">Villa Yönetimi</div>
+  <div class="sidebar-item" onclick="showPage('villas',this)">🏡 Villalar</div>
+  <div class="sidebar-item" onclick="showPage('add-villa',this)">➕ Villa Ekle</div>
+  <div class="sidebar-item" onclick="showPage('calendar',this)">📅 Müsaitlik Takvimi</div>
+  <div class="sidebar-section">İlişkiler</div>
+  <div class="sidebar-item" onclick="showPage('owners',this)">👤 Villa Sahipleri</div>
+  <div class="sidebar-item" onclick="showPage('inquiries',this)">📋 Rezervasyonlar <span class="sidebar-badge" id="inq-badge" style="display:none">0</span></div>
+  <div class="sidebar-item" onclick="showPage('reviews',this)">⭐ Yorumlar</div>
+  <div class="sidebar-section">Strateji</div>
+  <div class="sidebar-item" onclick="showPage('competitor',this)">📊 Rakip Fiyat Analizi</div>
+  <div class="sidebar-footer">
+    <button class="logout-btn" onclick="doLogout()">🚪 Çıkış Yap</button>
+  </div>
+</div>
+
+<!-- MAIN -->
+<div class="main">
+
+<!-- DASHBOARD -->
+<div id="page-dashboard">
+  <div class="ph"><div><div class="pt">Dashboard</div><div class="ps" id="dash-date"></div></div></div>
+  <div class="stat-grid">
+    <div class="stat-card"><div class="sc-head"><span class="sc-label">Toplam Villa</span><div class="sc-icon" style="background:#eff6ff">🏡</div></div><div class="sc-val" id="s-villas">—</div><div class="sc-trend">Aktif ilanlar</div></div>
+    <div class="stat-card"><div class="sc-head"><span class="sc-label">Villa Sahibi</span><div class="sc-icon" style="background:#f0fdf4">👤</div></div><div class="sc-val" id="s-owners">—</div><div class="sc-trend">Kayıtlı sahip</div></div>
+    <div class="stat-card"><div class="sc-head"><span class="sc-label">Yeni Talep</span><div class="sc-icon" style="background:#fffbeb">📋</div></div><div class="sc-val" id="s-inq">—</div><div class="sc-trend" id="s-inq-sub">Bekleyen talepler</div></div>
+    <div class="stat-card"><div class="sc-head"><span class="sc-label">Bu Ay Doluluk</span><div class="sc-icon" style="background:#fff3f3">📅</div></div><div class="sc-val" id="s-blocks">—</div><div class="sc-trend">Aktif kiralama</div></div>
+  </div>
+  <div class="tc">
+    <div class="tc-head"><span class="tc-title">Son Rezervasyon Talepleri</span><button class="btn btn-primary btn-sm" onclick="showPage('inquiries',null)">Tümünü Gör</button></div>
+    <table><thead><tr><th>Misafir</th><th>Villa</th><th>Giriş / Çıkış</th><th>Kişi</th><th>Durum</th><th></th></tr></thead>
+    <tbody id="dash-inq"></tbody></table>
+  </div>
+  <div class="tc">
+    <div class="tc-head"><span class="tc-title">Yaklaşan Kiralamalar</span><button class="btn btn-outline btn-sm" onclick="showPage('calendar',null)">Takvimi Gör</button></div>
+    <table><thead><tr><th>Villa</th><th>Giriş</th><th>Çıkış</th><th>Misafir</th><th>Platform</th><th>Fiyat</th></tr></thead>
+    <tbody id="dash-blocks"></tbody></table>
+  </div>
+</div>
+
+<!-- VİLLALAR -->
+<div id="page-villas" style="display:none">
+  <div class="ph"><div><div class="pt">Villalar</div><div class="ps" id="villas-sub"></div></div><button class="btn btn-primary" onclick="showPage('add-villa',null);resetVillaForm()">➕ Villa Ekle</button></div>
+  <div class="tc"><table>
+    <thead><tr><th></th><th>Villa</th><th>Sahip</th><th>Bölge</th><th>Fiyat/gece</th><th>Puan</th><th>Durum</th><th>İşlem</th></tr></thead>
+    <tbody id="villas-list"></tbody>
+  </table></div>
+</div>
+
+<!-- VİLLA EKLE/DÜZENLE -->
+<div id="page-add-villa" style="display:none">
+  <div class="ph"><div><div class="pt" id="av-title">Villa Ekle</div></div><button class="btn btn-outline" onclick="showPage('villas',null)">← Geri</button></div>
+  <div class="fc"><div class="fc-title">Temel Bilgiler</div>
+    <div class="fg">
+      <div class="ff full"><label>Villa Adı *</label><input type="text" id="f-title" placeholder="ör. Villa Mavi Hayal"></div>
+      <div class="ff"><label>Bölge *</label><select id="f-region"><option value="">Seçin...</option><option>Bodrum</option><option>Fethiye</option><option>Alacati</option><option>Antalya</option><option>Marmaris</option><option>Datca</option><option>Kas</option></select></div>
+      <div class="ff"><label>İlçe / Semt</label><input type="text" id="f-district" placeholder="ör. Yalıkavak"></div>
+      <div class="ff"><label>Villa Sahibi</label><select id="f-owner"><option value="">Sahip seçin (opsiyonel)</option></select></div>
+      <div class="ff full">
+        <label style="display:flex;justify-content:space-between;align-items:center">
+          Açıklama *
+          <button type="button" onclick="generateSEO()" id="ai-btn" style="font-size:11px;background:linear-gradient(135deg,#667eea,#764ba2);color:#fff;border:none;padding:5px 12px;border-radius:5px;cursor:pointer;font-family:DM Sans,sans-serif;display:flex;align-items:center;gap:5px">
+            ✨ AI ile Otomatik Doldur
+          </button>
+        </label>
+        <textarea id="f-desc" rows="4" placeholder="Villayı tanıtın... veya AI ile otomatik doldurun"></textarea>
+        <div id="ai-status" style="font-size:11px;color:var(--muted);margin-top:4px;display:none"></div>
+      </div>
+
+      <div class="ff full">
+        <label style="display:flex;justify-content:space-between;align-items:center">
+          🇬🇧 English Title
+          <button type="button" onclick="translateToEN()" id="translate-btn" style="font-size:11px;background:linear-gradient(135deg,#10b981,#059669);color:#fff;border:none;padding:5px 12px;border-radius:5px;cursor:pointer;font-family:DM Sans,sans-serif;display:flex;align-items:center;gap:5px">
+            🌐 AI ile İngilizceye Çevir
+          </button>
+        </label>
+        <input type="text" id="f-title-en" placeholder="English title (auto-fill with AI)">
+      </div>
+      <div class="ff full">
+        <label>🇬🇧 English Description</label>
+        <textarea id="f-desc-en" rows="4" placeholder="English description (auto-fill with AI)"></textarea>
+        <div id="translate-status" style="font-size:11px;color:var(--muted);margin-top:4px;display:none"></div>
+      </div>
+    </div>
+  </div>
+  <div class="fc"><div class="fc-title">Kapasite & Alan</div>
+    <div class="fg">
+      <div class="ff"><label>Misafir *</label><input type="number" id="f-guests" min="1" placeholder="8"></div>
+      <div class="ff"><label>Yatak odası *</label><input type="number" id="f-bedrooms" min="1" placeholder="4"></div>
+      <div class="ff"><label>Banyo *</label><input type="number" id="f-bathrooms" min="1" placeholder="3"></div>
+      <div class="ff"><label>Yatak</label><input type="number" id="f-beds" min="1" placeholder="6"></div>
+      <div class="ff"><label>İç alan m²</label><input type="number" id="f-indoor" placeholder="280"></div>
+      <div class="ff"><label>Dış alan m²</label><input type="number" id="f-outdoor" placeholder="600"></div>
+    </div>
+  </div>
+  <div class="fc"><div class="fc-title">Fiyatlandırma</div>
+    <div class="fg">
+      <div class="ff"><label>Gecelik (₺) *</label><input type="number" id="f-nightly" placeholder="12500"></div>
+      <div class="ff"><label>Haftalık (₺)</label><input type="number" id="f-weekly" placeholder="80000"></div>
+      <div class="ff"><label>Temizlik ücreti (₺)</label><input type="number" id="f-cleaning" placeholder="2000"></div>
+      <div class="ff"><label>Min. konaklama (gece)</label><input type="number" id="f-minstay" placeholder="3"></div>
+    </div>
+  </div>
+  <div class="fc"><div class="fc-title">Olanaklar</div>
+    <div class="cbgrid">
+      <label class="cbitem"><input type="checkbox" id="a-pool"> 🏊 Havuz</label>
+      <label class="cbitem"><input type="checkbox" id="a-jacuzzi"> 🛁 Jakuzi</label>
+      <label class="cbitem"><input type="checkbox" id="a-seaView"> 🌊 Deniz manzarası</label>
+      <label class="cbitem"><input type="checkbox" id="a-beachfront"> 🏖️ Denize sıfır</label>
+      <label class="cbitem"><input type="checkbox" id="a-wifi" checked> 📶 Wi-Fi</label>
+      <label class="cbitem"><input type="checkbox" id="a-airConditioning" checked> ❄️ Klima</label>
+      <label class="cbitem"><input type="checkbox" id="a-bbq"> 🔥 Mangal</label>
+      <label class="cbitem"><input type="checkbox" id="a-garden"> 🌿 Bahçe</label>
+      <label class="cbitem"><input type="checkbox" id="a-terrace"> ☀️ Teras</label>
+      <label class="cbitem"><input type="checkbox" id="a-fireplace"> 🪵 Şömine</label>
+      <label class="cbitem"><input type="checkbox" id="a-garage"> 🚗 Garaj</label>
+      <label class="cbitem"><input type="checkbox" id="a-sauna"> 🧖 Sauna</label>
+    </div>
+  </div>
+  <div class="fc"><div class="fc-title">Fotoğraflar (URL)</div>
+    <div class="fg">
+      <div class="ff"><label>Kapak Fotoğrafı URL</label><input type="text" class="photo-url" placeholder="https://images.unsplash.com/..."></div>
+      <div class="ff"><label>Fotoğraf 2</label><input type="text" class="photo-url" placeholder="https://..."></div>
+      <div class="ff"><label>Fotoğraf 3</label><input type="text" class="photo-url" placeholder="https://..."></div>
+      <div class="ff"><label>Fotoğraf 4</label><input type="text" class="photo-url" placeholder="https://..."></div>
+    </div>
+  </div>
+  <div class="fc"><div class="fc-title">Yayın</div>
+    <div class="fg">
+      <div class="ff"><label>Durum</label><select id="f-status"><option value="active">Aktif</option><option value="pending">Beklemede</option><option value="draft">Taslak</option></select></div>
+      <div class="ff" style="justify-content:flex-end"><label style="display:flex;align-items:center;gap:8px;cursor:pointer;margin-top:auto"><input type="checkbox" id="f-featured"> Öne çıkan villa</label></div>
+    </div>
+    <div class="fa">
+      <button class="btn btn-primary" onclick="saveVilla()">💾 Kaydet</button>
+      <button class="btn btn-outline" onclick="showPage('villas',null)">İptal</button>
+    </div>
+  </div>
+</div>
+
+<!-- TAKVİM -->
+<div id="page-calendar" style="display:none">
+  <div class="ph">
+    <div><div class="pt">Müsaitlik Takvimi</div><div class="ps">Kiralama bloklarını yönetin</div></div>
+    <button class="btn btn-primary" onclick="openAddBlock()">➕ Kiralama Ekle</button>
+  </div>
+  <div class="villa-selector" id="cal-villa-sel"></div>
+  <div class="cal-wrap">
+    <div class="cal-header">
+      <div class="cal-title" id="cal-month-title"></div>
+      <div class="cal-nav">
+        <button onclick="changeMonth(-1)">‹</button>
+        <button onclick="changeMonth(0)">Bugün</button>
+        <button onclick="changeMonth(1)">›</button>
+      </div>
+    </div>
+    <div class="cal-grid" id="cal-days-header">
+      <div class="cal-dow">Pzt</div><div class="cal-dow">Sal</div><div class="cal-dow">Çar</div>
+      <div class="cal-dow">Per</div><div class="cal-dow">Cum</div><div class="cal-dow">Cmt</div><div class="cal-dow">Paz</div>
+    </div>
+    <div class="cal-grid" id="cal-body"></div>
+    <div class="cal-legend">
+      <div class="leg-item"><div class="leg-dot ev-booked"></div> Kiralık (bizebivilla)</div>
+      <div class="leg-item"><div class="leg-dot ev-competitor"></div> Rakip platform</div>
+      <div class="leg-item"><div class="leg-dot ev-option"></div> Opsiyon</div>
+      <div class="leg-item"><div class="leg-dot ev-blocked"></div> Bloklu</div>
+    </div>
+  </div>
+  <div class="tc">
+    <div class="tc-head"><span class="tc-title">Bu Villanın Kiralamalar Listesi</span></div>
+    <table><thead><tr><th>Giriş</th><th>Çıkış</th><th>Gece</th><th>Misafir</th><th>Platform</th><th>Fiyat</th><th>Not</th><th></th></tr></thead>
+    <tbody id="block-list"></tbody></table>
+  </div>
+</div>
+
+<!-- SAHİPLER -->
+<div id="page-owners" style="display:none">
+  <div class="ph"><div><div class="pt">Villa Sahipleri</div><div class="ps" id="owners-sub"></div></div><button class="btn btn-primary" onclick="openOwnerModal()">➕ Sahip Ekle</button></div>
+  <div class="owner-grid" id="owner-grid"></div>
+</div>
+
+<!-- REZERVASYONLAR -->
+<div id="page-inquiries" style="display:none">
+  <div class="ph"><div><div class="pt">Rezervasyon Talepleri</div><div class="ps" id="inq-sub"></div></div></div>
+  <div class="tabs">
+    <button class="tab active" onclick="filterInq('all',this)">Tümü</button>
+    <button class="tab" onclick="filterInq('new',this)">🔵 Yeni</button>
+    <button class="tab" onclick="filterInq('confirmed',this)">✅ Onaylı</button>
+    <button class="tab" onclick="filterInq('rejected',this)">❌ Reddedilen</button>
+  </div>
+  <div class="tc"><table>
+    <thead><tr><th>Misafir</th><th>Villa</th><th>Giriş</th><th>Çıkış</th><th>Kişi</th><th>Tutar</th><th>Durum</th><th>İşlem</th></tr></thead>
+    <tbody id="inq-list"></tbody>
+  </table></div>
+</div>
+
+
+<!-- RAKİP FİYAT ANALİZİ -->
+<div id="page-competitor" style="display:none">
+  <div class="ph">
+    <div><div class="pt">Rakip Fiyat Analizi</div><div class="ps">Rakip platformlarla fiyat karşılaştırması</div></div>
+    <button class="btn btn-primary" onclick="openAddCompetitor()">➕ Rakip Fiyat Ekle</button>
+  </div>
+
+  <!-- ÖZET KARTLAR -->
+  <div id="comp-summary" style="display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:24px"></div>
+
+  <!-- ANALİZ TABLOSU -->
+  <div class="tc" style="margin-bottom:20px">
+    <div class="tc-head"><span class="tc-title">Villa Bazlı Fiyat Karşılaştırması</span><button class="btn btn-outline btn-sm" onclick="loadCompAnalysis()">🔄 Yenile</button></div>
+    <table>
+      <thead><tr><th>Villa</th><th>Bizim Fiyat</th><th>Rakip Ort.</th><th>En Düşük</th><th>En Yüksek</th><th>Fark</th><th>Rakip Sayısı</th><th></th></tr></thead>
+      <tbody id="comp-analysis-list"></tbody>
+    </table>
+  </div>
+
+  <!-- DETAY LİSTE -->
+  <div class="tc">
+    <div class="tc-head">
+      <span class="tc-title">Rakip Fiyat Listesi</span>
+      <div style="display:flex;gap:8px">
+        <select id="comp-filter-platform" onchange="filterCompetitors()" style="border:1px solid var(--border);border-radius:6px;padding:5px 10px;font-size:12px;font-family:DM Sans,sans-serif">
+          <option value="">Tüm platformlar</option>
+          <option value="airbnb">Airbnb</option>
+          <option value="booking">Booking.com</option>
+          <option value="tatilsepeti">Tatilsepeti</option>
+          <option value="other">Diğer</option>
+        </select>
+      </div>
+    </div>
+    <table>
+      <thead><tr><th>Villa</th><th>Platform</th><th>Rakip Villa</th><th>Gecelik</th><th>Puan</th><th>Kapasite</th><th>Son Kontrol</th><th>İşlem</th></tr></thead>
+      <tbody id="comp-list"></tbody>
+    </table>
+  </div>
+</div>
+<!-- YORUMLAR -->
+<div id="page-reviews" style="display:none">
+  <div class="ph"><div><div class="pt">Yorumlar</div><div class="ps" id="rev-sub"></div></div></div>
+  <div class="tc"><table>
+    <thead><tr><th>Misafir</th><th>Villa</th><th>Puan</th><th>Yorum</th><th>Tarih</th><th>Durum</th></tr></thead>
+    <tbody id="rev-list"></tbody>
+  </table></div>
+</div>
+
+</div><!-- /main -->
+</div><!-- /admin-wrap -->
+</div><!-- /admin-screen -->
+
+<!-- MODAL -->
+<div class="mo" id="modal"><div class="mc"><button class="mc-close" onclick="closeModal()">×</button><div id="modal-body"></div></div></div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+const API = 'http://localhost:3001/api';
+let token = localStorage.getItem('bvAdminToken');
+let allInquiries = [], allVillas = [], calVillaId = null, calBlocks = [];
+let calYear = new Date().getFullYear(), calMonth = new Date().getMonth();
+let editingVillaId = null, editingOwnerId = null;
+
+// ── Auth ──────────────────────────────────────────────────────────
+async function doLogin() {
+  const email = document.getElementById('l-email').value;
+  const pass  = document.getElementById('l-pass').value;
+  const err   = document.getElementById('login-err');
+  err.style.display = 'none';
+  try {
+    const res  = await fetch(API + '/auth/login', { method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify({email,password:pass}) });
+    const json = await res.json();
+    if (json.success) { token = json.token; localStorage.setItem('bvAdminToken',token); showAdmin(); }
+    else { err.textContent = json.message||'Hatalı giriş.'; err.style.display='block'; }
+  } catch(e) { err.textContent='Sunucuya bağlanılamadı.'; err.style.display='block'; }
+}
+
+
+
+// ── AI İLE İNGİLİZCEYE ÇEVİR ──────────────────────────────────────
+async function translateToEN() {
+  const title = document.getElementById('f-title').value.trim();
+  const desc = document.getElementById('f-desc').value.trim();
+  
+  if (!title || !desc) { showToast('Önce villa adı ve Türkçe açıklama girin!'); return; }
+  
+  const btn = document.getElementById('translate-btn');
+  const status = document.getElementById('translate-status');
+  btn.textContent = '⏳ Çevriliyor...';
+  btn.disabled = true;
+  status.style.display = 'block';
+  status.textContent = 'Claude AI metni İngilizceye çeviriyor...';
+  
+  try {
+    const response = await fetch(API + '/ai/translate', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ title, description: desc })
+    });
+    
+    const data = await response.json();
+    if (!response.ok) throw new Error(data.message || 'Çeviri başarısız');
+    const result = data.data;
+    
+    document.getElementById('f-title-en').value = result.title_en || '';
+    document.getElementById('f-desc-en').value = result.description_en || '';
+    
+    status.innerHTML = '✅ İngilizce çeviri başarılı!';
+    status.style.color = '#166534';
+    status.style.background = '#f0fdf4';
+    status.style.padding = '10px 12px';
+    status.style.borderRadius = '7px';
+    showToast('🌐 İngilizce çeviri tamamlandı!');
+  } catch(e) {
+    console.error(e);
+    status.textContent = '⚠️ Çeviri hatası: ' + e.message;
+    status.style.color = 'var(--red)';
+    showToast('Çeviri başarısız: ' + e.message);
+  } finally {
+    btn.innerHTML = '🌐 AI ile İngilizceye Çevir';
+    btn.disabled = false;
+  }
+}
+
+// Toplu çeviri — tüm villaları otomatik çevir
+async function translateAllVillas() {
+  if (!confirm('Tüm villaları AI ile İngilizceye çevirmek için Claude API\'ye istek atılacak. Bu işlem birkaç dakika sürebilir. Devam edilsin mi?')) return;
+  
+  try {
+    const res = await fetch(API + '/villas?limit=100');
+    const json = await res.json();
+    const villas = json.data || [];
+    
+    let done = 0;
+    for (const v of villas) {
+      if (v.title_en && v.description_en) { done++; continue; }
+      
+      try {
+        const r = await fetch(API + '/ai/translate', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ title: v.title, description: v.description })
+        });
+        const d = await r.json();
+        if (d.success && d.data) {
+          await fetch(API + '/villas/' + v._id, {
+            method: 'PATCH',
+            headers: {
+              'Content-Type': 'application/json',
+              'Authorization': 'Bearer ' + localStorage.getItem('token')
+            },
+            body: JSON.stringify({ title_en: d.data.title_en, description_en: d.data.description_en })
+          });
+          done++;
+          showToast('✅ ' + v.title + ' çevrildi (' + done + '/' + villas.length + ')');
+        }
+      } catch(err) { console.error('Hata:', v.title, err); }
+    }
+    
+    showToast('🎉 Toplu çeviri tamamlandı! ' + done + '/' + villas.length);
+    loadVillas();
+  } catch(e) {
+    showToast('Hata: ' + e.message);
+  }
+}
+
+// ── AI SEO ÜRETICI ────────────────────────────────────────────────
+async function generateSEO() {
+  const title    = document.getElementById('f-title').value.trim();
+  const region   = document.getElementById('f-region').value;
+  const district = document.getElementById('f-district').value.trim();
+  const guests   = document.getElementById('f-guests').value;
+  const bedrooms = document.getElementById('f-bedrooms').value;
+  const bathrooms= document.getElementById('f-bathrooms').value;
+  const nightly  = document.getElementById('f-nightly').value;
+
+  if (!title || !region) { showToast('Önce villa adı ve bölgeyi girin!'); return; }
+
+  // Olanaklar
+  const amenityMap = {pool:'Özel havuz',jacuzzi:'Jakuzi',seaView:'Deniz manzarası',beachfront:'Denize sıfır',wifi:'Wi-Fi',airConditioning:'Klima',bbq:'Mangal',garden:'Bahçe',terrace:'Teras',fireplace:'Şömine',garage:'Garaj',sauna:'Sauna'};
+  const amenities = Object.entries(amenityMap).filter(([k]) => document.getElementById('a-'+k)?.checked).map(([,v]) => v);
+
+  const btn = document.getElementById('ai-btn');
+  const status = document.getElementById('ai-status');
+  btn.textContent = '⏳ Üretiliyor...';
+  btn.disabled = true;
+  status.style.display = 'block';
+  status.textContent = 'Claude AI villa açıklaması yazıyor...';
+
+  try {
+    const response = await fetch(API + '/ai/seo', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        title, region, district, guests, bedrooms, bathrooms, nightly, amenities
+      })
+    });
+
+    const data = await response.json();
+    if (!response.ok) throw new Error(data.message || 'AI hatası');
+    const result = data.data;
+
+    // Alanları doldur
+    document.getElementById('f-desc').value = result.description || '';
+
+    // Highlights göster
+    if (result.highlights?.length) {
+      status.innerHTML = '<strong>🎯 Öne çıkan özellikler:</strong> ' + result.highlights.join(' · ') +
+        '<br><strong>📝 Meta:</strong> ' + (result.metaDescription || '') +
+        '<br><strong>🔑 Anahtar kelimeler:</strong> ' + (result.keywords || []).join(', ');
+      status.style.color = '#166534';
+      status.style.background = '#f0fdf4';
+      status.style.padding = '10px 12px';
+      status.style.borderRadius = '7px';
+      status.style.marginTop = '8px';
+    }
+
+    showToast('✅ AI açıklama üretildi!');
+
+  } catch(e) {
+    console.error(e);
+    status.textContent = '⚠️ Hata: ' + e.message;
+    status.style.color = 'var(--red)';
+    showToast('AI üretimi başarısız: ' + e.message);
+  } finally {
+    btn.innerHTML = '✨ AI ile Otomatik Doldur';
+    btn.disabled = false;
+  }
+}
+
+function doLogout() { localStorage.removeItem('bvAdminToken'); token=null; document.getElementById('admin-screen').style.display='none'; document.getElementById('login-screen').style.display='flex'; }
+
+function showAdmin() {
+  document.getElementById('login-screen').style.display='none';
+  document.getElementById('admin-screen').style.display='block';
+  document.getElementById('dash-date').textContent = new Date().toLocaleDateString('tr-TR',{weekday:'long',year:'numeric',month:'long',day:'numeric'});
+  loadDashboard();
+}
+if (token) showAdmin();
+
+function auth() { return {'Authorization':'Bearer '+token}; }
+
+// ── Sayfa ─────────────────────────────────────────────────────────
+function showPage(name, btn) {
+  document.querySelectorAll('[id^="page-"]').forEach(p=>p.style.display='none');
+  document.getElementById('page-'+name).style.display='block';
+  if(btn){ document.querySelectorAll('.sidebar-item').forEach(i=>i.classList.remove('active')); btn.classList.add('active'); }
+  if(name==='villas') loadVillas();
+  if(name==='inquiries') loadInquiries();
+  if(name==='reviews') loadAdminReviews();
+  if(name==='competitor'){ loadCompAnalysis(); loadCompetitors(); }
+  if(name==='owners') loadOwners();
+  if(name==='calendar') initCalendar();
+  if(name==='add-villa') loadOwnersForSelect();
+}
+
+// ── Dashboard ─────────────────────────────────────────────────────
+async function loadDashboard() {
+  try {
+    const [vR,iR,rR,oR] = await Promise.all([
+      fetch(API+'/villas?limit=1'),
+      fetch(API+'/inquiries/mine',{headers:auth()}),
+      fetch(API+'/reviews/stats'),
+      fetch(API+'/owners',{headers:auth()}),
+    ]);
+    const [vJ,iJ,rJ,oJ] = await Promise.all([vR.json(),iR.json(),rR.json(),oR.json()]);
+    document.getElementById('s-villas').textContent = vJ.total||0;
+    document.getElementById('s-owners').textContent = oJ.total||0;
+    const newC = (iJ.data||[]).filter(i=>i.status==='new').length;
+    document.getElementById('s-inq').textContent = newC;
+    if(newC>0){ document.getElementById('inq-badge').textContent=newC; document.getElementById('inq-badge').style.display='inline-flex'; }
+    allInquiries = iJ.data||[];
+    allVillas = [];
+    renderDashInq(allInquiries.slice(0,5));
+    loadDashBlocks();
+  } catch(e){}
+}
+
+async function loadDashBlocks() {
+  try {
+    const res = await fetch(API+'/availability/summary',{headers:auth()});
+    const json = await res.json();
+    document.getElementById('s-blocks').textContent = json.data?.length||0;
+    const tbody = document.getElementById('dash-blocks');
+    if(!json.data?.length){ tbody.innerHTML='<tr><td colspan="6" class="empty">Yaklaşan kiralama yok.</td></tr>'; return; }
+    tbody.innerHTML = json.data.map(b=>`
+      <tr>
+        <td>${b.villa?.title||'—'}</td>
+        <td>${fmtDate(b.startDate)}</td>
+        <td>${fmtDate(b.endDate)}</td>
+        <td>${b.guestName||'—'}</td>
+        <td><span class="badge badge-${b.platform==='bizebivilla'?'booked':'competitor'}">${platformLabel(b.platform)}</span></td>
+        <td>${b.price?'₺'+b.price.toLocaleString('tr-TR'):'—'}</td>
+      </tr>`).join('');
+  } catch(e){}
+}
+
+function renderDashInq(list) {
+  document.getElementById('dash-inq').innerHTML = !list.length
+    ? '<tr><td colspan="6" class="empty">Talep yok.</td></tr>'
+    : list.map(i=>`<tr>
+        <td><strong>${i.guest.name}</strong><br><small style="color:var(--muted)">${i.guest.phone||i.guest.email}</small></td>
+        <td>${i.villa?.title||'—'}</td>
+        <td>${fmtDate(i.dates?.checkIn)} → ${fmtDate(i.dates?.checkOut)}</td>
+        <td>${i.guestCount}</td>
+        <td><span class="badge badge-${i.status}">${statusLabel(i.status)}</span></td>
+        <td><button class="btn btn-outline btn-sm" onclick="openInqDetail('${i._id}')">Detay</button></td>
+      </tr>`).join('');
+}
+
+// ── Villalar ──────────────────────────────────────────────────────
+async function loadVillas() {
+  try {
+    const res  = await fetch(API+'/villas/my',{headers:auth()});
+    const json = await res.json();
+    allVillas  = json.data||[];
+    document.getElementById('villas-sub').textContent=(json.total||0)+' villa';
+    const tbody = document.getElementById('villas-list');
+    if(!allVillas.length){ tbody.innerHTML='<tr><td colspan="8" class="empty">Villa yok.</td></tr>'; return; }
+    tbody.innerHTML = allVillas.map(v=>{
+      const cover = v.photos?.find(p=>p.isCover)?.url||v.photos?.[0]?.url;
+      return `<tr>
+        <td>${cover?`<img class="thumb" src="${cover}">`:'<div class="thumb"></div>'}</td>
+        <td><strong>${v.title}</strong></td>
+        <td style="font-size:12px;color:var(--muted)">—</td>
+        <td>${v.location.region}</td>
+        <td>₺${v.pricing.nightly.toLocaleString('tr-TR')}</td>
+        <td>⭐${v.rating.average}</td>
+        <td><span class="badge badge-${v.status}">${v.status==='active'?'Aktif':v.status==='pending'?'Beklemede':'Taslak'}</span></td>
+        <td style="display:flex;gap:6px">
+          <button class="btn btn-outline btn-sm" onclick="editVilla('${v._id}')">✏️</button>
+          <button class="btn btn-outline btn-sm" onclick="showPage('calendar',null);selectCalVilla('${v._id}')">📅</button>
+          <button class="btn btn-danger btn-sm" onclick="deleteVilla('${v._id}','${v.title}')">🗑️</button>
+        </td>
+      </tr>`;
+    }).join('');
+  } catch(e){}
+}
+
+async function loadOwnersForSelect() {
+  try {
+    const res  = await fetch(API+'/owners',{headers:auth()});
+    const json = await res.json();
+    const sel  = document.getElementById('f-owner');
+    sel.innerHTML = '<option value="">Sahip seçin (opsiyonel)</option>';
+    (json.data||[]).forEach(o=>{ const opt=document.createElement('option'); opt.value=o._id; opt.textContent=o.name+(o.phone?' — '+o.phone:''); sel.appendChild(opt); });
+  } catch(e){}
+}
+
+function resetVillaForm() {
+  editingVillaId=null;
+  document.getElementById('av-title').textContent='Villa Ekle';
+  ['f-title','f-title-en','f-district','f-desc','f-desc-en','f-guests','f-bedrooms','f-bathrooms','f-beds','f-indoor','f-outdoor','f-nightly','f-weekly','f-cleaning','f-minstay'].forEach(id=>{ const el=document.getElementById(id); if(el)el.value=''; });
+  document.getElementById('f-region').value='';
+  document.getElementById('f-status').value='active';
+  document.getElementById('f-featured').checked=false;
+  document.querySelectorAll('.photo-url').forEach(el=>el.value='');
+  document.querySelectorAll('.cbitem input').forEach(el=>el.checked=false);
+  document.getElementById('a-wifi').checked=true;
+  document.getElementById('a-airConditioning').checked=true;
+}
+
+async function editVilla(id) {
+  editingVillaId=id;
+  const v = allVillas.find(v=>v._id===id);
+  if(!v) return;
+  showPage('add-villa',null);
+  document.getElementById('av-title').textContent='Villa Düzenle';
+  document.getElementById('f-title').value=v.title;
+  document.getElementById('f-region').value=v.location.region;
+  document.getElementById('f-district').value=v.location.district||'';
+  document.getElementById('f-desc').value=v.description;
+  if(document.getElementById('f-title-en'))document.getElementById('f-title-en').value=v.title_en||'';
+  if(document.getElementById('f-desc-en'))document.getElementById('f-desc-en').value=v.description_en||'';
+  document.getElementById('f-guests').value=v.capacity.guests;
+  document.getElementById('f-bedrooms').value=v.capacity.bedrooms;
+  document.getElementById('f-bathrooms').value=v.capacity.bathrooms;
+  document.getElementById('f-beds').value=v.capacity.beds||'';
+  document.getElementById('f-indoor').value=v.area?.indoor||'';
+  document.getElementById('f-outdoor').value=v.area?.outdoor||'';
+  document.getElementById('f-nightly').value=v.pricing.nightly;
+  document.getElementById('f-weekly').value=v.pricing.weekly||'';
+  document.getElementById('f-cleaning').value=v.pricing.cleaningFee||'';
+  document.getElementById('f-minstay').value=v.pricing.minStay||'';
+  document.getElementById('f-status').value=v.status;
+  document.getElementById('f-featured').checked=v.isFeatured;
+  ['pool','jacuzzi','seaView','beachfront','wifi','airConditioning','bbq','garden','terrace','fireplace','garage','sauna'].forEach(k=>{ const el=document.getElementById('a-'+k); if(el)el.checked=v.amenities[k]||false; });
+  const urls=document.querySelectorAll('.photo-url');
+  v.photos?.forEach((p,i)=>{ if(urls[i])urls[i].value=p.url; });
+}
+
+async function saveVilla() {
+  const title=document.getElementById('f-title').value.trim();
+  const region=document.getElementById('f-region').value;
+  const desc=document.getElementById('f-desc').value.trim();
+  const titleEn=document.getElementById('f-title-en')?.value.trim();
+  const descEn=document.getElementById('f-desc-en')?.value.trim();
+  const nightly=document.getElementById('f-nightly').value;
+  const guests=document.getElementById('f-guests').value;
+  const bedrooms=document.getElementById('f-bedrooms').value;
+  const bathrooms=document.getElementById('f-bathrooms').value;
+  if(!title||!region||!desc||!nightly||!guests||!bedrooms||!bathrooms){ showToast('⚠️ Zorunlu alanları doldurun!'); return; }
+  const photos=Array.from(document.querySelectorAll('.photo-url')).map((el,i)=>el.value.trim()).filter(Boolean).map((url,i)=>({url,isCover:i===0}));
+  const data={
+    title,title_en:titleEn,description:desc,description_en:descEn,
+    location:{region,district:document.getElementById('f-district').value.trim()},
+    capacity:{guests:+guests,bedrooms:+bedrooms,bathrooms:+bathrooms,beds:+document.getElementById('f-beds').value||1},
+    area:{indoor:+document.getElementById('f-indoor').value||undefined,outdoor:+document.getElementById('f-outdoor').value||undefined},
+    pricing:{nightly:+nightly,weekly:+document.getElementById('f-weekly').value||undefined,cleaningFee:+document.getElementById('f-cleaning').value||0,minStay:+document.getElementById('f-minstay').value||1,currency:'TRY'},
+    amenities:Object.fromEntries(['pool','jacuzzi','seaView','beachfront','wifi','airConditioning','bbq','garden','terrace','fireplace','garage','sauna'].map(k=>[k,document.getElementById('a-'+k)?.checked||false])),
+    photos,status:document.getElementById('f-status').value,isFeatured:document.getElementById('f-featured').checked,
+  };
+  try {
+    const url=editingVillaId?API+'/villas/'+editingVillaId:API+'/villas';
+    const method=editingVillaId?'PUT':'POST';
+    const res=await fetch(url,{method,headers:{...auth(),'Content-Type':'application/json'},body:JSON.stringify(data)});
+    const json=await res.json();
+    if(json.success){ showToast(editingVillaId?'✅ Güncellendi!':'✅ Villa eklendi!'); editingVillaId=null; showPage('villas',null); }
+    else showToast('Hata: '+json.message);
+  } catch(e){ showToast('Sunucu hatası.'); }
+}
+
+async function deleteVilla(id,title) {
+  if(!confirm('"'+title+'" silinsin mi?')) return;
+  const res=await fetch(API+'/villas/'+id,{method:'DELETE',headers:auth()});
+  const json=await res.json();
+  if(json.success){ showToast('🗑️ Silindi.'); loadVillas(); }
+}
+
+// ── TAKVİM ────────────────────────────────────────────────────────
+async function initCalendar() {
+  try {
+    const res=await fetch(API+'/villas/my',{headers:auth()});
+    const json=await res.json();
+    allVillas=json.data||[];
+    const sel=document.getElementById('cal-villa-sel');
+    sel.innerHTML='';
+    allVillas.forEach((v,i)=>{
+      const btn=document.createElement('button');
+      btn.className='vs-item'+(i===0?' active':'');
+      btn.textContent=v.title;
+      btn.onclick=()=>selectCalVilla(v._id,btn);
+      sel.appendChild(btn);
+    });
+    if(allVillas.length) selectCalVilla(allVillas[0]._id, sel.firstChild);
+  } catch(e){}
+}
+
+async function selectCalVilla(id, btn) {
+  calVillaId=id;
+  if(btn){ document.querySelectorAll('.vs-item').forEach(b=>b.classList.remove('active')); btn.classList.add('active'); }
+  await loadCalBlocks();
+  renderCalendar();
+  renderBlockList();
+}
+
+async function loadCalBlocks() {
+  if(!calVillaId) return;
+  try {
+    const res=await fetch(API+'/availability/villa/'+calVillaId+'?month='+(calMonth+1)+'&year='+calYear,{headers:auth()});
+    const json=await res.json();
+    calBlocks=json.data||[];
+  } catch(e){ calBlocks=[]; }
+}
+
+function renderCalendar() {
+  const months=['Ocak','Şubat','Mart','Nisan','Mayıs','Haziran','Temmuz','Ağustos','Eylül','Ekim','Kasım','Aralık'];
+  document.getElementById('cal-month-title').textContent=months[calMonth]+' '+calYear;
+  const firstDay=new Date(calYear,calMonth,1);
+  const lastDay =new Date(calYear,calMonth+1,0);
+  let startDow=(firstDay.getDay()+6)%7;
+  const today=new Date();
+  const body=document.getElementById('cal-body');
+  const cells=[];
+  for(let i=0;i<startDow;i++) cells.push({day:null});
+  for(let d=1;d<=lastDay.getDate();d++) cells.push({day:d});
+  while(cells.length%7!==0) cells.push({day:null});
+  body.innerHTML=cells.map(c=>{
+    if(!c.day) return '<div class="cal-day other-month"></div>';
+    const date=new Date(calYear,calMonth,c.day);
+    const isToday=date.toDateString()===today.toDateString();
+    const dayBlocks=calBlocks.filter(b=>new Date(b.startDate)<=date&&new Date(b.endDate)>=date);
+    const events=dayBlocks.map(b=>`<div class="cal-event ev-${b.type}" onclick="event.stopPropagation();openBlockDetail('${b._id}')" title="${b.guestName||b.notes||''}">${b.guestName||platformLabel(b.platform)}</div>`).join('');
+    return `<div class="cal-day${isToday?' today':''}" onclick="openAddBlockDate(${c.day})">
+      <div class="cal-day-num">${c.day}</div>${events}
+    </div>`;
+  }).join('');
+}
+
+async function changeMonth(dir) {
+  if(dir===0){ calYear=new Date().getFullYear(); calMonth=new Date().getMonth(); }
+  else { calMonth+=dir; if(calMonth>11){calMonth=0;calYear++;} if(calMonth<0){calMonth=11;calYear--;} }
+  await loadCalBlocks();
+  renderCalendar();
+}
+
+async function renderBlockList() {
+  if(!calVillaId) return;
+  try {
+    const res=await fetch(API+'/availability/villa/'+calVillaId,{headers:auth()});
+    const json=await res.json();
+    const all=json.data||[];
+    const tbody=document.getElementById('block-list');
+    if(!all.length){ tbody.innerHTML='<tr><td colspan="8" class="empty">Kiralama kaydı yok.</td></tr>'; return; }
+    tbody.innerHTML=all.sort((a,b)=>new Date(b.startDate)-new Date(a.startDate)).map(b=>`
+      <tr>
+        <td>${fmtDate(b.startDate)}</td>
+        <td>${fmtDate(b.endDate)}</td>
+        <td>${b.nights||nightsBetween(b.startDate,b.endDate)}</td>
+        <td>${b.guestName||'—'}</td>
+        <td><span class="badge badge-${b.platform==='bizebivilla'?'booked':'competitor'}">${platformLabel(b.platform)}</span></td>
+        <td>${b.price?'₺'+b.price.toLocaleString('tr-TR'):'—'}</td>
+        <td style="max-width:120px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${b.notes||'—'}</td>
+        <td><button class="btn btn-danger btn-sm" onclick="deleteBlock('${b._id}')">🗑️</button></td>
+      </tr>`).join('');
+  } catch(e){}
+}
+
+function openAddBlockDate(day) {
+  const dateStr=calYear+'-'+String(calMonth+1).padStart(2,'0')+'-'+String(day).padStart(2,'0');
+  openAddBlock(dateStr);
+}
+
+function openAddBlock(defaultDate) {
+  const v=allVillas.find(v=>v._id===calVillaId);
+  document.getElementById('modal-body').innerHTML=`
+    <div class="mc-title">📅 Kiralama Ekle${v?' — '+v.title:''}</div>
+    <div class="fg" style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+      <div class="ff"><label>Giriş tarihi</label><input type="date" id="b-start" value="${defaultDate||''}"></div>
+      <div class="ff"><label>Çıkış tarihi</label><input type="date" id="b-end"></div>
+      <div class="ff"><label>Tür</label>
+        <select id="b-type">
+          <option value="booked">Kiralık (bizebivilla)</option>
+          <option value="competitor">Rakip platform</option>
+          <option value="option">Opsiyon</option>
+          <option value="blocked">Bloklu (müsait değil)</option>
+        </select>
+      </div>
+      <div class="ff"><label>Platform</label>
+        <select id="b-platform">
+          <option value="bizebivilla">bizebivilla</option>
+          <option value="airbnb">Airbnb</option>
+          <option value="booking">Booking.com</option>
+          <option value="tatilsepeti">Tatilsepeti</option>
+          <option value="other">Diğer</option>
+        </select>
+      </div>
+      <div class="ff"><label>Misafir adı</label><input type="text" id="b-guest" placeholder="ör. Ahmet Yılmaz"></div>
+      <div class="ff"><label>Misafir telefonu</label><input type="text" id="b-phone" placeholder="05XX XXX XXXX"></div>
+      <div class="ff"><label>Toplam fiyat (₺)</label><input type="number" id="b-price" placeholder="25000"></div>
+      <div class="ff"><label>Not</label><input type="text" id="b-notes" placeholder="Opsiyonel not..."></div>
+    </div>
+    <div style="display:flex;gap:10px;margin-top:18px">
+      <button class="btn btn-primary" style="flex:1" onclick="saveBlock()">💾 Kaydet</button>
+      <button class="btn btn-outline" onclick="closeModal()">İptal</button>
+    </div>`;
+  document.getElementById('modal').classList.add('open');
+}
+
+async function saveBlock() {
+  const start=document.getElementById('b-start').value;
+  const end=document.getElementById('b-end').value;
+  if(!start||!end||!calVillaId){ showToast('Tarihleri doldurun!'); return; }
+  const data={
+    villa:calVillaId,
+    startDate:start,endDate:end,
+    type:document.getElementById('b-type').value,
+    platform:document.getElementById('b-platform').value,
+    guestName:document.getElementById('b-guest').value.trim(),
+    guestPhone:document.getElementById('b-phone').value.trim(),
+    price:+document.getElementById('b-price').value||undefined,
+    nights:nightsBetween(start,end),
+    notes:document.getElementById('b-notes').value.trim(),
+  };
+  try {
+    const res=await fetch(API+'/availability',{method:'POST',headers:{...auth(),'Content-Type':'application/json'},body:JSON.stringify(data)});
+    const json=await res.json();
+    if(json.success){ showToast('✅ Kiralama eklendi!'); closeModal(); await loadCalBlocks(); renderCalendar(); renderBlockList(); }
+    else showToast('Hata: '+json.message);
+  } catch(e){ showToast('Sunucu hatası.'); }
+}
+
+function openBlockDetail(id) {
+  const b=calBlocks.find(b=>b._id===id);
+  if(!b) return;
+  document.getElementById('modal-body').innerHTML=`
+    <div class="mc-title">Kiralama Detayı</div>
+    <table style="width:100%;font-size:13px;border-collapse:collapse">
+      <tr><td style="padding:8px 0;color:var(--muted);width:110px">Giriş</td><td>${fmtDate(b.startDate)}</td></tr>
+      <tr><td style="padding:8px 0;color:var(--muted)">Çıkış</td><td>${fmtDate(b.endDate)}</td></tr>
+      <tr><td style="padding:8px 0;color:var(--muted)">Gece</td><td>${b.nights||nightsBetween(b.startDate,b.endDate)}</td></tr>
+      <tr><td style="padding:8px 0;color:var(--muted)">Misafir</td><td>${b.guestName||'—'}</td></tr>
+      <tr><td style="padding:8px 0;color:var(--muted)">Telefon</td><td>${b.guestPhone||'—'}</td></tr>
+      <tr><td style="padding:8px 0;color:var(--muted)">Platform</td><td><span class="badge badge-${b.platform==='bizebivilla'?'booked':'competitor'}">${platformLabel(b.platform)}</span></td></tr>
+      <tr><td style="padding:8px 0;color:var(--muted)">Fiyat</td><td>${b.price?'₺'+b.price.toLocaleString('tr-TR'):'—'}</td></tr>
+      <tr><td style="padding:8px 0;color:var(--muted)">Not</td><td>${b.notes||'—'}</td></tr>
+    </table>
+    <div style="display:flex;gap:10px;margin-top:18px">
+      <button class="btn btn-danger" onclick="deleteBlock('${b._id}')" style="flex:1">🗑️ Sil</button>
+      <button class="btn btn-outline" onclick="closeModal()">Kapat</button>
+    </div>`;
+  document.getElementById('modal').classList.add('open');
+}
+
+async function deleteBlock(id) {
+  if(!confirm('Bu kiralama bloğu silinsin mi?')) return;
+  const res=await fetch(API+'/availability/'+id,{method:'DELETE',headers:auth()});
+  const json=await res.json();
+  if(json.success){ showToast('🗑️ Silindi.'); closeModal(); await loadCalBlocks(); renderCalendar(); renderBlockList(); }
+}
+
+// ── SAHİPLER ──────────────────────────────────────────────────────
+async function loadOwners() {
+  try {
+    const res=await fetch(API+'/owners',{headers:auth()});
+    const json=await res.json();
+    document.getElementById('owners-sub').textContent=(json.total||0)+' sahip kayıtlı';
+    const grid=document.getElementById('owner-grid');
+    if(!json.data?.length){ grid.innerHTML='<div class="empty" style="grid-column:1/-1">Henüz villa sahibi eklenmedi.</div>'; return; }
+    grid.innerHTML=json.data.map(o=>`
+      <div class="owner-card">
+        <div class="oc-name">${o.name}</div>
+        <div class="oc-phone">📞 ${o.phone||'—'}</div>
+        ${o.phone2?`<div class="oc-detail">📱 ${o.phone2}</div>`:''}
+        ${o.email?`<div class="oc-detail">✉️ ${o.email}</div>`:''}
+        ${o.iban?`<div class="oc-detail">🏦 ${o.bankName||''} — ${o.iban}</div>`:''}
+        ${o.commission?`<div class="oc-detail">💰 Komisyon: %${o.commission}</div>`:''}
+        ${o.notes?`<div class="oc-detail" style="margin-top:6px;font-style:italic">📝 ${o.notes}</div>`:''}
+        ${o.villas?.length?`<div class="oc-villas">${o.villas.map(v=>`<span class="oc-villa-tag">${v.title}</span>`).join('')}</div>`:''}
+        <div class="oc-actions">
+          <button class="btn btn-outline btn-sm" onclick="openOwnerModal('${o._id}')">✏️ Düzenle</button>
+          <button class="btn btn-danger btn-sm" onclick="deleteOwner('${o._id}','${o.name}')">🗑️</button>
+        </div>
+      </div>`).join('');
+  } catch(e){}
+}
+
+function openOwnerModal(id) {
+  editingOwnerId=id||null;
+  document.getElementById('modal-body').innerHTML=`
+    <div class="mc-title">${id?'Sahip Düzenle':'Yeni Villa Sahibi'}</div>
+    <div class="fg" style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+      <div class="ff full"><label>Ad Soyad *</label><input type="text" id="o-name" placeholder="ör. Mehmet Yılmaz"></div>
+      <div class="ff"><label>Telefon</label><input type="tel" id="o-phone" placeholder="05XX XXX XXXX"></div>
+      <div class="ff"><label>2. Telefon</label><input type="tel" id="o-phone2" placeholder="05XX XXX XXXX"></div>
+      <div class="ff full"><label>E-posta</label><input type="email" id="o-email" placeholder="ornek@email.com"></div>
+      <div class="ff"><label>IBAN</label><input type="text" id="o-iban" placeholder="TR00 0000 0000 0000 0000 00"></div>
+      <div class="ff"><label>Banka</label><input type="text" id="o-bank" placeholder="ör. Yapı Kredi"></div>
+      <div class="ff"><label>TC / Vergi No</label><input type="text" id="o-id" placeholder="12345678901"></div>
+      <div class="ff"><label>Komisyon (%)</label><input type="number" id="o-comm" placeholder="20" min="0" max="100"></div>
+      <div class="ff full"><label>Notlar</label><textarea id="o-notes" rows="3" placeholder="Villa sahibiyle ilgili notlar..."></textarea></div>
+    </div>
+    <div style="display:flex;gap:10px;margin-top:18px">
+      <button class="btn btn-primary" style="flex:1" onclick="saveOwner()">💾 Kaydet</button>
+      <button class="btn btn-outline" onclick="closeModal()">İptal</button>
+    </div>`;
+
+  if(id) {
+    fetch(API+'/owners/'+id,{headers:auth()}).then(r=>r.json()).then(j=>{
+      const o=j.data;
+      document.getElementById('o-name').value=o.name||'';
+      document.getElementById('o-phone').value=o.phone||'';
+      document.getElementById('o-phone2').value=o.phone2||'';
+      document.getElementById('o-email').value=o.email||'';
+      document.getElementById('o-iban').value=o.iban||'';
+      document.getElementById('o-bank').value=o.bankName||'';
+      document.getElementById('o-id').value=o.idNumber||'';
+      document.getElementById('o-comm').value=o.commission||'';
+      document.getElementById('o-notes').value=o.notes||'';
+    });
+  }
+  document.getElementById('modal').classList.add('open');
+}
+
+async function saveOwner() {
+  const name=document.getElementById('o-name').value.trim();
+  if(!name){ showToast('Ad soyad zorunlu!'); return; }
+  const data={
+    name,
+    phone:document.getElementById('o-phone').value.trim(),
+    phone2:document.getElementById('o-phone2').value.trim(),
+    email:document.getElementById('o-email').value.trim(),
+    iban:document.getElementById('o-iban').value.trim(),
+    bankName:document.getElementById('o-bank').value.trim(),
+    idNumber:document.getElementById('o-id').value.trim(),
+    commission:+document.getElementById('o-comm').value||20,
+    notes:document.getElementById('o-notes').value.trim(),
+  };
+  try {
+    const url=editingOwnerId?API+'/owners/'+editingOwnerId:API+'/owners';
+    const method=editingOwnerId?'PUT':'POST';
+    const res=await fetch(url,{method,headers:{...auth(),'Content-Type':'application/json'},body:JSON.stringify(data)});
+    const json=await res.json();
+    if(json.success){ showToast(editingOwnerId?'✅ Güncellendi!':'✅ Sahip eklendi!'); closeModal(); loadOwners(); }
+    else showToast('Hata: '+json.message);
+  } catch(e){ showToast('Sunucu hatası.'); }
+}
+
+async function deleteOwner(id,name) {
+  if(!confirm('"'+name+'" silinsin mi?')) return;
+  const res=await fetch(API+'/owners/'+id,{method:'DELETE',headers:auth()});
+  const json=await res.json();
+  if(json.success){ showToast('🗑️ Silindi.'); loadOwners(); }
+}
+
+// ── REZERVASYONLAR ────────────────────────────────────────────────
+async function loadInquiries() {
+  try {
+    const res=await fetch(API+'/inquiries/mine',{headers:auth()});
+    const json=await res.json();
+    allInquiries=json.data||[];
+    document.getElementById('inq-sub').textContent=(json.total||0)+' talep';
+    renderInq(allInquiries);
+  } catch(e){}
+}
+
+function renderInq(list) {
+  const tbody=document.getElementById('inq-list');
+  if(!list.length){ tbody.innerHTML='<tr><td colspan="8" class="empty">Talep yok.</td></tr>'; return; }
+  tbody.innerHTML=list.map(i=>`
+    <tr>
+      <td><strong>${i.guest.name}</strong><br><small style="color:var(--muted)">${i.guest.phone||i.guest.email}</small></td>
+      <td>${i.villa?.title||'—'}</td>
+      <td>${fmtDate(i.dates?.checkIn)}</td>
+      <td>${fmtDate(i.dates?.checkOut)}</td>
+      <td>${i.guestCount}</td>
+      <td>${i.estimatedTotal?'₺'+i.estimatedTotal.toLocaleString('tr-TR'):'—'}</td>
+      <td><span class="badge badge-${i.status}">${statusLabel(i.status)}</span></td>
+      <td style="display:flex;gap:6px">
+        <button class="btn btn-outline btn-sm" onclick="openInqDetail('${i._id}')">Detay</button>
+        ${i.status==='new'||i.status==='read'?`
+          <button class="btn btn-success btn-sm" onclick="updateInq('${i._id}','confirmed')">✓</button>
+          <button class="btn btn-danger btn-sm" onclick="updateInq('${i._id}','rejected')">✗</button>
+        `:''}
+      </td>
+    </tr>`).join('');
+}
+
+function filterInq(status,btn) {
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+  btn.classList.add('active');
+  renderInq(status==='all'?allInquiries:allInquiries.filter(i=>i.status===status));
+}
+
+function openInqDetail(id) {
+  const i=allInquiries.find(x=>x._id===id);
+  if(!i) return;
+  document.getElementById('modal-body').innerHTML=`
+    <div class="mc-title">Rezervasyon Detayı</div>
+    <table style="width:100%;font-size:13px;border-collapse:collapse">
+      <tr><td style="padding:7px 0;color:var(--muted);width:110px">Misafir</td><td><strong>${i.guest.name}</strong></td></tr>
+      <tr><td style="padding:7px 0;color:var(--muted)">E-posta</td><td>${i.guest.email}</td></tr>
+      <tr><td style="padding:7px 0;color:var(--muted)">Telefon</td><td><a href="tel:${i.guest.phone}" style="color:var(--blue)">${i.guest.phone||'—'}</a></td></tr>
+      <tr><td style="padding:7px 0;color:var(--muted)">Villa</td><td>${i.villa?.title||'—'}</td></tr>
+      <tr><td style="padding:7px 0;color:var(--muted)">Giriş</td><td>${fmtDate(i.dates?.checkIn)}</td></tr>
+      <tr><td style="padding:7px 0;color:var(--muted)">Çıkış</td><td>${fmtDate(i.dates?.checkOut)}</td></tr>
+      <tr><td style="padding:7px 0;color:var(--muted)">Kişi</td><td>${i.guestCount}</td></tr>
+      <tr><td style="padding:7px 0;color:var(--muted)">Tahmini</td><td>${i.estimatedTotal?'₺'+i.estimatedTotal.toLocaleString('tr-TR'):'—'}</td></tr>
+      <tr><td style="padding:7px 0;color:var(--muted)">Mesaj</td><td>${i.message||'—'}</td></tr>
+      <tr><td style="padding:7px 0;color:var(--muted)">Durum</td><td><span class="badge badge-${i.status}">${statusLabel(i.status)}</span></td></tr>
+    </table>
+    ${i.status==='new'||i.status==='read'?`
+    <div style="display:flex;gap:10px;margin-top:18px">
+      <button class="btn btn-success" onclick="updateInq('${i._id}','confirmed')" style="flex:1">✅ Onayla & Takvime Ekle</button>
+      <button class="btn btn-danger" onclick="updateInq('${i._id}','rejected')" style="flex:1">❌ Reddet</button>
+    </div>`:''}`;
+  document.getElementById('modal').classList.add('open');
+}
+
+async function updateInq(id,status) {
+  try {
+    const res=await fetch(API+'/inquiries/'+id+'/status',{method:'PUT',headers:{...auth(),'Content-Type':'application/json'},body:JSON.stringify({status})});
+    const json=await res.json();
+    if(json.success){
+      showToast(status==='confirmed'?'✅ Onaylandı!':'❌ Reddedildi.');
+      closeModal();
+      loadInquiries();
+    }
+  } catch(e){}
+}
+
+// ── YORUMLAR ──────────────────────────────────────────────────────
+async function loadAdminReviews() {
+  try {
+    const res=await fetch(API+'/reviews/all?limit=100');
+    const json=await res.json();
+    document.getElementById('rev-sub').textContent=(json.total||0)+' yorum';
+    const tbody=document.getElementById('rev-list');
+    if(!json.data?.length){ tbody.innerHTML='<tr><td colspan="6" class="empty">Yorum yok.</td></tr>'; return; }
+    tbody.innerHTML=json.data.map(r=>`
+      <tr>
+        <td><strong>${r.guest.name}</strong></td>
+        <td style="max-width:130px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${r.villa?.title||'—'}</td>
+        <td style="color:var(--yellow)">${'★'.repeat(r.rating.overall)}</td>
+        <td style="max-width:220px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;color:var(--muted)">"${r.comment}"</td>
+        <td style="font-size:11px;color:var(--muted)">${r.stayDate||'—'}</td>
+        <td><span class="badge ${r.isApproved?'badge-active':'badge-pending'}">${r.isApproved?'Onaylı':'Beklemede'}</span></td>
+      </tr>`).join('');
+  } catch(e){}
+}
+
+
+// ── RAKİP FİYAT ANALİZİ ──────────────────────────────────────────
+let allCompetitors = [];
+
+async function loadCompAnalysis() {
+  try {
+    const res = await fetch(API+'/competitors/analysis', {headers:auth()});
+    const json = await res.json();
+    const list = document.getElementById('comp-analysis-list');
+    const summary = document.getElementById('comp-summary');
+
+    if(!json.data?.length){ list.innerHTML='<tr><td colspan="8" class="empty">Veri yok.</td></tr>'; return; }
+
+    // Özet kartlar
+    const withComps = json.data.filter(d=>d.stats.count>0);
+    const avgDiff = withComps.length ? Math.round(withComps.reduce((s,d)=>s+(d.stats.diff||0),0)/withComps.length) : 0;
+    const cheapVillas = json.data.filter(d=>d.stats.diff<-10);
+    const expVillas = json.data.filter(d=>d.stats.diff>10);
+
+    summary.innerHTML = [
+      {icon:'📊', label:'Karşılaştırılan Villa', val:withComps.length, sub:'rakip verisi olan', bg:'#eff6ff'},
+      {icon:avgDiff>5?'💸':'✅', label:'Ortalama Fiyat Farkı', val:(avgDiff>0?'+':'')+avgDiff+'%', sub:avgDiff>0?'rakipten pahalıyız':'rakipten ucuzuz', bg:avgDiff>10?'#fff3f3':avgDiff<-10?'#f0fdf4':'#fffbeb'},
+      {icon:'📉', label:'Fiyat Düşürme Önerileri', val:expVillas.length, sub:'villa rakipten pahalı', bg:'#fff3f3'},
+    ].map(c=>`
+      <div class="stat-card">
+        <div class="sc-head"><span class="sc-label">${c.label}</span><div class="sc-icon" style="background:${c.bg}">${c.icon}</div></div>
+        <div class="sc-val">${c.val}</div><div class="sc-trend">${c.sub}</div>
+      </div>`).join('');
+
+    list.innerHTML = json.data.map(d => {
+      const diff = d.stats.diff;
+      const diffColor = diff===null?'var(--muted)':diff>10?'var(--red)':diff<-10?'var(--green)':'var(--yellow)';
+      const diffLabel = diff===null?'—':(diff>0?'+':'')+diff+'%';
+      const rec = diff===null?'—':diff>15?'Fiyat dusur':diff<-15?'Fiyat artir':'Uygun';
+      return `<tr>
+        <td><strong>${d.villa.title}</strong><br><small style="color:var(--muted)">${d.villa.region}</small></td>
+        <td>₺${d.villa.nightly.toLocaleString('tr-TR')}</td>
+        <td>${d.stats.avgComp?'₺'+d.stats.avgComp.toLocaleString('tr-TR'):'—'}</td>
+        <td>${d.stats.minComp?'₺'+d.stats.minComp.toLocaleString('tr-TR'):'—'}</td>
+        <td>${d.stats.maxComp?'₺'+d.stats.maxComp.toLocaleString('tr-TR'):'—'}</td>
+        <td style="color:${diffColor};font-weight:500">${diffLabel}</td>
+        <td>${d.stats.count} rakip</td>
+        <td><button class="btn btn-outline btn-sm" onclick="openAddCompetitor('${d.villa._id}')">+ Ekle</button></td>
+      </tr>`;
+    }).join('');
+  } catch(e){ console.error(e); }
+}
+
+async function loadCompetitors() {
+  try {
+    const res = await fetch(API+'/competitors', {headers:auth()});
+    const json = await res.json();
+    allCompetitors = json.data||[];
+    renderCompetitors(allCompetitors);
+  } catch(e){}
+}
+
+function renderCompetitors(list) {
+  const tbody = document.getElementById('comp-list');
+  if(!list.length){ tbody.innerHTML='<tr><td colspan="8" class="empty">Henüz rakip fiyat eklenmedi.</td></tr>'; return; }
+  tbody.innerHTML = list.map(c=>`
+    <tr>
+      <td>${c.villa?.title||'—'}</td>
+      <td><span class="badge badge-${c.platform==='airbnb'?'new':c.platform==='booking'?'confirmed':'pending'}">${platformLabel(c.platform)}</span></td>
+      <td>${c.competitorVillaName||'—'}${c.url?` <a href="${c.url}" target="_blank" style="font-size:10px;color:var(--blue)">↗</a>`:''}</td>
+      <td style="font-weight:500">₺${c.priceNightly?.toLocaleString('tr-TR')||'—'}</td>
+      <td>${c.rating?'⭐'+c.rating+(c.reviewCount?' ('+c.reviewCount+')':''):'—'}</td>
+      <td>${c.capacity?c.capacity+' kişi':'—'}</td>
+      <td style="font-size:11px;color:var(--muted)">${fmtDate(c.checkedAt)}</td>
+      <td style="display:flex;gap:6px">
+        <button class="btn btn-outline btn-sm" onclick="editCompetitor('${c._id}')">✏️</button>
+        <button class="btn btn-danger btn-sm" onclick="deleteCompetitor('${c._id}')">🗑️</button>
+      </td>
+    </tr>`).join('');
+}
+
+function filterCompetitors() {
+  const platform = document.getElementById('comp-filter-platform').value;
+  renderCompetitors(platform ? allCompetitors.filter(c=>c.platform===platform) : allCompetitors);
+}
+
+function openAddCompetitor(preVillaId, editId) {
+  const editData = editId ? allCompetitors.find(c=>c._id===editId) : null;
+  document.getElementById('modal-body').innerHTML=`
+    <div class="mc-title">${editId?'Rakip Fiyat Düzenle':'Rakip Fiyat Ekle'}</div>
+    <div class="fg" style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+      <div class="ff full"><label>Villa *</label>
+        <select id="cp-villa">${allVillas.map(v=>`<option value="${v._id}" ${(preVillaId||editData?.villa?._id)===v._id?'selected':''}>${v.title}</option>`).join('')}</select>
+      </div>
+      <div class="ff"><label>Platform *</label>
+        <select id="cp-platform">
+          <option value="airbnb" ${editData?.platform==='airbnb'?'selected':''}>Airbnb</option>
+          <option value="booking" ${editData?.platform==='booking'?'selected':''}>Booking.com</option>
+          <option value="tatilsepeti" ${editData?.platform==='tatilsepeti'?'selected':''}>Tatilsepeti</option>
+          <option value="other" ${editData?.platform==='other'?'selected':''}>Diğer</option>
+        </select>
+      </div>
+      <div class="ff"><label>Gecelik Fiyat (₺) *</label><input type="number" id="cp-price" placeholder="8500" value="${editData?.priceNightly||''}"></div>
+      <div class="ff"><label>Haftalık Fiyat (₺)</label><input type="number" id="cp-weekly" placeholder="55000" value="${editData?.priceWeekly||''}"></div>
+      <div class="ff full"><label>Rakip Villa Adı</label><input type="text" id="cp-name" placeholder="ör. Villa Sunset Bodrum" value="${editData?.competitorVillaName||''}"></div>
+      <div class="ff full"><label>İlan URL</label><input type="text" id="cp-url" placeholder="https://airbnb.com/rooms/..." value="${editData?.url||''}"></div>
+      <div class="ff"><label>Puan</label><input type="number" id="cp-rating" placeholder="4.8" step="0.1" min="1" max="5" value="${editData?.rating||''}"></div>
+      <div class="ff"><label>Yorum Sayısı</label><input type="number" id="cp-revcount" placeholder="42" value="${editData?.reviewCount||''}"></div>
+      <div class="ff"><label>Kapasite (kişi)</label><input type="number" id="cp-cap" placeholder="8" value="${editData?.capacity||''}"></div>
+      <div class="ff"><label>Bölge</label><input type="text" id="cp-region" placeholder="ör. Bodrum Yalıkavak" value="${editData?.region||''}"></div>
+      <div class="ff full"><label>Olanaklar / Not</label><input type="text" id="cp-notes" placeholder="ör. Havuzlu, denize 100m" value="${editData?.notes||''}"></div>
+    </div>
+    <div style="display:flex;gap:10px;margin-top:18px">
+      <button class="btn btn-primary" style="flex:1" onclick="saveCompetitor('${editId||''}')">💾 Kaydet</button>
+      <button class="btn btn-outline" onclick="closeModal()">İptal</button>
+    </div>`;
+  document.getElementById('modal').classList.add('open');
+}
+
+function editCompetitor(id) { openAddCompetitor(null, id); }
+
+async function saveCompetitor(editId) {
+  const villaId = document.getElementById('cp-villa').value;
+  const price   = document.getElementById('cp-price').value;
+  if(!villaId||!price){ showToast('Villa ve fiyat zorunlu!'); return; }
+  const data = {
+    villa: villaId,
+    platform: document.getElementById('cp-platform').value,
+    priceNightly: +price,
+    priceWeekly: +document.getElementById('cp-weekly').value||undefined,
+    competitorVillaName: document.getElementById('cp-name').value.trim(),
+    url: document.getElementById('cp-url').value.trim(),
+    rating: +document.getElementById('cp-rating').value||undefined,
+    reviewCount: +document.getElementById('cp-revcount').value||undefined,
+    capacity: +document.getElementById('cp-cap').value||undefined,
+    region: document.getElementById('cp-region').value.trim(),
+    notes: document.getElementById('cp-notes').value.trim(),
+  };
+  try {
+    const url = editId ? API+'/competitors/'+editId : API+'/competitors';
+    const method = editId ? 'PUT' : 'POST';
+    const res = await fetch(url, {method, headers:{...auth(),'Content-Type':'application/json'}, body:JSON.stringify(data)});
+    const json = await res.json();
+    if(json.success){ showToast(editId?'✅ Güncellendi!':'✅ Eklendi!'); closeModal(); loadCompAnalysis(); loadCompetitors(); }
+    else showToast('Hata: '+json.message);
+  } catch(e){ showToast('Sunucu hatası.'); }
+}
+
+async function deleteCompetitor(id) {
+  if(!confirm('Bu rakip fiyat silinsin mi?')) return;
+  const res = await fetch(API+'/competitors/'+id, {method:'DELETE', headers:auth()});
+  const json = await res.json();
+  if(json.success){ showToast('🗑️ Silindi.'); loadCompetitors(); loadCompAnalysis(); }
+}
+
+// ── Yardımcılar ───────────────────────────────────────────────────
+function fmtDate(d){ if(!d)return'—'; try{return new Date(d).toLocaleDateString('tr-TR',{day:'2-digit',month:'short',year:'numeric'})}catch(e){return d;} }
+function nightsBetween(a,b){ return Math.max(1,Math.ceil((new Date(b)-new Date(a))/(1000*60*60*24))); }
+function statusLabel(s){ return{new:'Yeni',read:'Okundu',replied:'Yanıtlandı',confirmed:'Onaylı',rejected:'Reddedildi'}[s]||s; }
+function platformLabel(p){ return{bizebivilla:'bizebivilla',airbnb:'Airbnb',booking:'Booking',tatilsepeti:'Tatilsepeti',other:'Diğer'}[p]||p; }
+
+let toastT;
+function showToast(msg){ const t=document.getElementById('toast'); t.textContent=msg; t.style.display='block'; clearTimeout(toastT); toastT=setTimeout(()=>t.style.display='none',3000); }
+function closeModal(){ document.getElementById('modal').classList.remove('open'); }
+document.getElementById('modal').addEventListener('click',function(e){if(e.target===this)closeModal();});
+</script>
+</body>
+</html>
