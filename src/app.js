@@ -7,6 +7,8 @@ const path = require('path');
 
 const app = express();
 
+app.set('trust proxy', 1);  // Railway proxy arkasında — gerçek IP'yi al
+
 // ── Güvenlik başlıkları ───────────────────────────────────────────
 app.use(helmet({ contentSecurityPolicy: false }));
 
