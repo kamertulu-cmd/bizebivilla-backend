@@ -1,78 +1,122 @@
-const Review = require("../models/review.model");
-const Villa  = require("../models/villa.model");
+// src/controllers/review.controller.js
+const Review = require('../models/review.model');
+const Villa = require('../models/villa.model');
+const { sendEmail, reviewThankYouEmail } = require('../services/email.service');
 
-// GET /api/reviews — tüm öne çıkan yorumlar (ana sayfa)
-exports.getFeaturedReviews = async (req, res, next) => {
+// POST /api/reviews — Yeni yorum
+exports.createReview = async (req, res) => {
   try {
-    const reviews = await Review.find({ isApproved: true, isFeatured: true })
-      .populate("villa", "title location slug")
-      .sort("-createdAt")
-      .limit(6);
-    res.json({ success: true, data: reviews });
-  } catch(e) { next(e); }
-};
+    const { villa: villaId, guestName, guestEmail, rating, comment, stayDate } = req.body;
+    if (!villaId || !guestName || !rating || !comment) {
+      return res.status(400).json({ message: 'Eksik alanlar (villa, ad, puan, yorum zorunlu)' });
+    }
 
-// GET /api/reviews/all — tüm yorumlar (yorumlar sayfası)
-exports.getAllReviews = async (req, res, next) => {
-  try {
-    const page  = Math.max(1, Number(req.query.page) || 1);
-    const limit = Math.min(20, Number(req.query.limit) || 12);
-    const filter = { isApproved: true };
-    if (req.query.villa) filter.villa = req.query.villa;
-
-    const [reviews, total] = await Promise.all([
-      Review.find(filter)
-        .populate("villa", "title location slug photos")
-        .sort("-createdAt")
-        .skip((page - 1) * limit)
-        .limit(limit),
-      Review.countDocuments(filter),
-    ]);
-    res.json({ success: true, total, page, pages: Math.ceil(total / limit), data: reviews });
-  } catch(e) { next(e); }
-};
-
-// GET /api/reviews/villa/:villaId — belirli villanın yorumları
-exports.getVillaReviews = async (req, res, next) => {
-  try {
-    const reviews = await Review.find({ villa: req.params.villaId, isApproved: true })
-      .sort("-createdAt");
-    res.json({ success: true, total: reviews.length, data: reviews });
-  } catch(e) { next(e); }
-};
-
-// POST /api/reviews — yeni yorum
-exports.createReview = async (req, res, next) => {
-  try {
-    const { villaId, guest, rating, comment, stayDate } = req.body;
     const villa = await Villa.findById(villaId);
-    if (!villa) return res.status(404).json({ success: false, message: "Villa bulunamadi." });
+    if (!villa) return res.status(404).json({ message: 'Villa bulunamadı' });
 
-    const review = await Review.create({ villa: villaId, guest, rating, comment, stayDate });
+    const review = await Review.create({
+      villa: villaId,
+      guestName,
+      guestEmail: guestEmail || '',
+      rating: Number(rating),
+      comment,
+      stayDate: stayDate ? new Date(stayDate) : new Date(),
+      status: 'pending'
+    });
 
-    // Villa rating güncelle
-    const all = await Review.find({ villa: villaId, isApproved: true });
-    const avg = all.reduce((s, r) => s + r.rating.overall, 0) / all.length;
-    await Villa.findByIdAndUpdate(villaId, { "rating.average": Math.round(avg * 10) / 10, "rating.count": all.length });
+    // Misafire teşekkür maili (eğer email verdiyse)
+    if (guestEmail) {
+      const { subject, html } = reviewThankYouEmail({
+        guestName,
+        villaTitle: villa.title,
+        rating: Number(rating)
+      });
+      sendEmail({ to: guestEmail, subject, html }).catch(e => console.error('Mail hatası:', e));
+    }
 
-    res.status(201).json({ success: true, message: "Yorumunuz alindi, tesekkurler!", data: review });
-  } catch(e) { next(e); }
+    res.status(201).json({ success: true, data: review });
+  } catch (e) {
+    console.error('createReview hatası:', e);
+    res.status(500).json({ message: e.message });
+  }
 };
 
-// GET /api/reviews/stats — genel istatistik
-exports.getStats = async (req, res, next) => {
+// GET /api/reviews/villa/:villaId — Bir villaya ait onaylanmış yorumlar
+exports.getReviewsByVilla = async (req, res) => {
   try {
-    const stats = await Review.aggregate([
-      { $match: { isApproved: true } },
-      { $group: {
-        _id: null,
-        total:   { $sum: 1 },
-        avgRating: { $avg: "$rating.overall" },
-        avg5: { $sum: { $cond: [{ $eq: ["$rating.overall", 5] }, 1, 0] } },
-        avg4: { $sum: { $cond: [{ $eq: ["$rating.overall", 4] }, 1, 0] } },
-        avg3: { $sum: { $cond: [{ $eq: ["$rating.overall", 3] }, 1, 0] } },
-      }}
-    ]);
-    res.json({ success: true, data: stats[0] || { total: 0, avgRating: 0 } });
-  } catch(e) { next(e); }
+    const reviews = await Review.find({ villa: req.params.villaId, status: 'approved' })
+      .sort({ createdAt: -1 });
+    res.json({ success: true, data: reviews });
+  } catch (e) {
+    res.status(500).json({ message: e.message });
+  }
+};
+
+// GET /api/reviews/all — Tüm yorumlar (anasayfada gösterim için)
+exports.getAllReviews = async (req, res) => {
+  try {
+    const limit = parseInt(req.query.limit) || 50;
+    const reviews = await Review.find({ status: 'approved' })
+      .populate('villa', 'title location.region')
+      .sort({ createdAt: -1 })
+      .limit(limit);
+    res.json({ success: true, data: reviews });
+  } catch (e) {
+    res.status(500).json({ message: e.message });
+  }
+};
+
+// GET /api/reviews/stats — Genel istatistikler
+exports.getReviewStats = async (req, res) => {
+  try {
+    const reviews = await Review.find({ status: 'approved' });
+    const total = reviews.length;
+    const avg = total ? reviews.reduce((s, r) => s + r.rating, 0) / total : 0;
+    const fiveStars = reviews.filter(r => r.rating === 5).length;
+    const satisfactionRate = total ? Math.round((reviews.filter(r => r.rating >= 4).length / total) * 100) : 0;
+    res.json({
+      success: true,
+      data: {
+        total,
+        average: Number(avg.toFixed(1)),
+        fiveStars,
+        satisfactionRate
+      }
+    });
+  } catch (e) {
+    res.status(500).json({ message: e.message });
+  }
+};
+
+// GET /api/reviews — Admin için tüm yorumlar
+exports.listReviews = async (req, res) => {
+  try {
+    const reviews = await Review.find()
+      .populate('villa', 'title')
+      .sort({ createdAt: -1 });
+    res.json({ success: true, data: reviews });
+  } catch (e) {
+    res.status(500).json({ message: e.message });
+  }
+};
+
+// PATCH /api/reviews/:id — Onayla/reddet
+exports.updateReview = async (req, res) => {
+  try {
+    const review = await Review.findByIdAndUpdate(req.params.id, req.body, { new: true });
+    if (!review) return res.status(404).json({ message: 'Bulunamadı' });
+    res.json({ success: true, data: review });
+  } catch (e) {
+    res.status(500).json({ message: e.message });
+  }
+};
+
+// DELETE /api/reviews/:id
+exports.deleteReview = async (req, res) => {
+  try {
+    await Review.findByIdAndDelete(req.params.id);
+    res.json({ success: true });
+  } catch (e) {
+    res.status(500).json({ message: e.message });
+  }
 };
