@@ -1,6 +1,7 @@
 const Inquiry      = require("../models/inquiry.model");
 const Villa        = require("../models/villa.model");
 const Availability = require("../models/availability.model");
+const { sendEmail, reservationConfirmationEmail } = require("../services/email.service");
 
 // POST /api/inquiries
 exports.createInquiry = async (req, res, next) => {
@@ -12,47 +13,40 @@ exports.createInquiry = async (req, res, next) => {
       return res.status(404).json({ success: false, message: "Villa bulunamadi." });
     }
 
-    // ── Tarih çakışması kontrolü ──────────────────────────────────
-    // ISO formatında tarih bekliyoruz: 2026-05-18
     const checkIn  = new Date(dates.checkIn  + 'T00:00:00');
     const checkOut = new Date(dates.checkOut + 'T00:00:00');
 
     if (isNaN(checkIn.getTime()) || isNaN(checkOut.getTime())) {
-      return res.status(400).json({ success: false, message: "Gecersiz tarih formati. YYYY-MM-DD bekleniyor." });
+      return res.status(400).json({ success: false, message: "Gecersiz tarih formati." });
     }
-
     if (checkIn >= checkOut) {
       return res.status(400).json({ success: false, message: "Cikis tarihi giris tarihinden sonra olmalidir." });
     }
-
     if (checkIn < new Date()) {
-      return res.status(400).json({ success: false, message: "Gecmis tarihe rezervasyon yapılamaz." });
+      return res.status(400).json({ success: false, message: "Gecmis tarihe rezervasyon yapilamaz." });
     }
 
     const conflict = await Availability.findOne({
       villa: villaId,
       type:  { $in: ["booked", "blocked", "competitor"] },
-      $or: [
-        { startDate: { $lt: checkOut }, endDate: { $gt: checkIn } },
-      ],
+      $or: [{ startDate: { $lt: checkOut }, endDate: { $gt: checkIn } }],
     });
 
     if (conflict) {
-      const conflictStart = new Date(conflict.startDate).toLocaleDateString("tr-TR");
-      const conflictEnd   = new Date(conflict.endDate).toLocaleDateString("tr-TR");
+      const cs = new Date(conflict.startDate).toLocaleDateString("tr-TR");
+      const ce = new Date(conflict.endDate).toLocaleDateString("tr-TR");
       return res.status(409).json({
         success: false,
-        message: `Bu villa ${conflictStart} - ${conflictEnd} tarihleri arasinda dolu. Lutfen baska tarih secin.`,
+        message: `Bu villa ${cs} - ${ce} tarihleri arasinda dolu.`,
         conflict: { startDate: conflict.startDate, endDate: conflict.endDate, type: conflict.type }
       });
     }
 
-    // Min. konaklama süresi kontrolü
     const nights = Math.ceil((checkOut - checkIn) / (1000 * 60 * 60 * 24));
     if (villa.pricing.minStay && nights < villa.pricing.minStay) {
       return res.status(400).json({
         success: false,
-        message: `Bu villa icin minimum konaklama ${villa.pricing.minStay} gecedir. Siz ${nights} gece secdiniz.`
+        message: `Bu villa icin minimum konaklama ${villa.pricing.minStay} gecedir.`
       });
     }
 
@@ -62,6 +56,29 @@ exports.createInquiry = async (req, res, next) => {
       villa: villaId, owner: villa.owner,
       guest, dates, guestCount, message, estimatedTotal,
     });
+
+    // ── Misafire onay maili (async) ──────────────────────────────
+    console.log('🔵 Email kontrolü başlıyor, guest:', JSON.stringify(guest));
+    if (guest && guest.email) {
+      console.log('🔵 Email gönderiliyor →', guest.email);
+      try {
+        const mail = reservationConfirmationEmail({
+          guestName: guest.name || 'Misafir',
+          villaTitle: villa.title,
+          checkIn: dates.checkIn,
+          checkOut: dates.checkOut,
+          guests: guestCount || 1,
+          message: message || ''
+        });
+        sendEmail({ to: guest.email, subject: mail.subject, html: mail.html })
+          .then(r => console.log('📧 Rezervasyon mail durumu:', r.success ? 'OK' : 'BAŞARISIZ', r.error || ''))
+          .catch(e => console.error('❌ Mail catch hatası:', e.message));
+      } catch (e) {
+        console.error('❌ Mail try hatası:', e.message);
+      }
+    } else {
+      console.log('⚠️ Guest email yok, mail atlanıyor');
+    }
 
     res.status(201).json({
       success: true,
@@ -73,7 +90,6 @@ exports.createInquiry = async (req, res, next) => {
   }
 };
 
-// GET /api/inquiries/mine
 exports.getMyInquiries = async (req, res, next) => {
   try {
     const { status, page = 1, limit = 20 } = req.query;
@@ -87,7 +103,6 @@ exports.getMyInquiries = async (req, res, next) => {
   } catch (err) { next(err); }
 };
 
-// PUT /api/inquiries/:id/status
 exports.updateInquiryStatus = async (req, res, next) => {
   try {
     const { status } = req.body;
@@ -100,7 +115,6 @@ exports.updateInquiryStatus = async (req, res, next) => {
     inquiry.status = status;
     await inquiry.save();
 
-    // Onaylanırsa takvime otomatik ekle
     if (status === "confirmed") {
       const exists = await Availability.findOne({ inquiry: inquiry._id });
       if (!exists) {
@@ -118,7 +132,6 @@ exports.updateInquiryStatus = async (req, res, next) => {
         });
       }
     }
-
     res.json({ success: true, data: inquiry });
   } catch (err) { next(err); }
 };
