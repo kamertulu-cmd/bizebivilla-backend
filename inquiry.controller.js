@@ -1,6 +1,7 @@
 const Inquiry      = require("../models/inquiry.model");
 const Villa        = require("../models/villa.model");
 const Availability = require("../models/availability.model");
+const { sendEmail, reservationConfirmationEmail } = require("../services/email.service");
 
 // POST /api/inquiries
 exports.createInquiry = async (req, res, next) => {
@@ -62,6 +63,21 @@ exports.createInquiry = async (req, res, next) => {
       villa: villaId, owner: villa.owner,
       guest, dates, guestCount, message, estimatedTotal,
     });
+
+    // ── Misafire onay maili (async, hatası bekletmiyoruz) ────────
+    if (guest && guest.email) {
+      const mail = reservationConfirmationEmail({
+        guestName: guest.name || 'Misafir',
+        villaTitle: villa.title,
+        checkIn: dates.checkIn,
+        checkOut: dates.checkOut,
+        guests: guestCount || 1,
+        message: message || ''
+      });
+      sendEmail({ to: guest.email, subject: mail.subject, html: mail.html })
+        .then(r => console.log('📧 Rezervasyon mail durumu:', r.success ? 'OK' : 'BAŞARISIZ', r.error || ''))
+        .catch(e => console.error('Mail hatası:', e.message));
+    }
 
     res.status(201).json({
       success: true,

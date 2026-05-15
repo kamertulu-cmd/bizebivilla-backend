@@ -1,5 +1,6 @@
 const Review = require("../models/review.model");
 const Villa  = require("../models/villa.model");
+const { sendEmail, reviewThankYouEmail } = require("../services/email.service");
 
 // GET /api/reviews — tüm öne çıkan yorumlar (ana sayfa)
 exports.getFeaturedReviews = async (req, res, next) => {
@@ -52,8 +53,23 @@ exports.createReview = async (req, res, next) => {
 
     // Villa rating güncelle
     const all = await Review.find({ villa: villaId, isApproved: true });
-    const avg = all.reduce((s, r) => s + r.rating.overall, 0) / all.length;
-    await Villa.findByIdAndUpdate(villaId, { "rating.average": Math.round(avg * 10) / 10, "rating.count": all.length });
+    if (all.length > 0) {
+      const avg = all.reduce((s, r) => s + r.rating.overall, 0) / all.length;
+      await Villa.findByIdAndUpdate(villaId, { "rating.average": Math.round(avg * 10) / 10, "rating.count": all.length });
+    }
+
+    // ── Misafire teşekkür maili ──
+    if (guest && guest.email) {
+      const overall = rating && rating.overall ? rating.overall : (typeof rating === 'number' ? rating : 5);
+      const mail = reviewThankYouEmail({
+        guestName: guest.name || 'Misafir',
+        villaTitle: villa.title,
+        rating: overall
+      });
+      sendEmail({ to: guest.email, subject: mail.subject, html: mail.html })
+        .then(r => console.log('📧 Yorum mail durumu:', r.success ? 'OK' : 'BAŞARISIZ', r.error || ''))
+        .catch(e => console.error('Mail hatası:', e.message));
+    }
 
     res.status(201).json({ success: true, message: "Yorumunuz alindi, tesekkurler!", data: review });
   } catch(e) { next(e); }
