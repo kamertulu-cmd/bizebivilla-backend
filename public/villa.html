@@ -984,8 +984,10 @@ async function submitInquiry() {
     const res = await fetch(API+'/inquiries',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({villaId:villa._id,guest:{name,email,phone},dates:{checkIn,checkOut},guestCount:Number(guests),message})});
     const json = await res.json();
     if (json.success) {
-      document.getElementById('modal-body').innerHTML=`<div class="modal-success"><div class="modal-success-icon">🎉</div><div style="font-family:'Cormorant Garamond',serif;font-size:22px;margin-bottom:8px">${currentLang==="en"?"Request received!":"Talebiniz alındı!"}</div><p style="color:var(--muted);font-size:13px">${currentLang==="en"?"The villa owner will contact you shortly.":"Villa sahibi en kısa sürede sizinle iletişime geçecek."}</p></div>`;
-      setTimeout(closeModal,3000);
+      // Yeni akış: kapora ödemesi için odeme.html'e yönlendir
+      const paymentUrl = json.data?.paymentUrl || ('/odeme.html?id=' + json.data?.inquiryId);
+      document.getElementById('modal-body').innerHTML=`<div class="modal-success"><div class="modal-success-icon">✓</div><div style="font-family:'Cormorant Garamond',serif;font-size:22px;margin-bottom:8px">${currentLang==="en"?"Reservation created":"Rezervasyon oluşturuldu"}</div><p style="color:var(--muted);font-size:13px;margin-bottom:16px">${currentLang==="en"?"Redirecting to secure payment...":"Güvenli ödeme sayfasına yönlendiriliyorsunuz..."}</p><div style="display:inline-block;width:24px;height:24px;border:3px solid #e5e5e5;border-top-color:#1a8fd9;border-radius:50%;animation:spin 0.8s linear infinite"></div><style>@keyframes spin{to{transform:rotate(360deg)}}</style></div>`;
+      setTimeout(() => { window.location.href = paymentUrl; }, 1200);
     } else {alert('Hata: '+json.message);}
   } catch(e){alert('Sunucuya bağlanılamadı.');}
 }

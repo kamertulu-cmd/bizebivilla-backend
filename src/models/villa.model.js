@@ -50,6 +50,9 @@ const villaSchema = new mongoose.Schema({
     cleaningFee: { type: Number, default: 0 },
     deposit:     { type: Number, default: 0 },
     minStay:     { type: Number, default: 1 },
+    // Komisyon oranı — sahip ile özel olarak belirlenir
+    // Ödeme akışında: komisyon = (gece sayısı x nightly) x commissionRate/100
+    commissionRate: { type: Number, default: 20, min: 0, max: 100 },
   },
   photos: [{
     url:     { type: String, required: true },

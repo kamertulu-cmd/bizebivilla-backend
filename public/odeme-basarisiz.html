@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ödeme Başarısız — bizebivilla</title>
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif; background: #f5f3ef; color: #1a1a1a; line-height: 1.6; min-height: 100vh; }
+  .container { max-width: 560px; margin: 0 auto; padding: 40px 20px; }
+  .logo { text-align: center; font-size: 24px; font-weight: 700; margin-bottom: 32px; }
+  .logo .bi { color: #1a8fd9; }
+  .card { background: white; border-radius: 14px; padding: 40px 32px; text-align: center; box-shadow: 0 2px 8px rgba(0,0,0,0.06); }
+  .fail-icon { width: 72px; height: 72px; margin: 0 auto 20px; background: #fee2e2; border-radius: 50%; display: flex; align-items: center; justify-content: center; }
+  .fail-icon svg { width: 36px; height: 36px; color: #dc2626; }
+  h1 { font-size: 22px; margin-bottom: 10px; }
+  p { color: #555; margin-bottom: 12px; }
+  .reason-box { background: #fef2f2; border-left: 4px solid #dc2626; padding: 14px 18px; border-radius: 8px; margin: 20px 0; text-align: left; font-size: 14px; color: #991b1b; }
+  .actions { display: flex; gap: 12px; margin-top: 24px; }
+  .btn { flex: 1; display: inline-block; padding: 12px 18px; border-radius: 8px; font-weight: 600; text-decoration: none; transition: all 0.15s; text-align: center; }
+  .btn-primary { background: #1a8fd9; color: white; }
+  .btn-primary:hover { background: #1577b8; }
+  .btn-secondary { background: white; color: #555; border: 1px solid #ddd; }
+  .btn-secondary:hover { background: #f5f5f5; }
+  .help { font-size: 13px; color: #888; margin-top: 24px; }
+</style>
+</head>
+<body>
+
+<div class="container">
+  <div class="logo">bize<span class="bi">bi</span>villa</div>
+
+  <div class="card">
+    <div class="fail-icon">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+        <line x1="18" y1="6" x2="6" y2="18"></line>
+        <line x1="6" y1="6" x2="18" y2="18"></line>
+      </svg>
+    </div>
+    <h1>Ödeme tamamlanamadı</h1>
+    <p>Endişelenmeyin — herhangi bir tutar kartınızdan çekilmedi.</p>
+
+    <div class="reason-box" id="reason-box">
+      <strong>Sebep:</strong> <span id="reason-text">Bilinmeyen bir hata oluştu</span>
+    </div>
+
+    <div class="actions">
+      <a href="javascript:history.back()" class="btn btn-primary">Tekrar Dene</a>
+      <a href="/" class="btn btn-secondary">Ana Sayfa</a>
+    </div>
+
+    <p class="help">Sorun devam ederse WhatsApp üzerinden bize ulaşabilirsiniz.</p>
+  </div>
+</div>
+
+<script>
+  const params = new URLSearchParams(window.location.search);
+  const reason = params.get('reason');
+
+  const reasonMap = {
+    'invalid_callback': 'Ödeme geri dönüşü işlenemedi. Lütfen tekrar deneyin.',
+    'not_found': 'Rezervasyon bulunamadı. Yeni bir rezervasyon oluşturmanız gerekebilir.',
+    'server_error': 'Sunucu hatası oluştu. Lütfen birkaç dakika sonra tekrar deneyin.',
+  };
+
+  const text = reasonMap[reason] || decodeURIComponent(reason || 'Bilinmeyen hata');
+  document.getElementById('reason-text').textContent = text;
+</script>
+
+</body>
+</html>
