@@ -77,7 +77,7 @@ async function getHashFromParam(securityString) {
 
   if (!hash) {
     console.error('Hash alinamadi. HTTP:', response.status);
-    console.error('Ham cevap (ilk 500):', xmlText.substring(0, 500));
+    console.error('Ham cevap (ilk 500):', xmlText.substring(0, 2000));
     throw new Error('Param hash servisi cevap vermedi');
   }
 
@@ -159,7 +159,7 @@ async function initPayment({ card, amount, orderId, guest, successUrl, failureUr
     const xmlText = await response.text();
 
     console.log('Pos_Odeme HTTP status:', response.status);
-    console.log('Pos_Odeme ham cevap (ilk 1500):', xmlText.substring(0, 1500));
+    console.log('Pos_Odeme ham cevap (ilk 1500):', xmlText.substring(0, 5000));
 
     if (xmlText.includes('<soap:Fault>') || xmlText.includes('<faultstring>')) {
       const faultStr = extractXmlValue(xmlText, 'faultstring') || 'SOAP fault';
