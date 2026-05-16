@@ -170,6 +170,10 @@ async function initPayment({ card, amount, orderId, guest, successUrl, failureUr
 
     const xmlText = await response.text();
 
+    console.log("🔍 Param SOAP URL:", SOAP_URL);
+    console.log("🔍 Param HTTP status:", response.status);
+    console.log("🔍 Param ham cevap (ilk 2000 karakter):", xmlText.substring(0, 2000));
+
     // SOAP fault var mı kontrol et
     if (xmlText.includes('<soap:Fault>') || xmlText.includes('<faultstring>')) {
       const faultStr = extractXmlValue(xmlText, 'faultstring') || 'SOAP fault';
